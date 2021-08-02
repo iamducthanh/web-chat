@@ -9,4 +9,20 @@ public class HomeController {
     public String homePage(){
         return "views/trangchu";
     }
+
+    @RequestMapping("/message_group")
+    public String messageGroupPage(){
+        return "views/message-group";
+    }
+
+    @RequestMapping("/message_direct")
+    public String messageDirectPage(){
+        return "views/message-direct";
+    }
+
+
+    @RequestMapping("/message_empty")
+    public String messageEmptyPage(){
+        return "views/message-empty";
+    }
 }
