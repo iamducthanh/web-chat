@@ -1,7 +1,5 @@
 package com.webchat.webchat.interceptor;
 
-import com.webchat.webchat.entities.User;
-import com.webchat.webchat.utils.SessionUtil;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
