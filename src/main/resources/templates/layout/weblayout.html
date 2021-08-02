@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout"><head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, maximum-scale=1, shrink-to-fit=no, viewport-fit=cover">
+    <title layout:fragment = "title">Title</title>
+    <!-- Favicon -->
+    <link rel="shortcut icon" href="./assets/img/favicon/favicon.ico" type="image/x-icon">
+    <!-- Font -->
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700" rel="stylesheet">
+    <!-- Template CSS -->
+    <link rel="stylesheet" href="./assets/css/template.bundle.css">
+    <link rel="stylesheet" href="./assets/css/template.dark.bundle.css" media="(prefers-color-scheme: dark)">
+</head>
+<body>
+    <div layout:fragment="body">
+
+    </div>
+    <div th:replace="/commons/web/modal-invite :: modal-invite"></div>
+    <div th:replace="/commons/web/modal-profile :: modal-profile"></div>
+    <div th:replace="/commons/web/modal-user-profile :: modal-user-profile"></div>
+    <div th:replace="/commons/web/modal-media-preview :: modal-media-preview"></div>
+<!-- Scripts -->
+<script src="./assets/js/vendor.js"></script>
+<script src="./assets/js/template.js"></script>
+</body>
+</html>
