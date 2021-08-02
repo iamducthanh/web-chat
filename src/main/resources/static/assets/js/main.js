@@ -121,7 +121,7 @@ function onMessageReceived(payload) {
                                 "</div>"+
                             "</div>"+
                         "</div>"+
-                        "<div class='message-footer'>'"+
+                        "<div class='message-footer'>"+
                             "<span class='extra-small text-muted'>"+timeChat+"</span>"+
                         "</div>"+
                     "</div>"+
