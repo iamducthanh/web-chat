@@ -163,7 +163,7 @@
       hash = 31 * hash + messageSender.charCodeAt(i);
     }
     var index = Math.abs(hash % colors.length);
-    return colors[index];
+    return colors[test];
   }
 
   usernameForm.addEventListener('submit', connect, true)

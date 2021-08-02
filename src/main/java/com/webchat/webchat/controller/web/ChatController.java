@@ -23,7 +23,7 @@ public class ChatController {
     public String index(Model model){
         String room = req.getParameter("room");
         model.addAttribute("room",room);
-        return "index";
+        return "test";
     }
 
     @MessageMapping("/chat.sendMessage/{room}") // nhận 1 messenge gửi tới từ client, nhận đc thì method send đc kích hoạt
