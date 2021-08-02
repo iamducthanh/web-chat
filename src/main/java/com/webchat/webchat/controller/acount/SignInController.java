@@ -23,7 +23,7 @@ public class SignInController {
 
     @PostMapping("/signin-action")
     public String signinAction(User user){
-        SessionUtil.getSessionUtil().addObject(req, "USER", user);
-        return "redirect:/message_group";
+//        SessionUtil.getSessionUtil().addObject(req, "USER", user);
+        return "redirect:/message_group?user=" + user.getFullname();
     }
 }
