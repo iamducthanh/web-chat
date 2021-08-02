@@ -14,7 +14,7 @@
     <name>web-chat</name>
     <description>Web Chat</description>
     <properties>
-        <java.version>1.8</java.version>
+        <java.version>8</java.version>
         <websocket.version>5.3.9</websocket.version>
     </properties>
     <dependencies>
