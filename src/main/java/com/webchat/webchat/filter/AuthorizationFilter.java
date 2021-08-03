@@ -20,28 +20,28 @@ import org.slf4j.LoggerFactory;
 
 @Component
 public class AuthorizationFilter implements Filter {
-//    private final static Logger LOG = LoggerFactory.getLogger(AuthorizationFilter.class);
+    private final static Logger LOG = LoggerFactory.getLogger(AuthorizationFilter.class);
 
     @Override
     public void init(final FilterConfig filterConfig) throws ServletException {
-//        LOG.info("Initializing filter :{}", this);
+        LOG.info("Initializing filter :{}", this);
     }
 
     @Override
     public void doFilter(final ServletRequest request, final ServletResponse response, final FilterChain chain)
             throws IOException, ServletException {
-//        HttpServletRequest req = (HttpServletRequest) request;
-//        HttpServletResponse res = (HttpServletResponse) response;
-//        User user = (User) SessionUtil.getSessionUtil().getObject(req, "USER");
-//        if(user != null){
+        HttpServletRequest req = (HttpServletRequest) request;
+        HttpServletResponse res = (HttpServletResponse) response;
+        User user = (User) SessionUtil.getSessionUtil().getObject(req, "USER");
+        if(user != null){
             chain.doFilter(request, response);
-//        } else {
-//            res.sendRedirect(req.getContextPath() + "/signin");
-//        }
+        } else {
+            res.sendRedirect(req.getContextPath() + "/signin");
+        }
     }
 
     @Override
     public void destroy() {
-//        LOG.warn("Destructing filter :{}", this);
+        LOG.warn("Destructing filter :{}", this);
     }
 }

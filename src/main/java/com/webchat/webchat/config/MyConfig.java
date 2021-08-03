@@ -7,12 +7,12 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 public class MyConfig {
-//    @Bean
-//    public FilterRegistrationBean<AuthorizationFilter> loggingFilter(){
-//        FilterRegistrationBean<AuthorizationFilter> registrationBean
-//                = new FilterRegistrationBean<>();
-//        registrationBean.setFilter(new AuthorizationFilter());
-//        registrationBean.addUrlPatterns("/message_group/*");
-//        return registrationBean;
-//    }
+    @Bean
+    public FilterRegistrationBean<AuthorizationFilter> loggingFilter(){
+        FilterRegistrationBean<AuthorizationFilter> registrationBean
+                = new FilterRegistrationBean<>();
+        registrationBean.setFilter(new AuthorizationFilter());
+        registrationBean.addUrlPatterns("/message_group/*");
+        return registrationBean;
+    }
 }

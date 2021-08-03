@@ -21,9 +21,8 @@ public class HomeController {
 
     @RequestMapping("/message_group")
     public String messageGroupPage(Model model){
-//        User user = (User) SessionUtil.getSessionUtil().getObject(req, "USER");
-//        model.addAttribute("username", user.getFullname());
-        model.addAttribute("username", req.getParameter("user"));
+        User user = (User) SessionUtil.getSessionUtil().getObject(req, "USER");
+        model.addAttribute("username", user.getFullname());
         return "views/message-group";
     }
 
