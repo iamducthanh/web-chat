@@ -26,10 +26,9 @@ public class ChatController {
         return "test";
     }
 
-    @MessageMapping("/chat.sendMessage/{room}") // nhận 1 messenge gửi tới từ client, nhận đc thì method send đc kích hoạt
+    @MessageMapping("/chat.sendMessage/{room}")
     @SendTo("/topic/{room}")
     public ChatMessagePojo sendMessage(@Payload ChatMessagePojo chatMessagePojo) {
-        // khởi tạo đối tượng chat rồi gửi về slient giống onmessage send to /topic/public
         Date now = new Date();
         chatMessagePojo.setTimeChat(now);
         SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss");
