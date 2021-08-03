@@ -14,7 +14,7 @@ public class HomeController {
     @Autowired
     HttpServletRequest req;
 
-    @RequestMapping("")
+    @RequestMapping("/")
     public String homePage(){
         return "views/trangchu";
     }
