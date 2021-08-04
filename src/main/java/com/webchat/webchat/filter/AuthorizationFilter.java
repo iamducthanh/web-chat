@@ -20,12 +20,12 @@ import org.slf4j.LoggerFactory;
 
 @Component
 public class AuthorizationFilter implements Filter {
-    private final static Logger LOG = LoggerFactory.getLogger(AuthorizationFilter.class);
-
-    @Override
-    public void init(final FilterConfig filterConfig) throws ServletException {
-        LOG.info("Initializing filter :{}", this);
-    }
+//    private final static Logger LOG = LoggerFactory.getLogger(AuthorizationFilter.class);
+//
+//    @Override
+//    public void init(final FilterConfig filterConfig) throws ServletException {
+//        LOG.info("Initializing filter :{}", this);
+//    }
 
     @Override
     public void doFilter(final ServletRequest request, final ServletResponse response, final FilterChain chain)
@@ -42,6 +42,6 @@ public class AuthorizationFilter implements Filter {
 
     @Override
     public void destroy() {
-        LOG.warn("Destructing filter :{}", this);
+//        LOG.warn("Destructing filter :{}", this);
     }
 }
