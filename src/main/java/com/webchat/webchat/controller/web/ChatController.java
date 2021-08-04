@@ -16,15 +16,15 @@ import java.util.Date;
 
 @Controller
 public class ChatController {
-    @Autowired
-    HttpServletRequest req;
+//    @Autowired
+//    HttpServletRequest req;
 
-    @RequestMapping("/chat")
-    public String index(Model model){
-        String room = req.getParameter("room");
-        model.addAttribute("room",room);
-        return "test";
-    }
+//    @RequestMapping("/chat")
+//    public String index(Model model){
+//        String room = req.getParameter("room");
+//        model.addAttribute("room",room);
+//        return "test";
+//    }
 
     @MessageMapping("/chat.sendMessage/{room}")
     @SendTo("/topic/{room}")
@@ -40,7 +40,6 @@ public class ChatController {
     @MessageMapping("/chat.addUser/{room}")
     @SendTo("/topic/{room}")
     public ChatMessagePojo addUser(@Payload ChatMessagePojo chatMessagePojo, SimpMessageHeaderAccessor headerAccessor) {
-// Add username in web socket session
         System.out.println("da conect");
         headerAccessor.getSessionAttributes().put("username", chatMessagePojo.getSender());
         headerAccessor.getSessionAttributes().put("room", chatMessagePojo.getRoom());
