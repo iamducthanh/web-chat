@@ -1,38 +1,59 @@
 package com.webchat.webchat.entities;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+import javax.persistence.*;
+import java.util.Date;
+import java.util.List;
+
+@Entity
+@Table(name = "users")
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
 public class User {
-    private String fullname;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
+    private Integer id;
+
+    @Column(name = "username")
+    private String username;
+
+    @Column(name = "firstname")
+    private String firstName;
+
+    @Column(name = "lastname")
+    private String lastName;
+
+    @Column(name = "email")
+    private String email;
+
+    @Column(name = "password")
     private String password;
 
-    public User(String fullname, String password) {
-        this.fullname = fullname;
-        this.password = password;
-    }
+    @Column(name = "image")
+    private String image;
 
-    public User() {
-    }
+    @Column(name = "birthdate")
+    private Date birthDate;
 
-    public String getFullname() {
-        return fullname;
-    }
+    @Column(name = "role")
+    private String role;
 
-    public void setFullname(String fullname) {
-        this.fullname = fullname;
-    }
+    @OneToMany(mappedBy = "user")
+    private List<Message> messages;
 
-    public String getPassword() {
-        return password;
-    }
+    @OneToMany(mappedBy = "user")
+    private List<Friend> users;
 
-    public void setPassword(String password) {
-        this.password = password;
-    }
+    @OneToMany(mappedBy = "friend")
+    private List<Friend> friends;
 
-    @Override
-    public String toString() {
-        return "User{" +
-                "fullname='" + fullname + '\'' +
-                ", password='" + password + '\'' +
-                '}';
-    }
+    @OneToMany(mappedBy = "user")
+    private List<RoomDetail> roomDetails;
 }
