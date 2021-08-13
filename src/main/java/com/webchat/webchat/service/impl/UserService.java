@@ -18,4 +18,10 @@ public class UserService implements IUserService {
         List<User> list = userRepo.findUserByUsername(username);
         return list.isEmpty() ? null : list.get(0);
     }
+
+    @Override
+    public List<User> findInRoom(int userId, String roomId) {
+        List<User> list = userRepo.findUserInRoom(userId, roomId);
+        return list.isEmpty() ? null : list;
+    }
 }

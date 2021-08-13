@@ -6,11 +6,13 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
 @Entity
-@Table(name = "message", uniqueConstraints = {@UniqueConstraint(columnNames = {"userId", "roomId"})})
+@Table(name = "message", uniqueConstraints = {@UniqueConstraint(columnNames = {"userid", "roomid"})})
 @Getter
 @Setter
 @AllArgsConstructor
@@ -21,10 +23,10 @@ public class Message {
     @Column(name = "id")
     private Integer id;
 
-    @ManyToOne @JoinColumn(name = "userId")
+    @ManyToOne @JoinColumn(name = "userid")
     private User user;
 
-    @ManyToOne @JoinColumn(name = "roomId")
+    @ManyToOne @JoinColumn(name = "roomid")
     private Room room;
 
     @Column(name = "type")
@@ -36,6 +38,9 @@ public class Message {
     @Column(name = "content")
     private String content;
 
+    @Column(name = "status")
+    private String status;
+
     @OneToMany(mappedBy = "message")
     private List<Attach> attaches;
 
@@ -43,5 +48,11 @@ public class Message {
         CHAT,
         JOIN,
         LEAVE
+    }
+
+    public String getTimeChat(){
+        DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy hh:mm:ss");
+        String strDate = dateFormat.format(this.time);
+        return strDate;
     }
 }

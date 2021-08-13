@@ -35,14 +35,13 @@
                                 <div class="row align-items-center gx-5">
                                     <div class="col-auto">
                                         <div class="avatar avatar-online d-none d-xl-inline-block">
-                                            <img class="avatar-img" src="assets/img/avatars/11.jpg" alt="">
+                                            <img class="avatar-img" th:src="@{'/assets/image/' + ${userInRoom.image}}" alt="">
                                         </div>
                                     </div>
 
                                     <div class="col overflow-hidden">
-                                        <h5 class="text-truncate">Ollie Chandler</h5>
-                                        <p class="text-truncate">is typing<span class='typing-dots'><span>.</span><span>.</span><span>.</span></span>
-                                        </p>
+                                        <h5 class="text-truncate">[[${userInRoom.getFullname()}]]</h5>
+                                        <p class="text-truncate" id="statusOn">Không hoạt động</p>
                                     </div>
                                 </div>
                             </div>
@@ -108,7 +107,42 @@
             <div class="chat-body hide-scrollbar flex-1 h-100" id="messForm">
                 <div class="chat-body-inner">
                     <div class="py-6 py-lg-10 " id="messageArea">
-
+                        <th:block th:each="message:${messages}">
+                            <div class='message message-out' th:if="${message.user.username == username}">
+                                <a data-bs-toggle='modal' data-bs-target='#modal-profile' class='avatar avatar-responsive'>
+                                    <img class='avatar-img' th:src="@{'/assets/image/' + ${message.user.image}}" alt=''>
+                                </a>
+                                <div class='message-inner'>
+                                    <div class='message-body'>
+                                        <div class='message-content'>
+                                            <div class='message-text'>
+                                                <p>[[${message.content}]]</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class='message-footer'>
+                                        <span class='extra-small text-muted'>[[${message.getTimeChat()}]]</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class='message' th:if="${message.user.username != username}">
+                                <a data-bs-toggle='modal' data-bs-target='#modal-user-profile' class='avatar avatar-responsive'>
+                                    <img class='avatar-img' th:src="@{'/assets/image/' + ${message.user.image}}" alt=''>
+                                </a>
+                                <div class='message-inner'>
+                                    <div class='message-body'>
+                                        <div class='message-content'>
+                                            <div class='message-text'>
+                                                <p>[[${message.content}]]</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class='message-footer'>
+                                        <span class='extra-small text-muted'>timeChat</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </th:block>
                     </div>
                 </div>
             </div>
@@ -136,7 +170,15 @@
 
                                 <a href="#" class="input-group-text text-body pe-0" data-emoji-btn="">
                                     <span class="icon icon-lg">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-smile"><circle cx="12" cy="12" r="10"></circle><path d="M8 14s1.5 2 4 2 4-2 4-2"></path><line x1="9" y1="9" x2="9.01" y2="9"></line><line x1="15" y1="9" x2="15.01" y2="9"></line></svg>
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                             viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                             stroke-linecap="round" stroke-linejoin="round"
+                                             class="feather feather-smile"><circle cx="12" cy="12" r="10"></circle><path
+                                                d="M8 14s1.5 2 4 2 4-2 4-2"></path><line x1="9" y1="9" x2="9.01"
+                                                                                         y2="9"></line><line x1="15"
+                                                                                                             y1="9"
+                                                                                                             x2="15.01"
+                                                                                                             y2="9"></line></svg>
                                     </span>
                                 </a>
                             </div>
@@ -1084,7 +1126,7 @@
         <!-- Tabs: Content -->
     </div>
     <!-- Offcanvas Body -->
-    <input type="hidden" value="1" id="room">
+    <input type="hidden" th:value="${room}" id="room">
     <input type="hidden" th:value="${username}" id="name">
 </div>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>

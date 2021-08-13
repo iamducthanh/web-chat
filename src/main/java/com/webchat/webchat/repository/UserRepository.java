@@ -9,4 +9,7 @@ import java.util.List;
 public interface UserRepository extends JpaRepository<User, Integer> {
     @Query("select o from User o where o.username = ?1")
     List<User> findUserByUsername(String username);
+
+    @Query("select o.user from RoomDetail o where o.user.id <> ?1 and o.room.id = ?2")
+    List<User> findUserInRoom(Integer userId, String roomId);
 }

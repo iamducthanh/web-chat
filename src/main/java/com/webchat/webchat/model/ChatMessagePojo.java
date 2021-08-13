@@ -13,7 +13,8 @@ public class ChatMessagePojo {
     public enum MessageType {
         CHAT,
         JOIN,
-        LEAVE
+        LEAVE,
+        JOINRETURN
     }
 
     public Date getTimeChat() {

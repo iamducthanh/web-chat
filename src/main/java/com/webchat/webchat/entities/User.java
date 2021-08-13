@@ -56,4 +56,8 @@ public class User {
 
     @OneToMany(mappedBy = "user")
     private List<RoomDetail> roomDetails;
+
+    public String getFullname(){
+        return this.lastName + " " + this.firstName;
+    }
 }

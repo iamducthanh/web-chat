@@ -8,7 +8,7 @@ import lombok.Setter;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "roomdetail", uniqueConstraints = {@UniqueConstraint(columnNames = {"userId", "roomId"})})
+@Table(name = "roomdetail", uniqueConstraints = {@UniqueConstraint(columnNames = {"userid", "roomid"})})
 @Getter
 @Setter
 @AllArgsConstructor
@@ -19,9 +19,9 @@ public class RoomDetail {
     @Column(name = "id")
     private Integer id;
 
-    @ManyToOne @JoinColumn(name = "userId")
+    @ManyToOne @JoinColumn(name = "userid")
     private User user;
 
-    @ManyToOne @JoinColumn(name = "roomId")
+    @ManyToOne @JoinColumn(name = "roomid")
     private Room room;
 }
