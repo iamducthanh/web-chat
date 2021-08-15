@@ -33,7 +33,11 @@ public class WebSocketEventListener {
             UserOnline userOnline1 = new UserOnline();
             userOnline1.setUsername(userOnline);
             userOnline1.setType("OFFLINE");
+//            int index = UsersOnline.usersOnline.indexOf(userOnline1.getUsername());
             UsersOnline.usersOnline.remove(userOnline1.getUsername());
+//            UsersOnline.usersEmtityOnline.remove(index);
+//            System.out.println(UsersOnline.usersEmtityOnline.size());
+//            System.out.println(UsersOnline.usersOnline.size());
             messagingTemplate.convertAndSend("/topic/system.adduser", userOnline1);
         } else {
             String username = (String) headerAccessor.getSessionAttributes().get("username");

@@ -1,5 +1,6 @@
 package com.webchat.webchat.service.impl;
 
+import com.webchat.webchat.constant.UsersOnline;
 import com.webchat.webchat.entities.User;
 import com.webchat.webchat.utils.SessionUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,6 +31,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
             throw new UsernameNotFoundException("User " + userName + " was not found in the database");
         }
         SessionUtil.getSessionUtil().addObject(req, "USER", user);
+//        UsersOnline.usersEmtityOnline.add(user);
         System.out.println("Found User: " + user);
 
         List<String> roleNames = new ArrayList<>();

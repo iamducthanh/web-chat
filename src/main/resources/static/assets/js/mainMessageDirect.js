@@ -16,7 +16,7 @@ function connect(event) {
     room = document.querySelector('#room').value.trim();
     if (username) {
         stompClient = null;
-        var socket = new SockJS('/wss');
+        var socket = new SockJS('/chatroom/wss');
         stompClient = Stomp.over(socket);
         stompClient.connect({}, onConnected, onError);
     }
@@ -53,6 +53,22 @@ function sendMessage(event) {
         };
         stompClient.send("/app/chat.sendMessage/" + room, {}, JSON.stringify(chatMessage));
         messageInput.value = '';
+
+        $.ajax({
+            url: window.location.pathname + '/save',
+            data: {
+                content: messageContent,
+                room: room,
+                sendto: document.getElementById('userInRoomDirect').value
+            },
+            error: function () {
+                console.log("error")
+            },
+            success: function (data) {
+                console.log("thanh cong")
+            },
+            type: 'POST'
+        });
     }
     event.preventDefault();
 }
@@ -113,7 +129,8 @@ function onMessageReceived(payload) {
                 "</div>" +
                 "</div>" +
                 "</div>";
-        } else {
+        }
+        else {
             messageArea.innerHTML +=
                 "<div class='message'>" +
                 "<a data-bs-toggle='modal' data-bs-target='#modal-user-profile'" +

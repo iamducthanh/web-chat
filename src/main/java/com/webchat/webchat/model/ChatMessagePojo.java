@@ -56,4 +56,14 @@ public class ChatMessagePojo {
     public void setSender(String sender) {
         this.sender = sender;
     }
+
+    @Override
+    public String toString() {
+        return "ChatMessagePojo{" +
+                "content='" + content + '\'' +
+                ", sender='" + sender + '\'' +
+                ", room='" + room + '\'' +
+                ", timeChat=" + timeChat +
+                '}';
+    }
 }

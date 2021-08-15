@@ -50,6 +50,19 @@ public class Message {
         LEAVE
     }
 
+    @Override
+    public String toString() {
+        return "Message{" +
+                "id=" + id +
+                ", user=" + user +
+                ", room=" + room +
+                ", type='" + type + '\'' +
+                ", time=" + time +
+                ", content='" + content + '\'' +
+                ", status='" + status + '\'' +
+                '}';
+    }
+
     public String getTimeChat(){
         DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy hh:mm:ss");
         String strDate = dateFormat.format(this.time);

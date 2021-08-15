@@ -6,7 +6,7 @@ var userOnline = null;
 function online(event) {
     userOnline = document.querySelector('#userOnline').value.trim();
     if (userOnline) {
-        var socket = new SockJS('/system');
+        var socket = new SockJS('/chatroom/system');
         stompClientSystem = Stomp.over(socket);
         stompClientSystem.connect({}, onOnlined, onError1);
     }

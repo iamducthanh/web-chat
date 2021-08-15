@@ -25,6 +25,12 @@ public class Room {
     @Column(name = "name")
     private String name;
 
+    public Room(String id, int groupChat, String name) {
+        this.id = id;
+        this.groupChat = groupChat;
+        this.name = name;
+    }
+
     @OneToMany(mappedBy = "room")
     private List<Message> messages;
 

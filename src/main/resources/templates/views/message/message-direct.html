@@ -105,6 +105,7 @@
 
             <!-- Chat: Content -->
             <div class="chat-body hide-scrollbar flex-1 h-100" id="messForm">
+                <input type="hidden" th:value="${userInRoom.username}" id="userInRoomDirect">
                 <div class="chat-body-inner">
                     <div class="py-6 py-lg-10 " id="messageArea">
                         <th:block th:each="message:${messages}">
@@ -1129,7 +1130,6 @@
     <input type="hidden" th:value="${room}" id="room">
     <input type="hidden" th:value="${username}" id="name">
 </div>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.1.4/sockjs.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
 <script src="./assets/js/mainMessageDirect.js"></script>
