@@ -34,14 +34,14 @@
                             <div class="col-12 col-xl-6">
                                 <div class="row align-items-center gx-5">
                                     <div class="col-auto">
-                                        <div class="avatar avatar-online d-none d-xl-inline-block">
+                                        <div class="avatar d-none d-xl-inline-block">
                                             <img class="avatar-img" th:src="@{'/assets/image/' + ${userInRoom.image}}" alt="">
                                         </div>
                                     </div>
 
                                     <div class="col overflow-hidden">
                                         <h5 class="text-truncate">[[${userInRoom.getFullname()}]]</h5>
-                                        <p class="text-truncate" id="statusOn">Không hoạt động</p>
+                                        <p class="text-truncate" id="statusOn" th:class="@{${userInRoom.username}}" th:text="${userInRoom.isOnline() ? 'Đang hoạt động' : 'Không hoạt động'}"></p>
                                     </div>
                                 </div>
                             </div>

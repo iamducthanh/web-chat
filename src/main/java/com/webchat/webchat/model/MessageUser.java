@@ -1,5 +1,6 @@
 package com.webchat.webchat.model;
 
+import com.webchat.webchat.constant.UsersOnline;
 import com.webchat.webchat.entities.RoomDetail;
 import com.webchat.webchat.entities.User;
 
@@ -28,6 +29,14 @@ public class MessageUser {
         this.status = status;
         this.time = time;
         this.roomCode = roomCode;
+    }
+
+    public boolean isOnline(){
+        if(UsersOnline.usersOnline.contains(this.users.get(0).getUsername())){
+            return true;
+        } else {
+            return false;
+        }
     }
 
     public RoomDetail getRoomDetail() {

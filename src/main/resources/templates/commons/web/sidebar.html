@@ -1003,7 +1003,7 @@
                   <div class="card-body">
                     <div class="row gx-5">
                       <div class="col-auto">
-                        <div class="avatar avatar-online">
+                        <div th:class="${messageUser.isOnline() ? 'avatar avatar-online' : 'avatar avatar-offline'}" th:id="@{${messageUser.users.get(0).username}}">
                           <img th:src="@{'/assets/image/' + ${messageUser.users.get(0).image}}" alt="#" class="avatar-img">
                         </div>
                       </div>

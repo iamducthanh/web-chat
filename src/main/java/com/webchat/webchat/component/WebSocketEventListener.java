@@ -1,6 +1,8 @@
 package com.webchat.webchat.component;
 
+import com.webchat.webchat.constant.UsersOnline;
 import com.webchat.webchat.model.ChatMessagePojo;
+import com.webchat.webchat.model.UserOnline;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.event.EventListener;
@@ -26,15 +28,24 @@ public class WebSocketEventListener {
     @EventListener
     public void handleWebSocketDisconnectListener(SessionDisconnectEvent event) {
         StompHeaderAccessor headerAccessor = StompHeaderAccessor.wrap(event.getMessage());
-        String username = (String) headerAccessor.getSessionAttributes().get("username");
-        String room = (String) headerAccessor.getSessionAttributes().get("room");
-        if(username != null) {
-            logger.info("User Disconnected : " + username);
-            ChatMessagePojo chatMessagePojo = new ChatMessagePojo();
-            chatMessagePojo.setType(ChatMessagePojo.MessageType.LEAVE);
-            chatMessagePojo.setSender(username);
-            chatMessagePojo.setRoom(room);
-            messagingTemplate.convertAndSend("/topic/" + room, chatMessagePojo);
+        String userOnline = (String) headerAccessor.getSessionAttributes().get("userOnline");
+        if(userOnline != null){
+            UserOnline userOnline1 = new UserOnline();
+            userOnline1.setUsername(userOnline);
+            userOnline1.setType("OFFLINE");
+            UsersOnline.usersOnline.remove(userOnline1.getUsername());
+            messagingTemplate.convertAndSend("/topic/system.adduser", userOnline1);
+        } else {
+            String username = (String) headerAccessor.getSessionAttributes().get("username");
+            String room = (String) headerAccessor.getSessionAttributes().get("room");
+            if(username != null) {
+                logger.info("User Disconnected : " + username);
+                ChatMessagePojo chatMessagePojo = new ChatMessagePojo();
+                chatMessagePojo.setType(ChatMessagePojo.MessageType.LEAVE);
+                chatMessagePojo.setSender(username);
+                chatMessagePojo.setRoom(room);
+                messagingTemplate.convertAndSend("/topic/" + room, chatMessagePojo);
+            }
         }
     }
 }

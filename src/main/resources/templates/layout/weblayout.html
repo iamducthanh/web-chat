@@ -14,6 +14,7 @@
     <link rel="stylesheet" href="./assets/css/template.dark.bundle.css" media="(prefers-color-scheme: dark)">
 </head>
 <body>
+<input type="hidden" th:value="${userOnline}" id="userOnline">
     <div class="layout overflow-hidden">
         <div th:replace="/commons/web/navigation :: navigation"></div>
         <div th:replace="/commons/web/sidebar :: sidebar"></div>
@@ -28,5 +29,9 @@
 <!-- Scripts -->
 <script src="./assets/js/vendor.js"></script>
 <script src="./assets/js/template.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.1.4/sockjs.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
+<script src="./assets/js/mainsystem.js"></script>
 </body>
 </html>

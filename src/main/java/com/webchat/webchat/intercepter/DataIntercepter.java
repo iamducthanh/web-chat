@@ -41,6 +41,7 @@ public class DataIntercepter implements HandlerInterceptor {
             }
             messageUsers.add(new MessageUser(roomDetail, name, userInRoom, null, 0, 0, null, roomDetail.getRoom().getId()));
         }
+        req.setAttribute("userOnline", user.getUsername());
         req.setAttribute("messageUsers", messageUsers);
         return true;
     }

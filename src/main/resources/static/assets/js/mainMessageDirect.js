@@ -15,9 +15,9 @@ function connect(event) {
     username = document.querySelector('#name').value.trim();
     room = document.querySelector('#room').value.trim();
     if (username) {
+        stompClient = null;
         var socket = new SockJS('/wss');
         stompClient = Stomp.over(socket);
-
         stompClient.connect({}, onConnected, onError);
     }
 }
@@ -69,7 +69,7 @@ function onMessageReceived(payload) {
     var minutes = date.getMinutes();
     var seconds = date.getSeconds();
     var timeChat = day + "-" + month + "-" + year + " " + hour + ":" + minutes + ":" + seconds;
-    if(message.type == 'JOINRETURN'){
+    if(message.type === 'JOINRETURN'){
         if(document.querySelector('#name').value.trim() != message.sender){
             document.getElementById('statusOn').innerText = "Đang hoạt động";
         }
@@ -80,7 +80,6 @@ function onMessageReceived(payload) {
         if(document.querySelector('#name').value.trim() != message.sender){
             document.getElementById('statusOn').innerText = "Đang hoạt động";
 
-            stompClient.subscribe('/topic/' + document.querySelector('#room').value.trim(), onMessageReceived);
             stompClient.send("/app/chat.addUser/" + document.querySelector('#room').value.trim(),
                 {},
                 JSON.stringify({
@@ -91,9 +90,6 @@ function onMessageReceived(payload) {
         }
         messageArea.innerHTML += "<div class='on-conect'><p>" + message.sender + " đang hoạt động!</p></div>";
     } else if (message.type === 'LEAVE') {
-        if(username != message.sender){
-            document.getElementById('statusOn').innerText = "Không hoạt động";
-        }
         messageArea.innerHTML += "<div class='close-conect'><p>" + message.sender + " đã thoát!</p></div>";
     } else if (message.type === 'CHAT'){
         var username = document.querySelector('#name').value.trim();

@@ -1,5 +1,6 @@
 package com.webchat.webchat.entities;
 
+import com.webchat.webchat.constant.UsersOnline;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -56,6 +57,14 @@ public class User {
 
     @OneToMany(mappedBy = "user")
     private List<RoomDetail> roomDetails;
+
+    public boolean isOnline(){
+        if(UsersOnline.usersOnline.contains(this.username)){
+            return true;
+        } else {
+            return false;
+        }
+    }
 
     public String getFullname(){
         return this.lastName + " " + this.firstName;
