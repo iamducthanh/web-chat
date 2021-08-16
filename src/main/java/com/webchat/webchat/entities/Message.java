@@ -54,8 +54,8 @@ public class Message {
     public String toString() {
         return "Message{" +
                 "id=" + id +
-                ", user=" + user +
-                ", room=" + room +
+                ", user=" + user.getUsername() +
+                ", room=" + room.getId() +
                 ", type='" + type + '\'' +
                 ", time=" + time +
                 ", content='" + content + '\'' +

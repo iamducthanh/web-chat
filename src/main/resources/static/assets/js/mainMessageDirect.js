@@ -114,7 +114,7 @@ function onMessageReceived(payload) {
                 "<div class='message message-out'>" +
                 "<a data-bs-toggle='modal' data-bs-target='#modal-profile'" +
                 "class='avatar avatar-responsive'>" +
-                "<img class='avatar-img' src='assets/img/avatars/1.jpg' alt=''>" +
+                "<img class='avatar-img' src='assets/image/" + document.getElementById("imageUserLogin").value + "'" + " alt=''>" +
                 "</a>" +
                 "<div class='message-inner'>" +
                 "<div class='message-body'>" +
@@ -135,7 +135,7 @@ function onMessageReceived(payload) {
                 "<div class='message'>" +
                 "<a data-bs-toggle='modal' data-bs-target='#modal-user-profile'" +
                 "class='avatar avatar-responsive'>" +
-                "<img class='avatar-img' src='assets/img/avatars/11.jpg' alt=''>" +
+                "<img class='avatar-img' src='assets/image/" + document.getElementById("imageUserInRoom").value + "'" + " alt=''>" +
                 "</a>" +
                 "<div class='message-inner'>" +
                 "<div class='message-body'>" +

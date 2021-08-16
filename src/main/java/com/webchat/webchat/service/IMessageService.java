@@ -6,4 +6,5 @@ import java.util.List;
 
 public interface IMessageService {
     List<Message> findByRoom(String roomId);
+    void saveMessage(Message message);
 }

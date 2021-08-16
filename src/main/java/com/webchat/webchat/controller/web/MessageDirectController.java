@@ -1,5 +1,6 @@
 package com.webchat.webchat.controller.web;
 
+import com.webchat.webchat.constant.UsersOnline;
 import com.webchat.webchat.entities.Message;
 import com.webchat.webchat.entities.Room;
 import com.webchat.webchat.entities.RoomDetail;
@@ -9,6 +10,7 @@ import com.webchat.webchat.service.impl.MessageService;
 import com.webchat.webchat.service.impl.RoomDetailService;
 import com.webchat.webchat.service.impl.UserService;
 import com.webchat.webchat.utils.SessionUtil;
+import com.webchat.webchat.utils.SystemUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -69,8 +71,13 @@ public class MessageDirectController {
         message.setType("CHAT");
         message.setTime(new Date());
         message.setContent(content);
-
-        message.setStatus("SEND");
-        System.out.println(user.getUsername());
+        int index = SystemUtil.findConnect(roomId);
+        if(UsersOnline.userConnect.get(index).getUser1() != null && UsersOnline.userConnect.get(index).getUser2() != null){
+            message.setStatus("READ");
+        } else {
+            message.setStatus("SEND");
+        }
+        System.out.println(message.toString());
+        messageService.saveMessage(message);
     }
 }

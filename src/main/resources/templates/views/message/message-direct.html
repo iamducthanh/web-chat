@@ -106,6 +106,8 @@
             <!-- Chat: Content -->
             <div class="chat-body hide-scrollbar flex-1 h-100" id="messForm">
                 <input type="hidden" th:value="${userInRoom.username}" id="userInRoomDirect">
+                <input type="hidden" th:value="${user.image}" id="imageUserLogin">
+                <input type="hidden" th:value="${userInRoom.image}" id="imageUserInRoom">
                 <div class="chat-body-inner">
                     <div class="py-6 py-lg-10 " id="messageArea">
                         <th:block th:each="message:${messages}">
@@ -139,7 +141,7 @@
                                         </div>
                                     </div>
                                     <div class='message-footer'>
-                                        <span class='extra-small text-muted'>timeChat</span>
+                                        <span class='extra-small text-muted'>[[${message.getTimeChat()}]]</span>
                                     </div>
                                 </div>
                             </div>

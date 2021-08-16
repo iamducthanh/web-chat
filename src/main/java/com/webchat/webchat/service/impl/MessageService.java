@@ -18,4 +18,9 @@ public class MessageService implements IMessageService {
         List<Message> list = messageRepo.findByRoom(roomId);
         return list.isEmpty() ? null : list;
     }
+
+    @Override
+    public void saveMessage(Message message) {
+        messageRepo.save(message);
+    }
 }
