@@ -9,6 +9,15 @@ public class ChatMessagePojo {
     private String sender;
     private String room;
     private Date timeChat;
+    private String statusMessage;
+
+    public String getStatusMessage() {
+        return statusMessage;
+    }
+
+    public void setStatusMessage(String statusMessage) {
+        this.statusMessage = statusMessage;
+    }
 
     public enum MessageType {
         CHAT,

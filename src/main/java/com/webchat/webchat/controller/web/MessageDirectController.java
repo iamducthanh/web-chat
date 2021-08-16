@@ -1,5 +1,6 @@
 package com.webchat.webchat.controller.web;
 
+import com.webchat.webchat.constant.PropertiesConstant;
 import com.webchat.webchat.constant.UsersOnline;
 import com.webchat.webchat.entities.Message;
 import com.webchat.webchat.entities.Room;
@@ -50,10 +51,21 @@ public class MessageDirectController {
             RoomDetail roomDetail = roomDetailService.findRoomDetailByUserAndRoom(user.getId(), roomId);
             if(roomDetail != null){
                 view = "views/message/message-direct";
-                List<Message> messages = messageService.findByRoom(roomId);
-                model.addAttribute("messages", messages);
                 List<User> userInRoom = userService.findInRoom(user.getId(), roomId);
                 model.addAttribute("userInRoom", userInRoom.get(0));
+                List<Message> messages = messageService.findByRoom(roomId);
+                if(messages != null){
+                    messageService.setStatusMessage(roomId, userInRoom.get(0).getUsername(), String.valueOf(PropertiesConstant.MessageStatus.SEND));
+                    String userLastMessage = messages.get(messages.size()-1).getUser().getUsername();
+                    if(userLastMessage.equals(user.getUsername())){
+                        if(messages.get(messages.size()-1).getStatus().equals(String.valueOf(PropertiesConstant.MessageStatus.SEND))){
+                            req.setAttribute("statusMessage","Đã gửi");
+                        } else {
+                            req.setAttribute("statusMessage","Đã xem");
+                        }
+                    }
+                }
+                model.addAttribute("messages", messages);
             }
         }
         model.addAttribute("room", roomId);
@@ -77,7 +89,6 @@ public class MessageDirectController {
         } else {
             message.setStatus("SEND");
         }
-        System.out.println(message.toString());
         messageService.saveMessage(message);
     }
 }

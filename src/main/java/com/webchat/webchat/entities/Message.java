@@ -44,6 +44,15 @@ public class Message {
     @OneToMany(mappedBy = "message")
     private List<Attach> attaches;
 
+    public Message(User user, Room room, String type, Date time, String content, String status) {
+        this.user = user;
+        this.room = room;
+        this.type = type;
+        this.time = time;
+        this.content = content;
+        this.status = status;
+    }
+
     public enum MessageType {
         CHAT,
         JOIN,

@@ -110,6 +110,8 @@ function onMessageReceived(payload) {
     } else if (message.type === 'CHAT'){
         var username = document.querySelector('#name').value.trim();
         if (username == message.sender) {
+            var elem = document.getElementById('statusMessageSend');
+            elem.parentNode.removeChild(elem);
             messageArea.innerHTML +=
                 "<div class='message message-out'>" +
                 "<a data-bs-toggle='modal' data-bs-target='#modal-profile'" +
@@ -128,6 +130,19 @@ function onMessageReceived(payload) {
                 "<span class='extra-small text-muted'>" + timeChat + "</span>" +
                 "</div>" +
                 "</div>" +
+                "</div>";
+            messageArea.innerHTML +=
+                "<div class='message message-out' style='margin: 0px' id='statusMessageSend'>"+
+                    "<a data-bs-toggle='modal' data-bs-target='#modal-profile' style='height: 0px'"+
+                       "class='avatar avatar-responsive'>"+
+                    "</a>"+
+                    "<div class='message-inner'>"+
+                        "<div class='message-body'>"+
+                        "</div>"+
+                        "<div class='message-footer'>"+
+                            "<span class='extra-small text-muted'>"+message.statusMessage+"</span><br/>"+
+                        "</div>"+
+                    "</div>"+
                 "</div>";
         }
         else {

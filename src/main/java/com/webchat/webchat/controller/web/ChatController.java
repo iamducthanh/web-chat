@@ -1,5 +1,6 @@
 package com.webchat.webchat.controller.web;
 
+import com.webchat.webchat.constant.PropertiesConstant;
 import com.webchat.webchat.constant.UsersOnline;
 import com.webchat.webchat.model.ChatMessagePojo;
 import com.webchat.webchat.model.UserConnect;
@@ -22,6 +23,12 @@ public class ChatController {
     public ChatMessagePojo sendMessage(@Payload ChatMessagePojo chatMessagePojo) {
         Date now = new Date();
         chatMessagePojo.setTimeChat(now);
+        int index = SystemUtil.findConnect(chatMessagePojo.getRoom());
+        if(UsersOnline.userConnect.get(index).getUser1() != null && UsersOnline.userConnect.get(index).getUser2() != null){
+            chatMessagePojo.setStatusMessage("Đã xem");
+        } else {
+            chatMessagePojo.setStatusMessage("Đã gửi");
+        }
         return chatMessagePojo;
     }
 
