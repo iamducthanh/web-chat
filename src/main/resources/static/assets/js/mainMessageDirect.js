@@ -24,6 +24,12 @@ function connect(event) {
 
 
 function onConnected() {
+    var names = 'messUser' + username + document.getElementById('userInRoomDirect').value;
+    console.log(names)
+    document.getElementsByName(names)[0].className = 'me-auto mb-0';
+    document.getElementsByName(names)[1].className = 'text-muted extra-small ms-2';
+    document.getElementsByName(names)[2].className = 'line-clamp me-auto';
+    document.getElementsByName(names)[3].innerText = 0;
     // Subscribe to the Public Topic
     stompClient.subscribe('/topic/' + room, onMessageReceived);
     // Tell your username to the server
@@ -144,6 +150,12 @@ function onMessageReceived(payload) {
                         "</div>"+
                     "</div>"+
                 "</div>";
+            var names = 'messUser' + username + document.getElementById('userInRoomDirect').value;
+            var classRe = document.getElementsByName(names);
+            if(classRe != null){
+                console.log(document.getElementsByName(names)[2].innerText)
+                document.getElementsByName(names)[2].innerText = message.content.substring(0, 100);
+            }
         }
         else {
             messageArea.innerHTML +=
@@ -164,7 +176,19 @@ function onMessageReceived(payload) {
                 "<span class='extra-small text-muted'>" + timeChat + "</span>" +
                 "</div>" +
                 "</div>" +
-                "</div>"
+                "</div>";
+
+            // if(message.statusMessage == 'Đã gửi'){
+                var names = 'messUser' + username + document.getElementById('userInRoomDirect').value;
+                var classRe = document.getElementsByName(names);
+                if(classRe != null){
+                    // document.getElementsByName(names)[0].className += ' messageSend';
+                    // document.getElementsByName(names)[1].className += ' messageSend';
+                    console.log(document.getElementsByName(names)[2].innerText)
+                    document.getElementsByName(names)[2].innerText = message.content.substring(0, 100);
+                    // document.getElementsByName(names)[3].innerText = 1;
+                }
+            // }
         }
     }
 

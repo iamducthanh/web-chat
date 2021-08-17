@@ -1,8 +1,11 @@
 package com.webchat.webchat.intercepter;
 
+import com.webchat.webchat.constant.PropertiesConstant;
+import com.webchat.webchat.entities.Message;
 import com.webchat.webchat.entities.RoomDetail;
 import com.webchat.webchat.entities.User;
 import com.webchat.webchat.model.MessageUser;
+import com.webchat.webchat.service.impl.MessageService;
 import com.webchat.webchat.service.impl.RoomDetailService;
 import com.webchat.webchat.service.impl.UserService;
 import com.webchat.webchat.utils.SessionUtil;
@@ -24,6 +27,9 @@ public class DataIntercepter implements HandlerInterceptor {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private MessageService messageService;
+
     @Override
     public boolean preHandle(HttpServletRequest req, HttpServletResponse resp, Object handler) throws Exception {
         String uri = req.getRequestURI();
@@ -39,7 +45,24 @@ public class DataIntercepter implements HandlerInterceptor {
             } else {
                 name = roomDetail.getRoom().getName();
             }
-            messageUsers.add(new MessageUser(roomDetail, name, userInRoom, null, 0, 0, null, roomDetail.getRoom().getId()));
+            Message messageLast = messageService.findMessageLast(roomDetail.getRoom().getId());
+            int status = 0;
+            String time = "";
+            int countMess = 0;
+            if(messageLast != null){
+                time = messageLast.getTimeChat();
+                countMess = messageService.countMessageSend(roomDetail.getRoom().getId(), userInRoom.get(0).getUsername());
+                if(!messageLast.getUser().getUsername().equals(user.getUsername())){
+                    if(messageLast.getStatus().equals(String.valueOf(PropertiesConstant.MessageStatus.SEND))){
+                        status = 1;
+                    }
+                }
+
+            } else {
+                messageLast = new Message();
+                messageLast.setContent("Bắt đầu trò chuyện");
+            }
+            messageUsers.add(new MessageUser(roomDetail, name, userInRoom, messageLast.getContent(), countMess, status, time, roomDetail.getRoom().getId()));
         }
         req.setAttribute("user", user);
         req.setAttribute("userOnline", user.getUsername());

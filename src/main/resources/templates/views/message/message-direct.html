@@ -68,12 +68,12 @@
                                         <div class="avatar-group">
                                             <a href="#" class="avatar avatar-sm" data-bs-toggle="modal"
                                                data-bs-target="#modal-user-profile">
-                                                <img class="avatar-img" src="assets/img/avatars/11.jpg" alt="#">
+                                                <img class="avatar-img" th:src="@{'/assets/image/' + ${userInRoom.image}}" alt="#">
                                             </a>
 
                                             <a href="#" class="avatar avatar-sm" data-bs-toggle="modal"
                                                data-bs-target="#modal-profile">
-                                                <img class="avatar-img" src="assets/img/avatars/1.jpg" alt="#">
+                                                <img class="avatar-img" th:src="@{'/assets/image/' + ${user.image}}" alt="#">
                                             </a>
                                         </div>
                                     </div>

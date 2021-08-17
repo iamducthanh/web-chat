@@ -14,13 +14,13 @@ public class MessageUser {
     private String messageLast;
     private int countMess;
     private int status;
-    private Date time;
+    private String time;
     private String roomCode;
 
     public MessageUser() {
     }
 
-    public MessageUser(RoomDetail roomDetail, String name, List<User> users, String messageLast, int countMess, int status, Date time, String roomCode) {
+    public MessageUser(RoomDetail roomDetail, String name, List<User> users, String messageLast, int countMess, int status, String time, String roomCode) {
         this.roomDetail = roomDetail;
         this.name = name;
         this.users = users;
@@ -95,11 +95,11 @@ public class MessageUser {
         this.status = status;
     }
 
-    public Date getTime() {
+    public String getTime() {
         return time;
     }
 
-    public void setTime(Date time) {
+    public void setTime(String time) {
         this.time = time;
     }
 }
