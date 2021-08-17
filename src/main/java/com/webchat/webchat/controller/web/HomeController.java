@@ -9,6 +9,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 
 import javax.servlet.http.HttpServletRequest;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 @Controller
@@ -34,4 +39,12 @@ public class HomeController {
 //    public String messageEmptyPage() {
 //        return "views/message/message-empty";
 //    }
+
+    public static void main(String[] args) {
+        SimpleDateFormat fm = new SimpleDateFormat("yyyy-MM-dd");
+        Calendar c = Calendar.getInstance();
+        c.setTime(new Date());
+        c.add(Calendar.DATE, 20);
+        System.out.println(fm.format(c.getTime()));
+    }
 }

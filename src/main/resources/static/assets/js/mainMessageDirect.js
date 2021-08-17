@@ -91,15 +91,15 @@ function onMessageReceived(payload) {
     var minutes = date.getMinutes();
     var seconds = date.getSeconds();
     var timeChat = day + "-" + month + "-" + year + " " + hour + ":" + minutes + ":" + seconds;
-    if(message.type === 'JOINRETURN'){
-        if(document.querySelector('#name').value.trim() != message.sender){
+    var userInRoom = document.getElementById('userInRoomDirect').value;
+    if (message.type === 'JOINRETURN') {
+        if (document.querySelector('#name').value.trim() != message.sender) {
             document.getElementById('statusOn').innerText = "Đang hoạt động";
         }
     }
     if (message.type === 'JOIN') {
-        console.log(message.sender)
         console.log(document.querySelector('#name').value.trim())
-        if(document.querySelector('#name').value.trim() != message.sender){
+        if (document.querySelector('#name').value.trim() != message.sender) {
             document.getElementById('statusOn').innerText = "Đang hoạt động";
 
             stompClient.send("/app/chat.addUser/" + document.querySelector('#room').value.trim(),
@@ -107,14 +107,16 @@ function onMessageReceived(payload) {
                 JSON.stringify({
                     sender: document.querySelector('#name').value.trim(),
                     room: document.querySelector('#room').value.trim(),
-                    type: 'JOINRETURN'})
+                    type: 'JOINRETURN'
+                })
             )
         }
         messageArea.innerHTML += "<div class='on-conect'><p>" + message.sender + " đang hoạt động!</p></div>";
     } else if (message.type === 'LEAVE') {
         messageArea.innerHTML += "<div class='close-conect'><p>" + message.sender + " đã thoát!</p></div>";
-    } else if (message.type === 'CHAT'){
+    } else if (message.type === 'CHAT') {
         var username = document.querySelector('#name').value.trim();
+        var names = 'messUser' + username + userInRoom;
         if (username == message.sender) {
             var elem = document.getElementById('statusMessageSend');
             elem.parentNode.removeChild(elem);
@@ -138,26 +140,29 @@ function onMessageReceived(payload) {
                 "</div>" +
                 "</div>";
             messageArea.innerHTML +=
-                "<div class='message message-out' style='margin: 0px' id='statusMessageSend'>"+
-                    "<a data-bs-toggle='modal' data-bs-target='#modal-profile' style='height: 0px'"+
-                       "class='avatar avatar-responsive'>"+
-                    "</a>"+
-                    "<div class='message-inner'>"+
-                        "<div class='message-body'>"+
-                        "</div>"+
-                        "<div class='message-footer'>"+
-                            "<span class='extra-small text-muted'>"+message.statusMessage+"</span><br/>"+
-                        "</div>"+
-                    "</div>"+
+                "<div class='message message-out' style='margin: 0px' id='statusMessageSend'>" +
+                "<a data-bs-toggle='modal' data-bs-target='#modal-profile' style='height: 0px'" +
+                "class='avatar avatar-responsive'>" +
+                "</a>" +
+                "<div class='message-inner'>" +
+                "<div class='message-body'>" +
+                "</div>" +
+                "<div class='message-footer'>" +
+                "<span class='extra-small text-muted'>" + message.statusMessage + "</span><br/>" +
+                "</div>" +
+                "</div>" +
                 "</div>";
-            var names = 'messUser' + username + document.getElementById('userInRoomDirect').value;
             var classRe = document.getElementsByName(names);
-            if(classRe != null){
-                console.log(document.getElementsByName(names)[2].innerText)
+            if (classRe != null) {
                 document.getElementsByName(names)[2].innerText = message.content.substring(0, 100);
             }
-        }
-        else {
+            if (message.statusMessage == 'Đã gửi') {
+                stompClientMessageListen.send("/app/system.onmessage/" + userInRoom,
+                    {},
+                    JSON.stringify({sender: username, reader: userInRoom, content: message.content})
+                )
+            }
+        } else {
             messageArea.innerHTML +=
                 "<div class='message'>" +
                 "<a data-bs-toggle='modal' data-bs-target='#modal-user-profile'" +
@@ -178,17 +183,11 @@ function onMessageReceived(payload) {
                 "</div>" +
                 "</div>";
 
-            // if(message.statusMessage == 'Đã gửi'){
-                var names = 'messUser' + username + document.getElementById('userInRoomDirect').value;
-                var classRe = document.getElementsByName(names);
-                if(classRe != null){
-                    // document.getElementsByName(names)[0].className += ' messageSend';
-                    // document.getElementsByName(names)[1].className += ' messageSend';
-                    console.log(document.getElementsByName(names)[2].innerText)
-                    document.getElementsByName(names)[2].innerText = message.content.substring(0, 100);
-                    // document.getElementsByName(names)[3].innerText = 1;
-                }
-            // }
+            var classRe = document.getElementsByName(names);
+            if (classRe != null) {
+                console.log(document.getElementsByName(names)[2].innerText)
+                document.getElementsByName(names)[2].innerText = message.content.substring(0, 100);
+            }
         }
     }
 

@@ -1,6 +1,7 @@
 'use strict';
 
 var stompClientSystem = null;
+var stompClientMessageListen = null;
 var userOnline = null;
 
 function online(event) {
@@ -8,19 +9,40 @@ function online(event) {
     if (userOnline) {
         var socket = new SockJS('/chatroom/system');
         stompClientSystem = Stomp.over(socket);
+        stompClientMessageListen = Stomp.over(socket);
         stompClientSystem.connect({}, onOnlined, onError1);
+        stompClientMessageListen.connect({}, onOnlined, onError1);
     }
 }
 
 
 function onOnlined() {
+    userOnline = document.querySelector('#userOnline').value.trim();
     // Subscribe to the Public Topic
     stompClientSystem.subscribe('/topic/system.adduser', onMessageReceivedOnline);
+    stompClientMessageListen.subscribe('/topic/system.onmessage/' + userOnline, onMessageRealtime);
     // Tell your username to the server
     stompClientSystem.send("/app/system.adduser",
         {},
         JSON.stringify({username: userOnline, type: 'ONLINE'})
-    )
+    );
+}
+
+function onMessageRealtime(payload){
+    var messageRealtime = JSON.parse(payload.body);
+    console.log(messageRealtime.sender)
+    console.log(messageRealtime.reader)
+    console.log(messageRealtime.content)
+    console.log(messageRealtime.time)
+    var classname = 'messUser' + messageRealtime.reader + messageRealtime.sender;
+    var elms = document.getElementsByName(classname);
+    if(elms != null){
+        elms[0].className = 'me-auto mb-0 messageSend';
+        elms[1].className = 'text-muted extra-small ms-2 messageSend';
+        elms[2].className = 'line-clamp me-auto messageSend';
+        elms[2].innerText = messageRealtime.content.substring(0, 100);
+        elms[3].innerText = '1';
+    }
 }
 
 function onMessageReceivedOnline(payload){

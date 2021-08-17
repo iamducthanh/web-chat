@@ -57,7 +57,9 @@ public class DataIntercepter implements HandlerInterceptor {
                         status = 1;
                     }
                 }
-
+                if(user.getUsername().equals(messageLast.getUser().getUsername())){
+                    messageLast.setContent("Bạn: " + messageLast.getContent());
+                }
             } else {
                 messageLast = new Message();
                 messageLast.setContent("Bắt đầu trò chuyện");
