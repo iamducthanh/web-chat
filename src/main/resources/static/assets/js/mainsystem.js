@@ -9,8 +9,10 @@ function online(event) {
     if (userOnline) {
         var socket = new SockJS('/chatroom/system');
         stompClientSystem = Stomp.over(socket);
-        stompClientMessageListen = Stomp.over(socket);
         stompClientSystem.connect({}, onOnlined, onError1);
+
+        var socketSystem = new SockJS('/chatroom/system');
+        stompClientMessageListen = Stomp.over(socketSystem);
         stompClientMessageListen.connect({}, onOnlined, onError1);
     }
 }
@@ -20,6 +22,7 @@ function onOnlined() {
     userOnline = document.querySelector('#userOnline').value.trim();
     // Subscribe to the Public Topic
     stompClientSystem.subscribe('/topic/system.adduser', onMessageReceivedOnline);
+
     stompClientMessageListen.subscribe('/topic/system.onmessage/' + userOnline, onMessageRealtime);
     // Tell your username to the server
     stompClientSystem.send("/app/system.adduser",
@@ -49,7 +52,7 @@ function onMessageReceivedOnline(payload){
     var user = JSON.parse(payload.body);
     console.log(user.username)
     var userClass = document.getElementById(user.username);
-    console.log(userClass)
+    console.log("nguoi vua online: " +userClass)
     if(userClass != null){
         if(user.type == 'ONLINE'){
             userClass.className = 'avatar avatar-online';
