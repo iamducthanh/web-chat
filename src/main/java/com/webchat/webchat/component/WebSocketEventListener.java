@@ -1,8 +1,8 @@
 package com.webchat.webchat.component;
 
 import com.webchat.webchat.constant.UsersOnline;
-import com.webchat.webchat.model.ChatMessagePojo;
-import com.webchat.webchat.model.UserOnline;
+import com.webchat.webchat.pojo.ChatMessagePojo;
+import com.webchat.webchat.pojo.UserOnline;
 import com.webchat.webchat.utils.SystemUtil;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,17 +46,17 @@ public class WebSocketEventListener {
             String room = (String) headerAccessor.getSessionAttributes().get("room");
             if(username != null) {
                 int index = SystemUtil.findConnect(room);
-                if(UsersOnline.userConnect.get(index).getUser1() == null || UsersOnline.userConnect.get(index).getUser2() == null){
-                    UsersOnline.userConnect.remove(index);
+                if(UsersOnline.userConnectPojo.get(index).getUser1() == null || UsersOnline.userConnectPojo.get(index).getUser2() == null){
+                    UsersOnline.userConnectPojo.remove(index);
                     System.out.println("remove");
                 } else {
                     System.out.println(username);
-                    if(UsersOnline.userConnect.get(index).getUser1().equals(username)){
-                        UsersOnline.userConnect.get(index).setUser1(null);
-                    } else if(UsersOnline.userConnect.get(index).getUser2().equals(username)){
-                        UsersOnline.userConnect.get(index).setUser2(null);
+                    if(UsersOnline.userConnectPojo.get(index).getUser1().equals(username)){
+                        UsersOnline.userConnectPojo.get(index).setUser1(null);
+                    } else if(UsersOnline.userConnectPojo.get(index).getUser2().equals(username)){
+                        UsersOnline.userConnectPojo.get(index).setUser2(null);
                     }
-                    System.out.println(UsersOnline.userConnect.get(index).toString());
+                    System.out.println(UsersOnline.userConnectPojo.get(index).toString());
                 }
                 logger.info("User Disconnected : " + username);
                 ChatMessagePojo chatMessagePojo = new ChatMessagePojo();

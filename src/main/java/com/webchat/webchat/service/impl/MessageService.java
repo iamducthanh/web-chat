@@ -18,8 +18,8 @@ public class MessageService implements IMessageService {
     private MessageRepository messageRepo;
 
     @Override
-    public List<Message> findByRoom(String roomId) {
-        List<Message> list = messageRepo.findByRoom(roomId);
+    public List<Message> findByRoom(String roomId, Pageable pageable) {
+        List<Message> list = messageRepo.findByRoom(roomId, pageable);
         return list.isEmpty() ? null : list;
     }
 

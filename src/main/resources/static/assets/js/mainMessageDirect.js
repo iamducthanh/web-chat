@@ -230,5 +230,20 @@ function onMessageReceived(payload) {
     console.log(messForm.scrollHeight)
 }
 
+// window.onscroll = function (){
+//     alert("d")
+//     scrollFunction_ct();
+// }
+
+var messForm = document.querySelector("#messForm")
+messForm.addEventListener("scroll", scrollFunction_ct);
+
+function scrollFunction_ct() {
+    if(messForm.scrollTop == 0){
+        var messageArea = document.querySelector("#messageArea");
+        messageArea.innerHTML = "<div class='load-message-page'><p>Đang tải...</p></div>" + messageArea.innerHTML;
+    }
+}
+
 // usernameForm.addEventListener('submit', connect, true)
 messageForm.addEventListener('submit', sendMessage, true)

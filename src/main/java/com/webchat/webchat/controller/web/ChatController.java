@@ -1,17 +1,14 @@
 package com.webchat.webchat.controller.web;
 
-import com.webchat.webchat.constant.PropertiesConstant;
 import com.webchat.webchat.constant.UsersOnline;
-import com.webchat.webchat.model.ChatMessagePojo;
-import com.webchat.webchat.model.UserConnect;
+import com.webchat.webchat.pojo.ChatMessagePojo;
+import com.webchat.webchat.pojo.UserConnectPojo;
 import com.webchat.webchat.utils.SystemUtil;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.messaging.simp.SimpMessageHeaderAccessor;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.Date;
 
@@ -24,7 +21,7 @@ public class ChatController {
         Date now = new Date();
         chatMessagePojo.setTimeChat(now);
         int index = SystemUtil.findConnect(chatMessagePojo.getRoom());
-        if(UsersOnline.userConnect.get(index).getUser1() != null && UsersOnline.userConnect.get(index).getUser2() != null){
+        if(UsersOnline.userConnectPojo.get(index).getUser1() != null && UsersOnline.userConnectPojo.get(index).getUser2() != null){
             chatMessagePojo.setStatusMessage("Đã xem");
         } else {
             chatMessagePojo.setStatusMessage("Đã gửi");
@@ -39,16 +36,16 @@ public class ChatController {
         int index = SystemUtil.findConnect(chatMessagePojo.getRoom());
         System.out.println("index: "+index);
         if(index == -1){
-            UserConnect userConnect = new UserConnect(chatMessagePojo.getRoom(), chatMessagePojo.getSender(), null);
-            UsersOnline.userConnect.add(userConnect);
-            System.out.println(userConnect.toString());
+            UserConnectPojo userConnectPojo = new UserConnectPojo(chatMessagePojo.getRoom(), chatMessagePojo.getSender(), null);
+            UsersOnline.userConnectPojo.add(userConnectPojo);
+            System.out.println(userConnectPojo.toString());
         } else {
-            if(UsersOnline.userConnect.get(index).getUser2() == null && UsersOnline.userConnect.get(index).getUser1() != null){
-                UsersOnline.userConnect.get(index).setUser2(chatMessagePojo.getSender());
-                System.out.println(UsersOnline.userConnect.get(index).toString());
-            } else if(UsersOnline.userConnect.get(index).getUser2() != null && UsersOnline.userConnect.get(index).getUser1() == null){
-                UsersOnline.userConnect.get(index).setUser1(chatMessagePojo.getSender());
-                System.out.println(UsersOnline.userConnect.get(index).toString());
+            if(UsersOnline.userConnectPojo.get(index).getUser2() == null && UsersOnline.userConnectPojo.get(index).getUser1() != null){
+                UsersOnline.userConnectPojo.get(index).setUser2(chatMessagePojo.getSender());
+                System.out.println(UsersOnline.userConnectPojo.get(index).toString());
+            } else if(UsersOnline.userConnectPojo.get(index).getUser2() != null && UsersOnline.userConnectPojo.get(index).getUser1() == null){
+                UsersOnline.userConnectPojo.get(index).setUser1(chatMessagePojo.getSender());
+                System.out.println(UsersOnline.userConnectPojo.get(index).toString());
             }
         }
         headerAccessor.getSessionAttributes().put("username", chatMessagePojo.getSender());

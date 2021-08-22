@@ -4,7 +4,7 @@ import com.webchat.webchat.constant.PropertiesConstant;
 import com.webchat.webchat.entities.Message;
 import com.webchat.webchat.entities.RoomDetail;
 import com.webchat.webchat.entities.User;
-import com.webchat.webchat.model.MessageUser;
+import com.webchat.webchat.pojo.MessageUser;
 import com.webchat.webchat.service.impl.MessageService;
 import com.webchat.webchat.service.impl.RoomDetailService;
 import com.webchat.webchat.service.impl.UserService;

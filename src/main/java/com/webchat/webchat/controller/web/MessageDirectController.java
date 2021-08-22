@@ -6,21 +6,21 @@ import com.webchat.webchat.entities.Message;
 import com.webchat.webchat.entities.Room;
 import com.webchat.webchat.entities.RoomDetail;
 import com.webchat.webchat.entities.User;
-import com.webchat.webchat.model.ChatMessagePojo;
 import com.webchat.webchat.service.impl.MessageService;
 import com.webchat.webchat.service.impl.RoomDetailService;
 import com.webchat.webchat.service.impl.UserService;
 import com.webchat.webchat.utils.SessionUtil;
 import com.webchat.webchat.utils.SystemUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
-import java.io.PrintWriter;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
@@ -53,8 +53,9 @@ public class MessageDirectController {
                 view = "views/message/message-direct";
                 List<User> userInRoom = userService.findInRoom(user.getId(), roomId);
                 model.addAttribute("userInRoom", userInRoom.get(0));
-                List<Message> messages = messageService.findByRoom(roomId);
+                List<Message> messages = messageService.findByRoom(roomId, PageRequest.of(0, 10));
                 if(messages != null){
+                    Collections.reverse(messages);
                     messageService.setStatusMessage(roomId, userInRoom.get(0).getUsername(), String.valueOf(PropertiesConstant.MessageStatus.SEND));
                     String userLastMessage = messages.get(messages.size()-1).getUser().getUsername();
                     if(userLastMessage.equals(user.getUsername())){
@@ -84,11 +85,21 @@ public class MessageDirectController {
         message.setTime(new Date());
         message.setContent(content);
         int index = SystemUtil.findConnect(roomId);
-        if(UsersOnline.userConnect.get(index).getUser1() != null && UsersOnline.userConnect.get(index).getUser2() != null){
+        if(UsersOnline.userConnectPojo.get(index).getUser1() != null && UsersOnline.userConnectPojo.get(index).getUser2() != null){
             message.setStatus("READ");
         } else {
             message.setStatus("SEND");
         }
         messageService.saveMessage(message);
+    }
+
+
+    @Autowired
+    HttpServletRequest httpServletRequest;
+    @PostMapping("/uploadImage")
+    @ResponseBody
+    public void uploadImage(@RequestPart("file") MultipartFile file){
+        System.out.println(file.getSize());
+        System.out.println("okkkkkkkkkkkkkkk");
     }
 }

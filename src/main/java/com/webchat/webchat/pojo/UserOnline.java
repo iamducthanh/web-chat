@@ -1,4 +1,4 @@
-package com.webchat.webchat.model;
+package com.webchat.webchat.pojo;
 
 public class UserOnline {
     private String username;

@@ -1,4 +1,4 @@
-package com.webchat.webchat.model;
+package com.webchat.webchat.pojo;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

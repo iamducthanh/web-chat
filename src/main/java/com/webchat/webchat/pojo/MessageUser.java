@@ -1,4 +1,4 @@
-package com.webchat.webchat.model;
+package com.webchat.webchat.pojo;
 
 import com.webchat.webchat.constant.UsersOnline;
 import com.webchat.webchat.entities.RoomDetail;

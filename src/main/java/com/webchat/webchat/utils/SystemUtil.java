@@ -4,8 +4,8 @@ import com.webchat.webchat.constant.UsersOnline;
 
 public class SystemUtil {
     public static int findConnect(String room){
-        for(int i = 0; i < UsersOnline.userConnect.size() ; i++){
-            if(UsersOnline.userConnect.get(i).getRoom().equals(room)){
+        for(int i = 0; i < UsersOnline.userConnectPojo.size() ; i++){
+            if(UsersOnline.userConnectPojo.get(i).getRoom().equals(room)){
                 return i;
             }
         }

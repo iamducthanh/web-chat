@@ -6,6 +6,7 @@ import com.webchat.webchat.service.impl.RoomDetailService;
 import com.webchat.webchat.utils.SessionUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
 import javax.servlet.http.HttpServletRequest;
@@ -31,6 +32,8 @@ public class HomeController {
 
     @GetMapping(value = "/trang-chu")
     public String homePage() {
+//        String a = "ddddddd";
+//        model.addAttribute("te", a);
         return "views/trangchu";
     }
 

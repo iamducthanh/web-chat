@@ -1,11 +1,11 @@
-package com.webchat.webchat.model;
+package com.webchat.webchat.pojo;
 
-public class UserConnect {
+public class UserConnectPojo {
     private String room;
     private String user1;
     private String user2;
 
-    public UserConnect() {
+    public UserConnectPojo() {
     }
 
     @Override
@@ -17,7 +17,7 @@ public class UserConnect {
                 '}';
     }
 
-    public UserConnect(String room, String user1, String user2) {
+    public UserConnectPojo(String room, String user1, String user2) {
         this.room = room;
         this.user1 = user1;
         this.user2 = user2;

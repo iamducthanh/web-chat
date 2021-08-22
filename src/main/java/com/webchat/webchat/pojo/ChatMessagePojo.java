@@ -1,4 +1,4 @@
-package com.webchat.webchat.model;
+package com.webchat.webchat.pojo;
 
 import java.util.Date;
 
