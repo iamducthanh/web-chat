@@ -15,9 +15,8 @@ import javax.persistence.*;
 @NoArgsConstructor
 public class Attach {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    private Integer id;
+    private String id;
 
     @ManyToOne @JoinColumn(name = "messageId")
     private Message message;

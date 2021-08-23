@@ -6,6 +6,7 @@ import com.webchat.webchat.entities.Message;
 import com.webchat.webchat.entities.Room;
 import com.webchat.webchat.entities.RoomDetail;
 import com.webchat.webchat.entities.User;
+import com.webchat.webchat.pojo.UserConnectPojo;
 import com.webchat.webchat.service.impl.MessageService;
 import com.webchat.webchat.service.impl.RoomDetailService;
 import com.webchat.webchat.service.impl.UserService;
@@ -23,6 +24,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 
 @Controller
 public class MessageDirectController {
@@ -79,13 +81,15 @@ public class MessageDirectController {
         Message message = new Message();
         User user = (User) SessionUtil.getSessionUtil().getObject(req, "USER");
         Room room = new Room(roomId,0,"");
+        UUID uuid = UUID.randomUUID();
+        message.setId(String.valueOf(uuid));
         message.setUser(user);
         message.setRoom(room);
         message.setType("CHAT");
         message.setTime(new Date());
         message.setContent(content);
-        int index = SystemUtil.findConnect(roomId);
-        if(UsersOnline.userConnectPojo.get(index).getUser1() != null && UsersOnline.userConnectPojo.get(index).getUser2() != null){
+        UserConnectPojo userConnectPojo = UsersOnline.userConnectPojo.get(roomId);
+        if(userConnectPojo.getUser1() != null && userConnectPojo.getUser2() != null){
             message.setStatus("READ");
         } else {
             message.setStatus("SEND");

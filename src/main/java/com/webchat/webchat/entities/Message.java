@@ -19,9 +19,8 @@ import java.util.List;
 @NoArgsConstructor
 public class Message {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    private Integer id;
+    private String id;
 
     @ManyToOne @JoinColumn(name = "userid")
     private User user;

@@ -32,7 +32,7 @@ public class MessageUser {
     }
 
     public boolean isOnline(){
-        if(UsersOnline.usersOnline.contains(this.users.get(0).getUsername())){
+        if(UsersOnline.usersOnline.get(this.users.get(0).getUsername()) != null){
             return true;
         } else {
             return false;

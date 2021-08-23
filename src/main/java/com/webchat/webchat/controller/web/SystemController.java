@@ -20,7 +20,7 @@ public class SystemController {
     @SendTo("/topic/system.adduser")
     public UserOnline addUser(@Payload UserOnline userOnline, SimpMessageHeaderAccessor headerAccessor) {
         System.out.println("da online");
-        UsersOnline.usersOnline.add(userOnline.getUsername());
+        UsersOnline.usersOnline.put(userOnline.getUsername(), userOnline.getUsername());
         headerAccessor.getSessionAttributes().put("userOnline", userOnline.getUsername());
         return userOnline;
     }

@@ -59,7 +59,7 @@ public class User {
     private List<RoomDetail> roomDetails;
 
     public boolean isOnline(){
-        if(UsersOnline.usersOnline.contains(this.username)){
+        if(UsersOnline.usersOnline.get(this.username) != null){
             return true;
         } else {
             return false;
