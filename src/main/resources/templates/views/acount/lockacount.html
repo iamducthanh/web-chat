@@ -20,6 +20,7 @@
                 </div>
 
                 <div class="card-body">
+                    <form th:action="@{'/uploadImage'}" th:method="post" enctype="multipart/form-data">
                     <div class="row g-6">
                         <div class="col-12">
                             <div class="text-center">
@@ -30,8 +31,8 @@
 
                         <div class="col-12">
                             <div class="form-floating">
-                                <input type="password" class="form-control" id="lockscreen-password"
-                                       placeholder="Password">
+                                <input type="file" class="form-control" id="lockscreen-password"
+                                       placeholder="Password" name="file">
                                 <label for="lockscreen-password">Password</label>
                             </div>
                         </div>
@@ -40,7 +41,7 @@
                             <button class="btn btn-block btn-lg btn-primary w-100" type="submit">Unlock</button>
                         </div>
                     </div>
-
+                    </form>
                 </div>
             </div>
 

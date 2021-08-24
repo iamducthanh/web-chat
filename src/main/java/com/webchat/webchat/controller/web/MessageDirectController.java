@@ -1,17 +1,22 @@
 package com.webchat.webchat.controller.web;
 
+import com.google.api.client.http.FileContent;
+import com.google.api.services.drive.Drive;
+import com.google.api.services.drive.model.File;
+import com.google.api.services.drive.model.FileList;
+import com.webchat.webchat.constant.AttackFile;
 import com.webchat.webchat.constant.PropertiesConstant;
 import com.webchat.webchat.constant.UsersOnline;
 import com.webchat.webchat.entities.Message;
 import com.webchat.webchat.entities.Room;
 import com.webchat.webchat.entities.RoomDetail;
 import com.webchat.webchat.entities.User;
+import com.webchat.webchat.pojo.FilesAttack;
 import com.webchat.webchat.pojo.UserConnectPojo;
 import com.webchat.webchat.service.impl.MessageService;
 import com.webchat.webchat.service.impl.RoomDetailService;
 import com.webchat.webchat.service.impl.UserService;
 import com.webchat.webchat.utils.SessionUtil;
-import com.webchat.webchat.utils.SystemUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
@@ -21,6 +26,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
@@ -40,8 +46,8 @@ public class MessageDirectController {
     @Autowired
     private UserService userService;
 
-    @Autowired
-    private HttpServletResponse resp;
+//    @Autowired
+//    private Drive googleDrive;
 
     @RequestMapping(value = "/message_direct", method = RequestMethod.GET)
     public String messageDirectPage(Model model) {
@@ -75,35 +81,50 @@ public class MessageDirectController {
         return view;
     }
 
-    @PostMapping("/message_direct/save")
+    @PostMapping("/removeImage")
     @ResponseBody
-    public void saveMessage(@RequestParam("content") String content, @RequestParam("room") String roomId, @RequestParam("sendto") String sendTo) {
-        Message message = new Message();
-        User user = (User) SessionUtil.getSessionUtil().getObject(req, "USER");
-        Room room = new Room(roomId,0,"");
-        UUID uuid = UUID.randomUUID();
-        message.setId(String.valueOf(uuid));
-        message.setUser(user);
-        message.setRoom(room);
-        message.setType("CHAT");
-        message.setTime(new Date());
-        message.setContent(content);
-        UserConnectPojo userConnectPojo = UsersOnline.userConnectPojo.get(roomId);
-        if(userConnectPojo.getUser1() != null && userConnectPojo.getUser2() != null){
-            message.setStatus("READ");
-        } else {
-            message.setStatus("SEND");
-        }
-        messageService.saveMessage(message);
+    public void removeImageTemp(@RequestParam("fileName") String fileName, @RequestParam("room") String room){
+        System.out.println(fileName);
+        System.out.println(room);
+        FilesAttack filesAttack = AttackFile.messageAttackHashMap.get(room);
+        System.out.println(filesAttack.getFilesAttack().get(fileName).getOriginalFilename());
+        filesAttack.getFilesAttack().remove(fileName);
     }
 
-
-    @Autowired
-    HttpServletRequest httpServletRequest;
     @PostMapping("/uploadImage")
     @ResponseBody
-    public void uploadImage(@RequestPart("file") MultipartFile file){
-        System.out.println(file.getSize());
-        System.out.println("okkkkkkkkkkkkkkk");
+    public void uploadImage(@RequestPart("file")MultipartFile file, @RequestParam("roomId") String roomId) throws IOException {
+        String fileName = file.getOriginalFilename();
+        FilesAttack filesAttack = AttackFile.messageAttackHashMap.get(roomId);
+        if(filesAttack == null){
+            FilesAttack filesAttackNew = new FilesAttack();
+            filesAttackNew.getFilesAttack().put(fileName, file);
+            AttackFile.messageAttackHashMap.put(roomId, filesAttackNew);
+        } else {
+            filesAttack.getFilesAttack().put(fileName, file);
+        }
+
+//        1VgexKeu7AVZLlN9XQXqNg7-S_4f3sJXR
+//        File fileMetadata = new File();
+//        fileMetadata.setName("image_webchat");
+//        fileMetadata.setMimeType("application/vnd.google-apps.folder");
+//
+//        File file1 = googleDrive.files().create(fileMetadata).setFields("id").execute();
+//        System.out.println(file1.getId());
+//        return file.getId();
+
+//        File newGGDriveFile = new File();
+//        newGGDriveFile.setParents(Collections.singletonList("1VgexKeu7AVZLlN9XQXqNg7-S_4f3sJXR")).setName("testfile");
+//        java.io.File fileToUpload = new java.io.File("C:\\Users\\ADMIN\\Downloads\\message.sql");
+//        FileContent mediaContent = new FileContent("application/zip", fileToUpload);
+//        File file1 = googleDrive.files().create(newGGDriveFile, mediaContent).setFields("id,webViewLink").execute();
+
+//        FileList result = googleDrive.files().list()
+//                .setFields("nextPageToken, files(id, name, parents, mimeType)")
+//                .execute();
+//        for(int i = 0 ; i< result.size();i++){
+//            System.out.println(result.getFiles().get(i).toString());
+//        }
     }
+
 }

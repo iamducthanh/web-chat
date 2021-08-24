@@ -1,11 +1,15 @@
 package com.webchat.webchat.utils;
 
+import com.google.api.services.drive.Drive;
+import com.google.api.services.drive.model.FileList;
 import com.webchat.webchat.entities.RoomDetail;
 import com.webchat.webchat.service.impl.RoomDetailService;
 import com.webchat.webchat.service.impl.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.List;
 import java.util.UUID;
 
@@ -15,6 +19,11 @@ public class TestUtil {
 
     @Autowired
     static UserService userService;
+
+    @Autowired
+    private Drive googleDrive;
+
+
     public static void main(String[] args) {
 //        UUID uuid1 = UUID.randomUUID();
 //        UUID uuid2 = UUID.randomUUID();
@@ -28,8 +37,8 @@ public class TestUtil {
 //        String password = "123";
 //        String encodedPassword = passwordEncoder.encode(password);
 //        System.out.println(encodedPassword);
-        System.out.println(userService.findByUsername("admin").getFirstName());
-        List<RoomDetail> roomDetails = roomDetailService.findByUser(1);
-        System.out.println(roomDetails.size());
+//        System.out.println(userService.findByUsername("admin").getFirstName());
+//        List<RoomDetail> roomDetails = roomDetailService.findByUser(1);
+//        System.out.println(roomDetails.size());
     }
 }

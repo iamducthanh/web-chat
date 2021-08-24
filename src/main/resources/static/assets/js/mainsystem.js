@@ -73,4 +73,22 @@ function onError1(error) {
     connectingElement.style.color = 'red';
 }
 
+function deleteAttack(aa){
+    console.log(aa)
+    $.ajax({
+        url: 'removeImage',
+        data: {
+            fileName: aa,
+            room: document.querySelector("#room").value,
+        },
+        error: function () {
+            console.log("error")
+        },
+        success: function (data) {
+            console.log("thanh cong")
+        },
+        type: 'POST'
+    });
+}
+
 

@@ -7874,18 +7874,27 @@
     }
     if (document.querySelector("[data-dropzone-area]")) {
         const e = new s.Dropzone("[data-dropzone-area]", {
-            url: "uploadImage",
+            url: "uploadImage?roomId=" + document.querySelector("#room").value,
             clickable: "#dz-btn",
             previewsContainer: "#dz-preview-row",
-            previewTemplate: '\n<div class="theme-file-preview position-relative mx-2">\n    <div class="avatar avatar-lg dropzone-file-preview">\n        <span class="avatar-text rounded bg-secondary text-body file-title">\n            <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" class="css-i6dzq1"><path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"></path><polyline points="13 2 13 9 20 9"></polyline></svg>\n        </span>\n    </div>\n\n    <div class="avatar avatar-lg dropzone-image-preview">\n        <img src="#" class="avatar-img rounded file-title" data-dz-thumbnail="" alt="" >\n    </div>\n\n    <a class="badge badge-circle bg-body text-body position-absolute top-0 end-0 m-2" href="#" data-dz-remove="">\n        <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" class="css-i6dzq1"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>\n    </a>\n</div>\n'
+            previewTemplate: '\n<div class="theme-file-preview position-relative mx-2">\n    ' +
+                '<div class="avatar avatar-lg dropzone-file-preview">\n        ' +
+                '<span class="avatar-text rounded bg-secondary text-body file-title">\n            ' +
+                '<svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" class="css-i6dzq1"><path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"></path><polyline points="13 2 13 9 20 9"></polyline></svg>\n        ' +
+                '</span>\n    </div>\n\n    ' +
+                '<div class="avatar avatar-lg dropzone-image-preview">\n        ' +
+                '<img src="#" class="avatar-img rounded file-title attackFiles" data-dz-thumbnail="" alt="" >\n    ' +
+                '</div>\n\n    ' +
+                '<a class="badge badge-circle bg-body text-body position-absolute top-0 end-0 m-2" name="aaaaa" onclick="deleteAttack()" data-dz-remove="">\n        ' +
+                '<svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" class="css-i6dzq1"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>\n    </a>\n</div>\n'
         });
         e.on("addedfile", (function (e) {
-            console.log("add 1")
+            var name  = document.getElementsByName("aaaaa");
+            name[name.length - 1].onclick = deleteAttack.bind(this, e.name);
             let o = document.querySelectorAll(".theme-file-preview");
             o = o[o.length - 1].querySelectorAll(".file-title");
             for (let i = 0; i < o.length; i++) o[i].title = e.name
-        })),  e.on("reset", (function (o) {
-            console.log("xoa 1")
+        })), e.on("reset", (function (o) {
             e.previewsContainer.classList.remove("dz-preview-moved", "pb-10", "pt-3", "px-2")
         }))
     }

@@ -41,11 +41,15 @@ public class ChatController {
             System.out.println(UsersOnline.userConnectPojo.get(chatMessagePojo.getRoom()).toString());
         } else {
             if(userConnectPojo.getUser2() == null && userConnectPojo.getUser1() != null){
-                userConnectPojo.setUser2(chatMessagePojo.getSender());
-                System.out.println(userConnectPojo.toString());
+                if(!userConnectPojo.getUser1().equals(chatMessagePojo.getSender())){
+                    userConnectPojo.setUser2(chatMessagePojo.getSender());
+                    System.out.println(userConnectPojo.toString());
+                }
             } else if(userConnectPojo.getUser2() != null && userConnectPojo.getUser1() == null){
-                userConnectPojo.setUser1(chatMessagePojo.getSender());
-                System.out.println(userConnectPojo.toString());
+                if(!userConnectPojo.getUser2().equals(chatMessagePojo.getSender())){
+                    userConnectPojo.setUser1(chatMessagePojo.getSender());
+                    System.out.println(userConnectPojo.toString());
+                }
             }
         }
         headerAccessor.getSessionAttributes().put("username", chatMessagePojo.getSender());

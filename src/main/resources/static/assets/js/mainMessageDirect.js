@@ -45,6 +45,14 @@ function onError(error) {
 function sendMessage(event) {
     var messageContent = messageInput.value.trim();
     if (messageContent && stompClient) {
+        var attack = document.getElementsByClassName("attackFiles");
+        let attacks = "";
+        if(attack != null){
+            for(let i=0;i<attack.length;i++){
+                attacks += "'"+ attack[i].title + "'";
+            }
+        }
+        attacks = "{" + attacks + "}";
         var chatMessage = {
             sender: username,
             content: messageInput.value,
@@ -55,11 +63,12 @@ function sendMessage(event) {
         messageInput.value = '';
 
         $.ajax({
-            url: window.location.pathname + '/save',
+            url: 'message_direct/save',
             data: {
                 content: messageContent,
                 room: room,
-                sendto: document.getElementById('userInRoomDirect').value
+                sendto: document.getElementById('userInRoomDirect').value,
+                attack : attacks
             },
             error: function () {
                 console.log("error")
