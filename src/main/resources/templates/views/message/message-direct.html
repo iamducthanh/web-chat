@@ -161,6 +161,13 @@
                                         <div class="message-content">
                                             <div class="message-gallery">
                                                 <div class="row gx-3">
+                                                    <th:block th:each="attach:${message.attachList}">
+                                                        <div class="col">
+                                                            <img class="img-fluid rounded"
+                                                                 th:src="@{'https://raw.githubusercontent.com/iamducthanh/image_webchat/main/' + ${attach.filename}}"
+                                                                 data-action="zoom" alt="">
+                                                        </div>
+                                                    </th:block>
 <!--                                                    <div class="col">-->
 <!--                                                        <img class="img-fluid rounded" src="https://github.com/iamducthanh/iamducthanh/blob/main/39Cg.gif?raw=true" data-action="zoom" alt="">-->
 <!--                                                    </div>-->
@@ -194,7 +201,13 @@
                                         <div class="message-content">
                                             <div class="message-gallery">
                                                 <div class="row gx-3">
-
+                                                    <th:block th:each="attach:${message.attachList}">
+                                                        <div class="col">
+                                                            <img class="img-fluid rounded"
+                                                                 th:src="@{'https://raw.githubusercontent.com/iamducthanh/image_webchat/main/' + ${attach.filename}}"
+                                                                 data-action="zoom" alt="">
+                                                        </div>
+                                                    </th:block>
                                                 </div>
                                             </div>
                                         </div>

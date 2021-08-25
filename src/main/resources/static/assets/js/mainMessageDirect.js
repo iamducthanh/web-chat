@@ -89,15 +89,15 @@ function sendMessage(event) {
                         fetch('https://api.github.com/repos/iamducthanh/image_webchat/contents/' + data[i].fileName, {
                             method: 'PUT',
                             headers: {
-                                "Authorization": "Bearer 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",
+                                "Authorization": "Bearer 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",
                                 'Content-Type': 'application/json',
                             },
                             body: JSON.stringify(dataa),
                         })
                             .then(response => response.json())
                             .then(out => {
-                                console.log('Success:', out);
-                                var attack = {
+                                document.querySelector("#dz-preview-row").innerHTML = "";
+                                let attack = {
                                     id: idMesss,
                                     sender: "",
                                     content: "",

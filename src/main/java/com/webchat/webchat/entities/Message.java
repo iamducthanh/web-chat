@@ -1,13 +1,16 @@
 package com.webchat.webchat.entities;
 
+import com.webchat.webchat.service.impl.AttachService;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.persistence.*;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -18,6 +21,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Message {
+
     @Id
     @Column(name = "id")
     private String id;
@@ -40,8 +44,8 @@ public class Message {
     @Column(name = "status")
     private String status;
 
-    @OneToMany(mappedBy = "message")
-    private List<Attach> attaches;
+    @OneToMany(fetch = FetchType.EAGER,mappedBy = "message")
+    private List<Attach> attachList;
 
     public Message(User user, Room room, String type, Date time, String content, String status) {
         this.user = user;

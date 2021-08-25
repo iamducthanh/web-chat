@@ -8,7 +8,7 @@ import lombok.Setter;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "attach", uniqueConstraints = {@UniqueConstraint(columnNames = {"messageId"})})
+@Table(name = "attach")
 @Getter
 @Setter
 @AllArgsConstructor
@@ -16,11 +16,27 @@ import javax.persistence.*;
 public class Attach {
     @Id
     @Column(name = "id")
-    private String id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
 
-    @ManyToOne @JoinColumn(name = "messageId")
+    @ManyToOne
+    @JoinColumn(name = "messageid")
     private Message message;
 
     @Column(name = "filename")
     private String filename;
+
+    public Attach(Message message, String filename) {
+        this.message = message;
+        this.filename = filename;
+    }
+
+    @Override
+    public String toString() {
+        return "Attach{" +
+                "id=" + id +
+                ", message=" + message +
+                ", filename='" + filename + '\'' +
+                '}';
+    }
 }

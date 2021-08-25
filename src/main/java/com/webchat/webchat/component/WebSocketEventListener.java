@@ -1,5 +1,6 @@
 package com.webchat.webchat.component;
 
+import com.webchat.webchat.constant.AttackFile;
 import com.webchat.webchat.constant.UsersOnline;
 import com.webchat.webchat.pojo.ChatMessagePojo;
 import com.webchat.webchat.pojo.UserConnectPojo;
@@ -49,6 +50,8 @@ public class WebSocketEventListener {
                 UserConnectPojo userConnectPojo = UsersOnline.userConnectPojo.get(room);
                 if(userConnectPojo.getUser1() == null || userConnectPojo.getUser2() == null){
                     UsersOnline.userConnectPojo.remove(room);
+                    AttackFile.messageAttackHashMap.remove(room);
+                    System.out.println("attackkk size: "+ AttackFile.messageAttackHashMap.size());
                     System.out.println("remove");
                 } else {
                     System.out.println(username);

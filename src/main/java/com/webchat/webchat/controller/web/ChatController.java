@@ -1,5 +1,6 @@
 package com.webchat.webchat.controller.web;
 
+import com.webchat.webchat.constant.AttackFile;
 import com.webchat.webchat.constant.UsersOnline;
 import com.webchat.webchat.pojo.ChatMessagePojo;
 import com.webchat.webchat.pojo.UserConnectPojo;
@@ -32,9 +33,6 @@ public class ChatController {
     @MessageMapping("/chat.addUser/{room}")
     @SendTo("/topic/{room}")
     public ChatMessagePojo addUser(@Payload ChatMessagePojo chatMessagePojo, SimpMessageHeaderAccessor headerAccessor) {
-//        System.out.println("da conect phong " + chatMessagePojo.getRoom());
-//        int index = SystemUtil.findConnect(chatMessagePojo.getRoom());
-//        System.out.println("index: "+index);
         UserConnectPojo userConnectPojo = UsersOnline.userConnectPojo.get(chatMessagePojo.getRoom());
         if(userConnectPojo == null){
             UsersOnline.userConnectPojo.put(chatMessagePojo.getRoom(),new UserConnectPojo(chatMessagePojo.getRoom(), chatMessagePojo.getSender(), null));

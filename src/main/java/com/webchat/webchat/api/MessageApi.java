@@ -1,16 +1,17 @@
 package com.webchat.webchat.api;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.webchat.webchat.constant.AttackFile;
 import com.webchat.webchat.constant.UsersOnline;
 import com.webchat.webchat.dto.FileAttackDto;
 import com.webchat.webchat.dto.MessagePageDto;
+import com.webchat.webchat.entities.Attach;
 import com.webchat.webchat.entities.Message;
 import com.webchat.webchat.entities.Room;
 import com.webchat.webchat.entities.User;
 import com.webchat.webchat.pojo.MessagePojo;
 import com.webchat.webchat.pojo.UserConnectPojo;
+import com.webchat.webchat.service.impl.AttachService;
 import com.webchat.webchat.service.impl.MessageService;
 import com.webchat.webchat.utils.SessionUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,11 +21,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.multipart.MultipartFile;
 
-import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
-import java.io.File;
 import java.io.IOException;
 import java.util.*;
 
@@ -34,10 +32,10 @@ public class MessageApi {
     private MessageService messageService;
 
     @Autowired
-    private HttpServletRequest req;
+    private AttachService attachService;
 
     @Autowired
-    private ServletContext servletContext;
+    private HttpServletRequest req;
 
     @GetMapping("/api/message")
     @ResponseBody
@@ -72,6 +70,7 @@ public class MessageApi {
             message.setStatus("SEND");
         }
         List<FileAttackDto> dataFile = new ArrayList<>();
+        List<Attach> attaches = new ArrayList<>();
         if (!attack.equals("[]")) {
             message.setType("ATTACK");
             ObjectMapper objectMapper = new ObjectMapper();
@@ -83,13 +82,17 @@ public class MessageApi {
                 String id = String.valueOf(UUID.randomUUID());
                 String mulFile = AttackFile.messageAttackHashMap.get(roomId).getFilesAttack().get(file);
                 dataFile.add(new FileAttackDto(String.valueOf(uuid),id+type,mulFile));
+                attaches.add(new Attach(message, id+type));
+                AttackFile.messageAttackHashMap.get(roomId).getFilesAttack().remove(file);
             }
             System.out.println("Lưu thành công");
         }
         if(dataFile.isEmpty()){
             dataFile.add(new FileAttackDto(String.valueOf(uuid),null,null));
         }
-//        messageService.saveMessage(message);
+        System.out.println("size mappp"+AttackFile.messageAttackHashMap.get(roomId).getFilesAttack().size());
+        messageService.saveMessage(message);
+        attachService.saveAttach(attaches);
         return dataFile;
     }
 }

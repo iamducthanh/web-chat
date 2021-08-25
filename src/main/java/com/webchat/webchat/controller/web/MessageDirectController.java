@@ -2,6 +2,7 @@ package com.webchat.webchat.controller.web;
 
 import com.webchat.webchat.constant.AttackFile;
 import com.webchat.webchat.constant.PropertiesConstant;
+import com.webchat.webchat.entities.Attach;
 import com.webchat.webchat.entities.Message;
 import com.webchat.webchat.entities.RoomDetail;
 import com.webchat.webchat.entities.User;
@@ -86,12 +87,9 @@ public class MessageDirectController {
         System.out.println(fileName);
         System.out.println(room);
         FilesAttack filesAttack = AttackFile.messageAttackHashMap.get(room);
-//        System.out.println(filesAttack.getFilesAttack().get(fileName).getOriginalFilename());
         filesAttack.getFilesAttack().remove(fileName);
     }
 
-    @Autowired
-    private ServletContext servletContext;
 
     @PostMapping("/uploadImage")
     @ResponseBody
@@ -99,9 +97,6 @@ public class MessageDirectController {
         String fileName = file.getOriginalFilename();
         byte[] fileContent = file.getBytes();
         String encodedString = Base64.getEncoder().encodeToString(fileContent);
-//        System.out.println(encodedString);
-
-//        uploadUtil.upload(file);
 
         System.out.println(fileName);
         FilesAttack filesAttack = AttackFile.messageAttackHashMap.get(roomId);
@@ -112,28 +107,6 @@ public class MessageDirectController {
         } else {
             filesAttack.getFilesAttack().put(fileName, encodedString);
         }
-
-//        1VgexKeu7AVZLlN9XQXqNg7-S_4f3sJXR
-//        File fileMetadata = new File();
-//        fileMetadata.setName("image_webchat");
-//        fileMetadata.setMimeType("application/vnd.google-apps.folder");
-//
-//        File file1 = googleDrive.files().create(fileMetadata).setFields("id").execute();
-//        System.out.println(file1.getId());
-//        return file.getId();
-
-//        File newGGDriveFile = new File();
-//        newGGDriveFile.setParents(Collections.singletonList("1VgexKeu7AVZLlN9XQXqNg7-S_4f3sJXR")).setName("testfile");
-//        java.io.File fileToUpload = new java.io.File("C:\\Users\\ADMIN\\Downloads\\message.sql");
-//        FileContent mediaContent = new FileContent("application/zip", fileToUpload);
-//        File file1 = googleDrive.files().create(newGGDriveFile, mediaContent).setFields("id,webViewLink").execute();
-
-//        FileList result = googleDrive.files().list()
-//                .setFields("nextPageToken, files(id, name, parents, mimeType)")
-//                .execute();
-//        for(int i = 0 ; i< result.size();i++){
-//            System.out.println(result.getFiles().get(i).toString());
-//        }
     }
 
 }
