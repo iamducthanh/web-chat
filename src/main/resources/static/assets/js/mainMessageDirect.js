@@ -47,20 +47,12 @@ function sendMessage(event) {
     if (messageContent && stompClient) {
         var attack = document.getElementsByClassName("attackFiles");
         let attacks = "";
-        if(attack != null){
-            for(let i=0;i<attack.length;i++){
-                attacks += "'"+ attack[i].title + "',";
+        if (attack != null) {
+            for (let i = 0; i < attack.length; i++) {
+                attacks += "'" + attack[i].title + "',";
             }
-            attacks = "[" + attacks.substring(0,attacks.length-1) + "]";
+            attacks = "[" + attacks.substring(0, attacks.length - 1) + "]";
         }
-        var chatMessage = {
-            sender: username,
-            content: messageInput.value,
-            type: 'CHAT',
-            room: room
-        };
-        stompClient.send("/app/chat.sendMessage/" + room, {}, JSON.stringify(chatMessage));
-        messageInput.value = '';
 
         $.ajax({
             url: 'message_direct/save',
@@ -68,13 +60,58 @@ function sendMessage(event) {
                 content: messageContent,
                 room: room,
                 sendto: document.getElementById('userInRoomDirect').value,
-                attack : attacks
+                attack: attacks
             },
             error: function () {
                 console.log("error")
             },
             success: function (data) {
-                console.log("thanh cong")
+                let idMesss = data[0].idMessage;
+                console.log("id mess: " + data[0].idMessage)
+                var chatMessage = {
+                    id: data[0].idMessage,
+                    sender: username,
+                    content: messageInput.value,
+                    type: 'CHAT',
+                    room: room
+                };
+                stompClient.send("/app/chat.sendMessage/" + room, {}, JSON.stringify(chatMessage));
+                messageInput.value = '';
+
+                console.log(data)
+
+                if (data[0].fileName != null) {
+                    for (let i = 0; i < data.length; i++) {
+                        let dataa = {
+                            message: "upload",
+                            content: data[i].data
+                        }
+                        fetch('https://api.github.com/repos/iamducthanh/image_webchat/contents/' + data[i].fileName, {
+                            method: 'PUT',
+                            headers: {
+                                "Authorization": "Bearer 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",
+                                'Content-Type': 'application/json',
+                            },
+                            body: JSON.stringify(dataa),
+                        })
+                            .then(response => response.json())
+                            .then(out => {
+                                console.log('Success:', out);
+                                var attack = {
+                                    id: idMesss,
+                                    sender: "",
+                                    content: "",
+                                    type: 'ATTACK',
+                                    room: room,
+                                    urlFile: "https://raw.githubusercontent.com/iamducthanh/image_webchat/main/" + data[i].fileName
+                                };
+                                stompClient.send("/app/chat.sendMessage/" + room, {}, JSON.stringify(attack));
+                            })
+                            .catch((error) => {
+                                console.error('Error:', error);
+                            });
+                    }
+                }
             },
             type: 'POST'
         });
@@ -121,7 +158,11 @@ function onMessageReceived(payload) {
                 "<div class='message message-out'><a href='#' data-bs-toggle='modal' data-bs-target='#modal-profile' class='avatar avatar-responsive'>" +
                 "<img class='avatar-img' src='assets/image/" + document.getElementById("imageUserLogin").value + "'" + " alt=''>" +
                 "</a>" +
-                "<div class='message-inner'>" + "<div class='message-body'>" + "<div class='message-content'>" + "<div class='message-text'>" + "<p>" + message.content + "</p>" +
+                "<div class='message-inner'>" +
+                "<div class='message-body'>" +
+                "<div class='message-content'>" +
+                "<div class='message-text'>" +
+                "<p>" + message.content + "</p>" +
                 "</div>" +
                 "<div class='message-action'>" +
                 "<div class='dropdown'>" +
@@ -149,7 +190,18 @@ function onMessageReceived(payload) {
                 "<div class='icon'>" +
                 "<svg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' class='feather feather-trash-2'><polyline points='3 6 5 6 21 6'></polyline><path d='M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2'></path>" +
                 "<line x1='10' y1='11' x2='10' y2='17'></line><line x1='14' y1='11' x2='14' y2='17'></line>" +
-                "</svg>" + "</div>" + "</a>" + "</li>" + "</ul>" + "</div>" + "</div>" + "</div>" + "</div>" + "<div class='message-footer'>" +
+                "</svg>" + "</div>" + "</a>" + "</li>" + "</ul>" + "</div>" + "</div>" + "</div>" +
+
+                "<div class='message-content'>"+
+                    "<div class='message-gallery'>"+
+                        "<div class='row gx-3' id='"+message.id+"'>"+
+
+                        "</div>"+
+                    "</div>"+
+                "</div>"+
+
+                "</div>" +
+                "<div class='message-footer'>" +
                 "<span class='extra-small text-muted'>" + timeChat + "</span>" + "</div>" + "</div>" + "</div>";
 
 
@@ -178,9 +230,19 @@ function onMessageReceived(payload) {
                 "class='avatar avatar-responsive'>" +
                 "<img class='avatar-img' src='assets/image/" + document.getElementById("imageUserInRoom").value + "'" + " alt=''>" +
                 "</a>" +
-                "<div class='message-inner'>" + "<div class='message-body'>" + "<div class='message-content'>" + "<div class='message-text'>" +
+                "<div class='message-inner'>" + "<div class='message-body'>" +
+                "<div class='message-content'>" +
+                "<div class='message-text'>" +
                 "<p>" + message.content + "</p>" +
-                "</div>" + "</div>" + "</div>" +
+                "</div>" + "</div>" +
+                "<div class='message-content'>"+
+                "<div class='message-gallery'>"+
+                "<div class='row gx-3' id='"+message.id+"'>"+
+
+                "</div>"+
+                "</div>"+
+                "</div>"+
+                "</div>" +
                 "<div class='message-footer'>" +
                 "<span class='extra-small text-muted'>" + timeChat + "</span>" +
                 "</div>" + "</div>" + "</div>";
@@ -190,6 +252,14 @@ function onMessageReceived(payload) {
                 document.getElementsByName(names)[2].innerText = message.content.substring(0, 100);
             }
         }
+    } else if(message.type === 'ATTACK'){
+        let divAttack = document.getElementById(message.id);
+        divAttack.innerHTML +=
+            "<div class='col'>"+
+                "<img class='img-fluid rounded'"+
+                     "src='"+message.urlFile+"' data-action='zoom'"+
+                     "alt=''>"+
+            "</div>"
     }
 
     var messForm = document.getElementById('messForm');
@@ -200,7 +270,7 @@ var messForm = document.querySelector("#messForm")
 messForm.addEventListener("scroll", scrollFunction_ct);
 
 function scrollFunction_ct() {
-    if(messForm.scrollTop == 0){
+    if (messForm.scrollTop == 0) {
         var messageArea = document.querySelector("#messageArea");
         messageArea.innerHTML = "<div id='loadingMess' class=\"line-clamp me-auto load-message-page\">\n" +
             "                          Đang tải<span class='typing-dots'><span>.</span><span>.</span><span>.</span></span>\n" +
@@ -226,7 +296,7 @@ function scrollFunction_ct() {
                 let loadDing = document.querySelector("#loadingMess");
                 loadDing.parentNode.removeChild(loadDing);
                 data.forEach(message => {
-                    if(username == message.sender){
+                    if (username == message.sender) {
                         messagePlus +=
                             "<div class='message message-out'><a href='#' data-bs-toggle='modal' data-bs-target='#modal-profile' class='avatar avatar-responsive'>" +
                             "<img class='avatar-img' src='assets/image/" + document.getElementById("imageUserLogin").value + "'" + " alt=''>" +
@@ -254,17 +324,17 @@ function scrollFunction_ct() {
                             "</div>" + "</div>" + "</div>";
                     } else {
                         messagePlus +=
-                        "<div class='message'>" +
-                        "<a data-bs-toggle='modal' data-bs-target='#modal-user-profile'" +
-                        "class='avatar avatar-responsive'>" +
-                        "<img class='avatar-img' src='assets/image/" + document.getElementById("imageUserInRoom").value + "'" + " alt=''>" +
-                        "</a>" +
-                        "<div class='message-inner'>" + "<div class='message-body'>" + "<div class='message-content'>" + "<div class='message-text'>" +
-                        "<p>" + message.content + "</p>" +
-                        "</div>" + "</div>" + "</div>" +
-                        "<div class='message-footer'>" +
-                        "<span class='extra-small text-muted'>" + message.time + "</span>" +
-                        "</div>" + "</div>" + "</div>";
+                            "<div class='message'>" +
+                            "<a data-bs-toggle='modal' data-bs-target='#modal-user-profile'" +
+                            "class='avatar avatar-responsive'>" +
+                            "<img class='avatar-img' src='assets/image/" + document.getElementById("imageUserInRoom").value + "'" + " alt=''>" +
+                            "</a>" +
+                            "<div class='message-inner'>" + "<div class='message-body'>" + "<div class='message-content'>" + "<div class='message-text'>" +
+                            "<p>" + message.content + "</p>" +
+                            "</div>" + "</div>" + "</div>" +
+                            "<div class='message-footer'>" +
+                            "<span class='extra-small text-muted'>" + message.time + "</span>" +
+                            "</div>" + "</div>" + "</div>";
                     }
                 })
                 messageArea.innerHTML = messagePlus + messageArea.innerHTML;

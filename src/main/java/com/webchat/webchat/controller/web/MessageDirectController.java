@@ -1,21 +1,17 @@
 package com.webchat.webchat.controller.web;
 
-import com.google.api.client.http.FileContent;
-import com.google.api.services.drive.Drive;
-import com.google.api.services.drive.model.FileList;
 import com.webchat.webchat.constant.AttackFile;
 import com.webchat.webchat.constant.PropertiesConstant;
-import com.webchat.webchat.constant.UsersOnline;
 import com.webchat.webchat.entities.Message;
-import com.webchat.webchat.entities.Room;
 import com.webchat.webchat.entities.RoomDetail;
 import com.webchat.webchat.entities.User;
 import com.webchat.webchat.pojo.FilesAttack;
-import com.webchat.webchat.pojo.UserConnectPojo;
 import com.webchat.webchat.service.impl.MessageService;
 import com.webchat.webchat.service.impl.RoomDetailService;
 import com.webchat.webchat.service.impl.UserService;
 import com.webchat.webchat.utils.SessionUtil;
+import com.webchat.webchat.utils.UploadUtil;
+import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
@@ -25,16 +21,13 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
 import java.io.File;
 import java.io.IOException;
+import java.util.Base64;
 import java.util.Collections;
-import java.util.Date;
 import java.util.List;
-import java.util.UUID;
 
-@javax.servlet.annotation.MultipartConfig
 @Controller
 public class MessageDirectController {
     @Autowired
@@ -48,6 +41,9 @@ public class MessageDirectController {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private UploadUtil uploadUtil;
 
 //    @Autowired
 //    private Drive googleDrive;
@@ -90,7 +86,7 @@ public class MessageDirectController {
         System.out.println(fileName);
         System.out.println(room);
         FilesAttack filesAttack = AttackFile.messageAttackHashMap.get(room);
-        System.out.println(filesAttack.getFilesAttack().get(fileName).getOriginalFilename());
+//        System.out.println(filesAttack.getFilesAttack().get(fileName).getOriginalFilename());
         filesAttack.getFilesAttack().remove(fileName);
     }
 
@@ -99,30 +95,23 @@ public class MessageDirectController {
 
     @PostMapping("/uploadImage")
     @ResponseBody
-    public void uploadImage(@RequestPart("file") Part file, @RequestParam("roomId") String roomId) throws IOException {
-        String fileName = file.getSubmittedFileName();
-        String path = req.getServletContext().getRealPath("/files");
-        File dir = new File(path);
-        if (!dir.exists()) {
-            dir.mkdirs();
+    public void uploadImage(@RequestPart("file") MultipartFile file, @RequestParam("roomId") String roomId) throws IOException {
+        String fileName = file.getOriginalFilename();
+        byte[] fileContent = file.getBytes();
+        String encodedString = Base64.getEncoder().encodeToString(fileContent);
+//        System.out.println(encodedString);
+
+//        uploadUtil.upload(file);
+
+        System.out.println(fileName);
+        FilesAttack filesAttack = AttackFile.messageAttackHashMap.get(roomId);
+        if(filesAttack == null){
+            FilesAttack filesAttackNew = new FilesAttack();
+            filesAttackNew.getFilesAttack().put(fileName, encodedString);
+            AttackFile.messageAttackHashMap.put(roomId, filesAttackNew);
+        } else {
+            filesAttack.getFilesAttack().put(fileName, encodedString);
         }
-        File fileup = new File(dir, file.getSubmittedFileName());
-        System.out.println(fileup.getAbsolutePath());
-        file.write(fileup.getAbsolutePath());
-//        File file1 = new File(servletContext.getRealPath("/files/" + fileName));
-//        file.transferTo(file1);
-//        System.out.println("luu thanh cong");
-
-
-//        System.out.println(fileName);
-//        FilesAttack filesAttack = AttackFile.messageAttackHashMap.get(roomId);
-//        if(filesAttack == null){
-//            FilesAttack filesAttackNew = new FilesAttack();
-//            filesAttackNew.getFilesAttack().put(fileName, file);
-//            AttackFile.messageAttackHashMap.put(roomId, filesAttackNew);
-//        } else {
-//            filesAttack.getFilesAttack().put(fileName, file);
-//        }
 
 //        1VgexKeu7AVZLlN9XQXqNg7-S_4f3sJXR
 //        File fileMetadata = new File();

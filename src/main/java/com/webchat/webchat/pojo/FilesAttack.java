@@ -6,11 +6,12 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.Part;
 import java.util.HashMap;
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
 public class FilesAttack {
-    HashMap<String, MultipartFile> filesAttack = new HashMap<>();
+    HashMap<String, String> filesAttack = new HashMap<>();
 }

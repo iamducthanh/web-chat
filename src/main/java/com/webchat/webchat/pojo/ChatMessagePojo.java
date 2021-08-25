@@ -1,15 +1,17 @@
 package com.webchat.webchat.pojo;
 
 import java.util.Date;
+import java.util.List;
 
 public class ChatMessagePojo {
-
+    private String id;
     private MessageType type;
     private String content;
     private String sender;
     private String room;
     private Date timeChat;
     private String statusMessage;
+    private String urlFile;
 
     public String getStatusMessage() {
         return statusMessage;
@@ -23,7 +25,24 @@ public class ChatMessagePojo {
         CHAT,
         JOIN,
         LEAVE,
-        JOINRETURN
+        JOINRETURN,
+        ATTACK
+    }
+
+    public String getUrlFile() {
+        return urlFile;
+    }
+
+    public void setUrlFile(String urlFile) {
+        this.urlFile = urlFile;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public Date getTimeChat() {
