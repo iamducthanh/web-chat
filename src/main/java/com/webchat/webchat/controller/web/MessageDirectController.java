@@ -2,7 +2,6 @@ package com.webchat.webchat.controller.web;
 
 import com.google.api.client.http.FileContent;
 import com.google.api.services.drive.Drive;
-import com.google.api.services.drive.model.File;
 import com.google.api.services.drive.model.FileList;
 import com.webchat.webchat.constant.AttackFile;
 import com.webchat.webchat.constant.PropertiesConstant;
@@ -24,14 +23,18 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.Part;
+import java.io.File;
 import java.io.IOException;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
+@javax.servlet.annotation.MultipartConfig
 @Controller
 public class MessageDirectController {
     @Autowired
@@ -91,18 +94,35 @@ public class MessageDirectController {
         filesAttack.getFilesAttack().remove(fileName);
     }
 
+    @Autowired
+    private ServletContext servletContext;
+
     @PostMapping("/uploadImage")
     @ResponseBody
-    public void uploadImage(@RequestPart("file")MultipartFile file, @RequestParam("roomId") String roomId) throws IOException {
-        String fileName = file.getOriginalFilename();
-        FilesAttack filesAttack = AttackFile.messageAttackHashMap.get(roomId);
-        if(filesAttack == null){
-            FilesAttack filesAttackNew = new FilesAttack();
-            filesAttackNew.getFilesAttack().put(fileName, file);
-            AttackFile.messageAttackHashMap.put(roomId, filesAttackNew);
-        } else {
-            filesAttack.getFilesAttack().put(fileName, file);
+    public void uploadImage(@RequestPart("file") Part file, @RequestParam("roomId") String roomId) throws IOException {
+        String fileName = file.getSubmittedFileName();
+        String path = req.getServletContext().getRealPath("/files");
+        File dir = new File(path);
+        if (!dir.exists()) {
+            dir.mkdirs();
         }
+        File fileup = new File(dir, file.getSubmittedFileName());
+        System.out.println(fileup.getAbsolutePath());
+        file.write(fileup.getAbsolutePath());
+//        File file1 = new File(servletContext.getRealPath("/files/" + fileName));
+//        file.transferTo(file1);
+//        System.out.println("luu thanh cong");
+
+
+//        System.out.println(fileName);
+//        FilesAttack filesAttack = AttackFile.messageAttackHashMap.get(roomId);
+//        if(filesAttack == null){
+//            FilesAttack filesAttackNew = new FilesAttack();
+//            filesAttackNew.getFilesAttack().put(fileName, file);
+//            AttackFile.messageAttackHashMap.put(roomId, filesAttackNew);
+//        } else {
+//            filesAttack.getFilesAttack().put(fileName, file);
+//        }
 
 //        1VgexKeu7AVZLlN9XQXqNg7-S_4f3sJXR
 //        File fileMetadata = new File();

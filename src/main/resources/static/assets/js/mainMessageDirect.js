@@ -49,10 +49,10 @@ function sendMessage(event) {
         let attacks = "";
         if(attack != null){
             for(let i=0;i<attack.length;i++){
-                attacks += "'"+ attack[i].title + "'";
+                attacks += "'"+ attack[i].title + "',";
             }
+            attacks = "[" + attacks.substring(0,attacks.length-1) + "]";
         }
-        attacks = "{" + attacks + "}";
         var chatMessage = {
             sender: username,
             content: messageInput.value,

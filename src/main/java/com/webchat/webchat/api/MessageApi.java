@@ -2,6 +2,7 @@ package com.webchat.webchat.api;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.webchat.webchat.constant.AttackFile;
 import com.webchat.webchat.constant.UsersOnline;
 import com.webchat.webchat.dto.MessagePageDto;
 import com.webchat.webchat.entities.Message;
@@ -19,7 +20,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
+import java.io.File;
+import java.io.IOException;
 import java.util.*;
 
 @Controller
@@ -29,6 +33,9 @@ public class MessageApi {
 
     @Autowired
     private HttpServletRequest req;
+
+    @Autowired
+    private ServletContext servletContext;
 
     @GetMapping("/api/message")
     @ResponseBody
@@ -45,7 +52,7 @@ public class MessageApi {
 
     @PostMapping("/message_direct/save")
     @ResponseBody
-    public void saveMessage(@RequestParam("content") String content, @RequestParam("room") String roomId, @RequestParam("sendto") String sendTo, @RequestParam("attack")String attack) throws JsonProcessingException {
+    public void saveMessage(@RequestParam("content") String content, @RequestParam("room") String roomId, @RequestParam("sendto") String sendTo, @RequestParam("attack")String attack) throws IOException {
         Message message = new Message();
         User user = (User) SessionUtil.getSessionUtil().getObject(req, "USER");
         Room room = new Room(roomId,0,"");
@@ -62,11 +69,26 @@ public class MessageApi {
         } else {
             message.setStatus("SEND");
         }
-        ObjectMapper objectMapper = new ObjectMapper();
-        List<String> listAttack = new ArrayList<>();
-        listAttack = Arrays.asList(objectMapper.readValue(attack, String[].class));
-        System.out.println("size at: "+listAttack.size());
-        System.out.println(listAttack.toString());
-        messageService.saveMessage(message);
+        if(!attack.equals("[]")){
+//            String path = servletContext.getRealPath("/files");
+//            File dir = new File(path);
+//            if (!dir.exists()) {
+//                dir.mkdirs();
+//            }
+            message.setType("ATTACK");
+            ObjectMapper objectMapper = new ObjectMapper();
+            List<String> listAttack = new ArrayList<>();
+            attack = attack.replace("'","\"");
+            listAttack = Arrays.asList(objectMapper.readValue(attack, String[].class));
+            System.out.println("size at: "+listAttack.size());
+//            System.out.println(attack);
+//            System.out.println(listAttack.get(0).toString());
+            File file = new File(servletContext.getRealPath("/files/") + listAttack.get(0).toString());
+            System.out.println("folder: " + servletContext.getRealPath("/filles/") + listAttack.get(0).toString());
+            System.out.println("file name: "+AttackFile.messageAttackHashMap.get(roomId).getFilesAttack().get(listAttack.get(0).toString()).getOriginalFilename());
+            AttackFile.messageAttackHashMap.get(roomId).getFilesAttack().get(listAttack.get(0).toString()).transferTo(file);
+            System.out.println("Lưu thành công");
+        }
+//        messageService.saveMessage(message);
     }
 }
