@@ -99,7 +99,7 @@ function sendMessage(event) {
                         fetch('https://api.github.com/repos/iamducthanh/image_webchat/contents/' + data[i].fileName, {
                             method: 'PUT',
                             headers: {
-                                "Authorization": TOKEN,
+                                "Authorization": TO+KEN,
                                 'Content-Type': 'application/json',
                             },
                             body: JSON.stringify(dataa),
@@ -335,7 +335,7 @@ async function scrollFunction_ct () {
                                 fetch('https://api.github.com/repos/iamducthanh/image_webchat/contents/' + message.listFile[i], {
                                     method: 'GET',
                                     headers: {
-                                        "Authorization": TOKEN,
+                                        "Authorization": TO+KEN,
                                         "Accept":"application/vnd.github.v3+json"
                                     },
                                 })
@@ -384,7 +384,7 @@ async function scrollFunction_ct () {
                                 fetch('https://api.github.com/repos/iamducthanh/image_webchat/contents/' + message.listFile[i], {
                                     method: 'GET',
                                     headers: {
-                                        "Authorization": TOKEN,
+                                        "Authorization": TO+KEN,
                                         "Accept":"application/vnd.github.v3+json"
                                     },
                                 })
@@ -428,7 +428,7 @@ function loadImage(){
         fetch('https://api.github.com/repos/iamducthanh/image_webchat/contents/' + imageMessages[i].name, {
             method: 'GET',
             headers: {
-                "Authorization": TOKEN,
+                "Authorization": TO+KEN,
                 "Accept":"application/vnd.github.v3+json"
             },
         })
