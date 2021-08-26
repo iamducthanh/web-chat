@@ -122,11 +122,11 @@ function sendMessage(event) {
 
 
 function onMessageReceived(payload) {
-    var message = JSON.parse(payload.body);
-    var messageArea = document.getElementById('messageArea');
-    var date = new Date();
-    var timeChat = moment(date).format('DD-MM-YYYY HH:mm:ss');
-    var userInRoom = document.getElementById('userInRoomDirect').value;
+    let message = JSON.parse(payload.body);
+    let messageArea = document.getElementById('messageArea');
+    let date = new Date();
+    let timeChat = moment(date).format('DD-MM-YYYY HH:mm:ss');
+    let userInRoom = document.getElementById('userInRoomDirect').value;
     if (message.type === 'JOINRETURN') {
         if (document.querySelector('#name').value.trim() != message.sender) {
             document.getElementById('statusOn').innerText = "Đang hoạt động";
@@ -150,8 +150,8 @@ function onMessageReceived(payload) {
     } else if (message.type === 'LEAVE') {
         messageArea.innerHTML += "<div class='close-conect'><p>" + message.sender + " đã thoát!</p></div>";
     } else if (message.type === 'CHAT') {
-        var username = document.querySelector('#name').value.trim();
-        var names = 'messUser' + username + userInRoom;
+        let username = document.querySelector('#name').value.trim();
+        let names = 'messUser' + username + userInRoom;
         if (username == message.sender) {
             let elem = document.getElementById('statusMessageSend');
             elem.parentNode.removeChild(elem);
@@ -272,7 +272,7 @@ messForm.addEventListener("scroll", scrollFunction_ct);
 
 async function scrollFunction_ct () {
     if (messForm.scrollTop == 0) {
-        var messageArea = document.querySelector("#messageArea");
+        let messageArea = document.querySelector("#messageArea");
         messageArea.innerHTML = "<div id='loadingMess' class=\"line-clamp me-auto load-message-page\">\n" +
             "                          Đang tải<span class='typing-dots'><span>.</span><span>.</span><span>.</span></span>\n" +
             "                        </div>" + messageArea.innerHTML;

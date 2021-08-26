@@ -27,8 +27,6 @@ public class HomeController {
 
     @GetMapping(value = "/trang-chu")
     public String homePage() {
-//        String a = "ddddddd";
-//        model.addAttribute("te", a);
         return "views/trangchu";
     }
 
@@ -38,11 +36,11 @@ public class HomeController {
 //        return "views/message/message-empty";
 //    }
 
-    public static void main(String[] args) {
-        SimpleDateFormat fm = new SimpleDateFormat("yyyy-MM-dd");
-        Calendar c = Calendar.getInstance();
-        c.setTime(new Date());
-        c.add(Calendar.DATE, 20);
-        System.out.println(fm.format(c.getTime()));
-    }
+//    public static void main(String[] args) {
+//        SimpleDateFormat fm = new SimpleDateFormat("yyyy-MM-dd");
+//        Calendar c = Calendar.getInstance();
+//        c.setTime(new Date());
+//        c.add(Calendar.DATE, 20);
+//        System.out.println(fm.format(c.getTime()));
+//    }
 }

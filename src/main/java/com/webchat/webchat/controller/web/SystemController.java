@@ -19,7 +19,7 @@ public class SystemController {
     @MessageMapping("/system.adduser")
     @SendTo("/topic/system.adduser")
     public UserOnline addUser(@Payload UserOnline userOnline, SimpMessageHeaderAccessor headerAccessor) {
-        System.out.println("da online");
+        System.out.println("da online " + userOnline.getUsername());
         UsersOnline.usersOnline.put(userOnline.getUsername(), userOnline.getUsername());
         headerAccessor.getSessionAttributes().put("userOnline", userOnline.getUsername());
         return userOnline;

@@ -1,17 +1,17 @@
 'use strict';
 
-var stompClientSystem = null;
-var stompClientMessageListen = null;
-var userOnline = null;
+let stompClientSystem = null;
+let stompClientMessageListen = null;
+let userOnline = null;
 
 function online(event) {
     userOnline = document.querySelector('#userOnline').value.trim();
     if (userOnline) {
-        var socket = new SockJS('/chatroom/system');
+        let socket = new SockJS('/chatroom/system');
         stompClientSystem = Stomp.over(socket);
         stompClientSystem.connect({}, onOnlined, onError1);
 
-        var socketSystem = new SockJS('/chatroom/system');
+        let socketSystem = new SockJS('/chatroom/system');
         stompClientMessageListen = Stomp.over(socketSystem);
         stompClientMessageListen.connect({}, onOnlined, onError1);
     }
@@ -20,6 +20,7 @@ function online(event) {
 
 function onOnlined() {
     userOnline = document.querySelector('#userOnline').value.trim();
+    console.log("tesst onlien " + userOnline)
     // Subscribe to the Public Topic
     stompClientSystem.subscribe('/topic/system.adduser', onMessageReceivedOnline);
 
@@ -32,13 +33,13 @@ function onOnlined() {
 }
 
 function onMessageRealtime(payload){
-    var messageRealtime = JSON.parse(payload.body);
+    let messageRealtime = JSON.parse(payload.body);
     console.log(messageRealtime.sender)
     console.log(messageRealtime.reader)
     console.log(messageRealtime.content)
     console.log(messageRealtime.time)
-    var classname = 'messUser' + messageRealtime.reader + messageRealtime.sender;
-    var elms = document.getElementsByName(classname);
+    let classname = 'messUser' + messageRealtime.reader + messageRealtime.sender;
+    let elms = document.getElementsByName(classname);
     if(elms != null){
         elms[0].className = 'me-auto mb-0 messageSend';
         elms[1].className = 'text-muted extra-small ms-2 messageSend';
@@ -49,15 +50,19 @@ function onMessageRealtime(payload){
 }
 
 function onMessageReceivedOnline(payload){
-    var user = JSON.parse(payload.body);
+    let user = JSON.parse(payload.body);
     console.log(user.username)
-    var userClass = document.getElementById(user.username);
+    let userClass = document.getElementById(user.username);
     console.log("nguoi vua online: " +userClass)
     if(userClass != null){
         if(user.type == 'ONLINE'){
             userClass.className = 'avatar avatar-online';
+            let userMess = document.getElementsByClassName(user.username)[0];
+            if(userMess != null){
+                userMess.innerText = 'Đang hoạt động';
+            }
         } else if(user.type == 'OFFLINE'){
-            var userMess = document.getElementsByClassName(user.username)[0];
+            let userMess = document.getElementsByClassName(user.username)[0];
             if(userMess != null){
                 userMess.innerText = 'Không hoạt động';
             }
