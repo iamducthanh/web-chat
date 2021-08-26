@@ -86,10 +86,20 @@ function sendMessage(event) {
                             message: "upload",
                             content: data[i].data
                         }
+                        let attack = {
+                            id: idMesss,
+                            sender: "",
+                            content: "",
+                            type: 'ATTACK',
+                            room: room,
+                            urlFile: "data:image/png;base64," + data[i].data
+                        };
+                        stompClient.send("/app/chat.sendMessage/" + room, {}, JSON.stringify(attack));
+
                         fetch('https://api.github.com/repos/iamducthanh/image_webchat/contents/' + data[i].fileName, {
                             method: 'PUT',
                             headers: {
-                                "Authorization": "Bearer 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",
+                                "Authorization": TOKEN,
                                 'Content-Type': 'application/json',
                             },
                             body: JSON.stringify(dataa),
@@ -97,15 +107,30 @@ function sendMessage(event) {
                             .then(response => response.json())
                             .then(out => {
                                 document.querySelector("#dz-preview-row").innerHTML = "";
-                                let attack = {
-                                    id: idMesss,
-                                    sender: "",
-                                    content: "",
-                                    type: 'ATTACK',
-                                    room: room,
-                                    urlFile: "https://raw.githubusercontent.com/iamducthanh/image_webchat/main/" + data[i].fileName
-                                };
-                                stompClient.send("/app/chat.sendMessage/" + room, {}, JSON.stringify(attack));
+                                // let dataByte = "";
+                                // fetch('https://api.github.com/repos/iamducthanh/image_webchat/contents/' + data[i].fileName, {
+                                //     method: 'GET',
+                                //     headers: {
+                                //         "Authorization": TOKEN,
+                                //         "Accept":"application/vnd.github.v3+json"
+                                //     },
+                                // })
+                                //     .then(response => response.json())
+                                //     .then(out => {
+                                //         dataByte = "data:image/png;base64,"+out.content;
+                                //     })
+                                //     .catch((error) => {
+                                //         console.error('Error:', error);
+                                //     });
+                                // let attack = {
+                                //     id: idMesss,
+                                //     sender: "",
+                                //     content: "",
+                                //     type: 'ATTACK',
+                                //     room: room,
+                                //     urlFile: dataByte
+                                // };
+                                // stompClient.send("/app/chat.sendMessage/" + room, {}, JSON.stringify(attack));
                             })
                             .catch((error) => {
                                 console.error('Error:', error);
@@ -346,5 +371,26 @@ function scrollFunction_ct() {
         });
     }
 }
-
+function loadImage(){
+    let imageMessages = document.getElementsByClassName("imageMessage");
+    console.log(imageMessages)
+    for(let i=0;i<imageMessages.length;i++){
+        console.log(imageMessages[i].name)
+        fetch('https://api.github.com/repos/iamducthanh/image_webchat/contents/' + imageMessages[i].name, {
+            method: 'GET',
+            headers: {
+                "Authorization": TOKEN,
+                "Accept":"application/vnd.github.v3+json"
+            },
+        })
+            .then(response => response.json())
+            .then(out => {
+                imageMessages[i].src = "data:image/png;base64,"+out.content;
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+            });
+    }
+}
+loadImage();
 messageForm.addEventListener('submit', sendMessage, true)

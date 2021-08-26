@@ -163,8 +163,9 @@
                                                 <div class="row gx-3">
                                                     <th:block th:each="attach:${message.attachList}">
                                                         <div class="col">
-                                                            <img class="img-fluid rounded"
-                                                                 th:src="@{'https://raw.githubusercontent.com/iamducthanh/image_webchat/main/' + ${attach.filename}}"
+                                                            <img class="img-fluid rounded imageMessage"
+                                                                 th:name="@{${attach.filename}}"
+                                                                 src=""
                                                                  data-action="zoom" alt="">
                                                         </div>
                                                     </th:block>
@@ -203,8 +204,9 @@
                                                 <div class="row gx-3">
                                                     <th:block th:each="attach:${message.attachList}">
                                                         <div class="col">
-                                                            <img class="img-fluid rounded"
-                                                                 th:src="@{'https://raw.githubusercontent.com/iamducthanh/image_webchat/main/' + ${attach.filename}}"
+                                                            <img class="img-fluid rounded imageMessage"
+                                                                 th:name="@{${attach.filename}}"
+                                                                 src=""
                                                                  data-action="zoom" alt="">
                                                         </div>
                                                     </th:block>
