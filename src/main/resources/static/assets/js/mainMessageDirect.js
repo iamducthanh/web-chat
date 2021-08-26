@@ -7,7 +7,7 @@ var stompClient = null;
 var username = null;
 var room = null;
 
-function connect(event) {
+function connect() {
     username = document.querySelector('#name').value.trim();
     room = document.querySelector('#room').value.trim();
     if (username) {
@@ -36,7 +36,7 @@ function onConnected() {
 
 connect();
 
-function onError(error) {
+function onError() {
     connectingElement.textContent = 'Could not connect to WebSocket server. Please refresh this page to try again!';
     connectingElement.style.color = 'red';
 }
@@ -106,30 +106,7 @@ function sendMessage(event) {
                         })
                             .then(response => response.json())
                             .then(out => {
-                                // let dataByte = "";
-                                // fetch('https://api.github.com/repos/iamducthanh/image_webchat/contents/' + data[i].fileName, {
-                                //     method: 'GET',
-                                //     headers: {
-                                //         "Authorization": TOKEN,
-                                //         "Accept":"application/vnd.github.v3+json"
-                                //     },
-                                // })
-                                //     .then(response => response.json())
-                                //     .then(out => {
-                                //         dataByte = "data:image/png;base64,"+out.content;
-                                //     })
-                                //     .catch((error) => {
-                                //         console.error('Error:', error);
-                                //     });
-                                // let attack = {
-                                //     id: idMesss,
-                                //     sender: "",
-                                //     content: "",
-                                //     type: 'ATTACK',
-                                //     room: room,
-                                //     urlFile: dataByte
-                                // };
-                                // stompClient.send("/app/chat.sendMessage/" + room, {}, JSON.stringify(attack));
+
                             })
                             .catch((error) => {
                                 console.error('Error:', error);
@@ -176,7 +153,7 @@ function onMessageReceived(payload) {
         var username = document.querySelector('#name').value.trim();
         var names = 'messUser' + username + userInRoom;
         if (username == message.sender) {
-            var elem = document.getElementById('statusMessageSend');
+            let elem = document.getElementById('statusMessageSend');
             elem.parentNode.removeChild(elem);
             messageArea.innerHTML +=
                 "<div class='message message-out'><a href='#' data-bs-toggle='modal' data-bs-target='#modal-profile' class='avatar avatar-responsive'>" +
@@ -237,7 +214,7 @@ function onMessageReceived(payload) {
                 "<div class='message-footer'>" +
                 "<span class='extra-small text-muted'>" + message.statusMessage + "</span><br/>" +
                 "</div>" + "</div>" + "</div>";
-            var classRe = document.getElementsByName(names);
+            let classRe = document.getElementsByName(names);
             if (classRe != null) {
                 document.getElementsByName(names)[2].innerText = message.content.substring(0, 100);
             }
@@ -271,7 +248,7 @@ function onMessageReceived(payload) {
                 "<span class='extra-small text-muted'>" + timeChat + "</span>" +
                 "</div>" + "</div>" + "</div>";
 
-            var classRe = document.getElementsByName(names);
+            let classRe = document.getElementsByName(names);
             if (classRe != null) {
                 document.getElementsByName(names)[2].innerText = message.content.substring(0, 100);
             }
@@ -286,14 +263,14 @@ function onMessageReceived(payload) {
             "</div>"
     }
 
-    var messForm = document.getElementById('messForm');
+    let messForm = document.getElementById('messForm');
     messForm.scrollTop = messForm.scrollHeight;
 }
 
-var messForm = document.querySelector("#messForm")
+let messForm = document.querySelector("#messForm")
 messForm.addEventListener("scroll", scrollFunction_ct);
 
-function scrollFunction_ct() {
+async function scrollFunction_ct () {
     if (messForm.scrollTop == 0) {
         var messageArea = document.querySelector("#messageArea");
         messageArea.innerHTML = "<div id='loadingMess' class=\"line-clamp me-auto load-message-page\">\n" +
@@ -340,11 +317,48 @@ function scrollFunction_ct() {
                             "<div class='icon'>" +
                             "<svg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' class='feather feather-trash-2'><polyline points='3 6 5 6 21 6'></polyline><path d='M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2'></path>" +
                             "<line x1='10' y1='11' x2='10' y2='17'></line><line x1='14' y1='11' x2='14' y2='17'></line>" +
-                            "</svg>" + "</div>" + "</a>" + "</li>" + "</ul>" + "</div>" + "</div>" + "</div>" + "</div>" +
+                            "</svg>" + "</div>" + "</a>" + "</li>" + "</ul>" + "</div>" + "</div>" + "</div>";
+
+                        if(message.listFile != null){
+                            console.log(message.content)
+                            console.log(message.listFile.length)
+                            messagePlus +=
+                                "<div class='message-content'>"+
+                                "<div class='message-gallery'>"+
+                                "<div class='row gx-3' id='"+message.id+"'>"+
+
+                                "</div>"+
+                                "</div>"+
+                                "</div>";
+
+                            for(let i=0;i<message.listFile.length;i++){
+                                fetch('https://api.github.com/repos/iamducthanh/image_webchat/contents/' + message.listFile[i], {
+                                    method: 'GET',
+                                    headers: {
+                                        "Authorization": TOKEN,
+                                        "Accept":"application/vnd.github.v3+json"
+                                    },
+                                })
+                                    .then(response => response.json())
+                                    .then(out => {
+                                        let divIPlus = document.getElementById(message.id);
+                                        divIPlus.innerHTML +=
+                                            "<div class='col'>"+
+                                            "<img class='img-fluid rounded'"+
+                                            "src='"+"data:image/png;base64,"+out.content+"' data-action='zoom'"+
+                                            "alt=''>"+
+                                            "</div>";
+                                    })
+                                    .catch((error) => {
+                                        console.error('Error:', error);
+                                    });
+                            }
+                        }
+
+                            messagePlus +=
+                            "</div>" +
                             "<div class='message-footer'>" +
-
                             "<span class='extra-small text-muted'>" + message.time + "</span>" +
-
                             "</div>" + "</div>" + "</div>";
                     } else {
                         messagePlus +=
@@ -355,7 +369,43 @@ function scrollFunction_ct() {
                             "</a>" +
                             "<div class='message-inner'>" + "<div class='message-body'>" + "<div class='message-content'>" + "<div class='message-text'>" +
                             "<p>" + message.content + "</p>" +
-                            "</div>" + "</div>" + "</div>" +
+                            "</div>" + "</div>";
+
+                        if(message.listFile != null){
+                            messagePlus +=
+                                "<div class='message-content'>"+
+                                "<div class='message-gallery'>"+
+                                "<div class='row gx-3' id='"+message.id+"'>"+
+
+                                "</div>"+
+                                "</div>"+
+                                "</div>";
+                            for(let i=0;i<message.listFile.length;i++){
+                                fetch('https://api.github.com/repos/iamducthanh/image_webchat/contents/' + message.listFile[i], {
+                                    method: 'GET',
+                                    headers: {
+                                        "Authorization": TOKEN,
+                                        "Accept":"application/vnd.github.v3+json"
+                                    },
+                                })
+                                    .then(response => response.json())
+                                    .then(out => {
+                                        let divIPlus = document.getElementById(message.id);
+                                        divIPlus.innerHTML +=
+                                            "<div class='col'>"+
+                                            "<img class='img-fluid rounded'"+
+                                            "src='"+"data:image/png;base64,"+out.content+"' data-action='zoom'"+
+                                            "alt=''>"+
+                                            "</div>";
+                                    })
+                                    .catch((error) => {
+                                        console.error('Error:', error);
+                                    });
+                            }
+                        }
+
+                        messagePlus +=
+                            "</div>" +
                             "<div class='message-footer'>" +
                             "<span class='extra-small text-muted'>" + message.time + "</span>" +
                             "</div>" + "</div>" + "</div>";

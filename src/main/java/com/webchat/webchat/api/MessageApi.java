@@ -44,7 +44,14 @@ public class MessageApi {
         List<MessagePojo> list = new ArrayList<>();
         if (messages != null) {
             for (int i = messages.size() - 1; i > -1; i--) {
-                list.add(new MessagePojo(messages.get(i).getId(), messages.get(i).getUser().getUsername(), messages.get(i).getContent(), messages.get(i).getTimeChat(), messages.get(i).getUser().getImage()));
+                List<String> listFile = null;
+                if(messages.get(i).getAttachList().size() != 0){
+                    listFile = new ArrayList<>();
+                    for(Attach attach:messages.get(i).getAttachList()){
+                        listFile.add(attach.getFilename());
+                    }
+                }
+                list.add(new MessagePojo(messages.get(i).getId(), messages.get(i).getUser().getUsername(), messages.get(i).getContent(), messages.get(i).getTimeChat(), messages.get(i).getUser().getImage(), listFile));
             }
         }
         return list;
@@ -85,14 +92,13 @@ public class MessageApi {
                 attaches.add(new Attach(message, id+type));
                 AttackFile.messageAttackHashMap.get(roomId).getFilesAttack().remove(file);
             }
+            attachService.saveAttach(attaches);
             System.out.println("Lưu thành công");
         }
         if(dataFile.isEmpty()){
             dataFile.add(new FileAttackDto(String.valueOf(uuid),null,null));
         }
-        System.out.println("size mappp"+AttackFile.messageAttackHashMap.get(roomId).getFilesAttack().size());
         messageService.saveMessage(message);
-        attachService.saveAttach(attaches);
         return dataFile;
     }
 }
