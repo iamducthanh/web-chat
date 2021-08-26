@@ -95,7 +95,7 @@ function sendMessage(event) {
                             urlFile: "data:image/png;base64," + data[i].data
                         };
                         stompClient.send("/app/chat.sendMessage/" + room, {}, JSON.stringify(attack));
-
+                        document.querySelector("#dz-preview-row").innerHTML = "";
                         fetch('https://api.github.com/repos/iamducthanh/image_webchat/contents/' + data[i].fileName, {
                             method: 'PUT',
                             headers: {
@@ -106,7 +106,6 @@ function sendMessage(event) {
                         })
                             .then(response => response.json())
                             .then(out => {
-                                document.querySelector("#dz-preview-row").innerHTML = "";
                                 // let dataByte = "";
                                 // fetch('https://api.github.com/repos/iamducthanh/image_webchat/contents/' + data[i].fileName, {
                                 //     method: 'GET',

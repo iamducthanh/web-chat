@@ -1,1 +1,1 @@
-let TOKEN = "Bearer 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";
+let TOKEN = "Bearer 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";
