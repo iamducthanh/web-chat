@@ -20,7 +20,7 @@
                 </div>
 
                 <div class="card-body">
-                    <form th:action="@{'/uploadImage'}" th:method="post" enctype="multipart/form-data">
+<!--                    <form th:action="@{'/testImage'}" th:method="post">-->
                     <div class="row g-6">
                         <div class="col-12">
                             <div class="text-center">
@@ -31,17 +31,20 @@
 
                         <div class="col-12">
                             <div class="form-floating">
-                                <input type="file" class="form-control" id="lockscreen-password"
-                                       placeholder="Password" name="file">
-                                <label for="lockscreen-password">Password</label>
+                                <div id="containerImage">
+
+                                </div>
+                                <input type="file" id="inputImage1" onchange="Main()" class="form-control"
+                                       name="file"/>
+<!--                                <label for="lockscreen-password">Password</label>-->
                             </div>
                         </div>
 
                         <div class="col-12">
-                            <button class="btn btn-block btn-lg btn-primary w-100" type="submit">Unlock</button>
+                            <button class="btn btn-block btn-lg btn-primary w-100" onclick="submitImage()">Unlock</button>
                         </div>
                     </div>
-                    </form>
+<!--                    </form>-->
                 </div>
             </div>
 
@@ -52,5 +55,51 @@
 
         </div>
     </div> <!-- / .row -->
+    <script>
+        let cImage = document.querySelector('#containerImage');
+        const toBase64 = file => new Promise((resolve, reject) => {
+            const reader = new FileReader();
+            reader.readAsDataURL(file);
+            reader.onload = () => resolve(reader.result);
+            reader.onerror = error => reject(error);
+        });
+
+        async function Main() {
+            const file = document.querySelector('#inputImage1').files[0];
+            let data = await toBase64(file)
+            let input = document.createElement("INPUT");
+            input.type = 'text';
+            input.name = 'imageFile';
+            input.value = data;
+            cImage.appendChild(input)
+
+        }
+
+        function submitImage(){
+            let inputI = document.getElementsByName("imageFile");
+            let arrI = [];
+            for(let i=0;i<inputI.length;i++){
+                arrI[i] = inputI[i].value;
+            }
+            console.log(arrI.length)
+            console.log(JSON.stringify(arrI))
+            let da = JSON.stringify(arrI);
+            $.ajax({
+                url: 'testImage',
+                data:
+                    {
+                        dataI: da
+                    }
+                ,
+                error: function () {
+                    console.log("error")
+                },
+                success: function (data) {
+                    console.log("data")
+                },
+                type: 'POST'
+            });
+        }
+    </script>
 </div>
 </html>
