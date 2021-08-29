@@ -6,15 +6,23 @@ function closei(){
     document.getElementById("showI").style.display = 'none';
 }
 
-function showWaitCall(){
-    document.getElementById("avtCall").src = document.getElementById("userImageRoom").src;
-    document.getElementById("nameCall").innerText = "Đang gọi " + document.getElementById("userNameRoom").innerText;
-    document.getElementById("call").style.display = 'unset'
-    document.getElementById("createMeet").click();
-    setTimeout(konghe, 3000)
-}
 function closeWaitCall(){
     document.getElementById("waitcall").style.display = 'none';
+}
+function nghe(){
+    document.getElementById("joinMeet").click();
+    document.getElementById("call").style.display = 'unset'
+    document.getElementById("container2call").style.width = '90%'
+    document.getElementById("container2call").style.height = '90%'
+    document.getElementsByClassName("waitCall1")[0].style.display = 'none';
+    document.getElementById("containerCall").style.display = 'unset';
+    closeWaitCall();
+    stompClientCall.send("/app/call/" + document.getElementById("caller1").value,
+        {},
+        JSON.stringify({
+            status: 'CALLRETURN'
+        })
+    );
 }
 function konghe(){
     let status = document.getElementById("statusCall").value;

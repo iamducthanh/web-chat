@@ -103,9 +103,10 @@ const vm = new Vue({
             this.roomId = roomId;
             this.roomToken = roomToken;
             console.log({ roomId, roomToken });
-            // window.location.href = "http://localhost:8080/chatroom/call?room=" + roomId;
             await this.authen();
             await this.publish();
+            document.getElementById('idRoomMeet').value = roomId;
+            onCallVideo();
         },
         join: async function() {
             const roomToken = await api.getRoomToken(this.roomId);

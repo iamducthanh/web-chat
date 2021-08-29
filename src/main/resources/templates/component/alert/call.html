@@ -1,16 +1,14 @@
 <!DOCTYPE html>
 <html lang="en"
       xmlns:th="http://www.thymeleaf.org" xmlns:v-bind="http://www.w3.org/1999/xhtml">
-<div th:fragment="call" id="call" class="swal2-container swal2-center swal2-backdrop-show" style="overflow-y: auto; display: none">
+<div th:fragment="call" id="call" class="swal2-container swal2-center swal2-backdrop-show" style="overflow-y: auto; display: unset">
   <div aria-labelledby="swal2-title" aria-describedby="swal2-html-container"
        class="swal2-popup swal2-modal swal2-icon-warning swal2-show" tabindex="-1" role="dialog"
-       aria-live="assertive" aria-modal="true" style="display: grid;">
+       aria-live="assertive" aria-modal="true" style="display: grid;" id="container2call">
     <button type="button" class="swal2-close" aria-label="Close this dialog" onclick="closeCall()">×</button>
-    <div class="container has-text-centered" v-cloak id="app" style="text-align: center">
+
+    <div class="container has-text-centered waitCall1" v-cloak id="app" style="text-align: center">
       <link rel="stylesheet" href="./assets/css/mystyle.css">
-      <script src="https://cdn.jsdelivr.net/npm/vue@2.6.12/dist/vue.min.js"></script>
-      <script src="https://cdn.jsdelivr.net/npm/axios@0.20.0/dist/axios.min.js"></script>
-      <script src="https://cdn.stringee.com/sdk/web/2.2.1/stringee-web-sdk.min.js"></script>
       <img class="swal2-image" id="avtCall"
            src="http://localhost:8080/chatroom/assets/img/avatars/11.jpg" alt="Custom image"
            style="width: 100px; height: 100px; border-radius: 50%;">
@@ -26,23 +24,24 @@
         </button>
       </div>
       <div>
-        <button class="btn btn-primary" style="display: none" id="createMeet" v-if="!room" @click="createRoom">
+        <button class="btn btn-primary" style="display: unset" id="createMeet" v-if="!room" @click="createRoom">
           Tạo Meeting
         </button>
-        <input type="hidden" value="" id="idRoomMeet">
+        <input type="hidden" value="" id="idRoomMeet" onchange="onCallVideo();">
+
         <button class="btn btn-info" style="display: none" id="joinMeet" v-if="!room" @click="joinWithId">
           Join Meeting
         </button>
+
+        <button class="btn btn-info" v-if="room" @click="publish(true)">
+          Chia sẻ màn hình
+        </button>
       </div>
     </div>
-    <div class="container" style="display:none;">
-      <button class="btn btn-info" v-if="room" @click="publish(true)">
-        Chia sẻ màn hình
-      </button>
+
+    <div id="containerCall" class="container" style="display:none; text-align: center">
       <div id="videos"></div>
     </div>
-    <script src="./assets/js/api.js"></script>
-    <script src="./assets/js/calljs.js"></script>
   </div>
 </div>
 </html>

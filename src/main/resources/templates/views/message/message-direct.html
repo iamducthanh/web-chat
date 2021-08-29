@@ -84,7 +84,7 @@
 
                                             <a href="#" class="avatar avatar-sm" data-bs-toggle="modal"
                                                data-bs-target="#modal-profile">
-                                                <img class="avatar-img" th:src="@{'/assets/image/' + ${user.image}}"
+                                                <img class="avatar-img" id="avtMyUser" th:src="@{'/assets/image/' + ${user.image}}"
                                                      alt="#">
                                             </a>
                                         </div>
@@ -1263,6 +1263,7 @@
     <!-- Offcanvas Body -->
     <input type="hidden" th:value="${room}" id="room">
     <input type="hidden" th:value="${username}" id="name">
+    <input type="hidden" th:value="${user.getFullname()}" id="fullname">
     <input type="hidden" th:value="0" id="pageIndex">
 </div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>

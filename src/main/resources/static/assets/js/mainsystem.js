@@ -2,6 +2,7 @@
 
 let stompClientSystem = null;
 let stompClientMessageListen = null;
+let stompClientCall = null;
 let userOnline = null;
 
 function online(event) {
@@ -14,22 +15,44 @@ function online(event) {
         let socketSystem = new SockJS('/chatroom/system');
         stompClientMessageListen = Stomp.over(socketSystem);
         stompClientMessageListen.connect({}, onOnlined, onError1);
+
+        let socketCall = new SockJS('/chatroom/system');
+        stompClientCall = Stomp.over(socketCall);
+        stompClientCall.connect({}, onOnlined, onError1);
     }
 }
 
 
 function onOnlined() {
     userOnline = document.querySelector('#userOnline').value.trim();
-    console.log("tesst onlien " + userOnline)
-    // Subscribe to the Public Topic
+    console.log("User online login " + userOnline)
+
     stompClientSystem.subscribe('/topic/system.adduser', onMessageReceivedOnline);
 
+    stompClientCall.subscribe('/topic/call/' + userOnline, onCall);
+
     stompClientMessageListen.subscribe('/topic/system.onmessage/' + userOnline, onMessageRealtime);
-    // Tell your username to the server
     stompClientSystem.send("/app/system.adduser",
         {},
         JSON.stringify({username: userOnline, type: 'ONLINE'})
     );
+}
+
+function onCall(payload){
+    let call = JSON.parse(payload.body);
+    console.log(call.fullnameCaller + "  " + call.ImageCaller)
+    if(call.status == 'SENDCALL'){
+        document.getElementById("waitcall").style.display = "unset";
+        document.getElementById("idRoomMeet").value = call.rooomId;
+        document.getElementById("nameCall1").innerHTML = call.fullnameCaller + ' đang gọi cho bạn!';
+        document.getElementById("avtCall1").src = call.imageCaller;
+        document.getElementById("caller1").value = call.caller;
+    } else if(call.status == 'CALLRETURN'){
+        document.getElementById("container2call").style.width = '90%'
+        document.getElementById("container2call").style.height = '90%'
+        document.getElementsByClassName("waitCall1")[0].style.display = 'none';
+        document.getElementById("containerCall").style.display = 'unset';
+    }
 }
 
 function onMessageRealtime(payload){
