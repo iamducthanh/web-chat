@@ -72,7 +72,10 @@
             input.name = 'imageFile';
             input.value = data;
             cImage.appendChild(input)
-
+            let img = document.createElement("IMG");
+            img.src = data;
+            img.style.width = '100px';
+            cImage.appendChild(img);
         }
 
         function submitImage(){
