@@ -10,6 +10,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700" rel="stylesheet">
     <!-- Template CSS -->
     <link rel="stylesheet" href="./assets/css/template.bundle.css">
+    <link rel="stylesheet" href="./assets/css/sweetalert2.min.css">
     <link rel="stylesheet" href="./assets/css/mystyle.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <link rel="stylesheet" href="./assets/css/template.dark.bundle.css" media="(prefers-color-scheme: dark)">
@@ -25,6 +26,9 @@
         </div>
     </div>
     <div th:replace="/commons/web/modal-invite :: modal-invite"></div>
+    <div th:replace="/component/alert/showi :: showi"></div>
+<!--    <div th:replace="/component/alert/waitcall :: waitcall"></div>-->
+    <div th:replace="/component/alert/call :: call"></div>
     <div th:replace="/commons/web/modal-profile :: modal-profile"></div>
     <div th:replace="/commons/web/modal-user-profile :: modal-user-profile"></div>
     <div th:replace="/commons/web/modal-media-preview :: modal-media-preview"></div>
@@ -34,6 +38,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.1.4/sockjs.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
 <script src="./assets/js/mainsystem.js"></script>
+<script src="./assets/js/alert.js"></script>
 <style>
     .messageSend{
         font-weight: 900;

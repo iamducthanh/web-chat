@@ -35,13 +35,15 @@
                                 <div class="row align-items-center gx-5">
                                     <div class="col-auto">
                                         <div class="avatar d-none d-xl-inline-block">
-                                            <img class="avatar-img" th:src="@{'/assets/image/' + ${userInRoom.image}}" alt="">
+                                            <img id="userImageRoom" class="avatar-img" th:src="@{'/assets/image/' + ${userInRoom.image}}"
+                                                 alt="">
                                         </div>
                                     </div>
 
                                     <div class="col overflow-hidden">
-                                        <h5 class="text-truncate">[[${userInRoom.getFullname()}]]</h5>
-                                        <p class="text-truncate" id="statusOn" th:class="@{${userInRoom.username}}" th:text="${userInRoom.isOnline() ? 'Đang hoạt động' : 'Không hoạt động'}"></p>
+                                        <h5 class="text-truncate" id="userNameRoom">[[${userInRoom.getFullname()}]]</h5>
+                                        <p class="text-truncate" id="statusOn" th:class="@{${userInRoom.username}}"
+                                           th:text="${userInRoom.isOnline() ? 'Đang hoạt động' : 'Không hoạt động'}"></p>
                                     </div>
                                 </div>
                             </div>
@@ -50,6 +52,14 @@
                             <!-- Toolbar -->
                             <div class="col-xl-6 d-none d-xl-block">
                                 <div class="row align-items-center justify-content-end gx-6">
+                                    <div class="col-auto">
+                                        <a href="#" data-toggle="tooltip" title="Chat video" onclick="callVideo();">
+                                            <svg role="presentation" width="26px" height="26px" viewBox="-5 -5 30 30">
+                                                <path d="M19.492 4.112a.972.972 0 00-1.01.063l-3.052 2.12a.998.998 0 00-.43.822v5.766a1 1 0 00.43.823l3.051 2.12a.978.978 0 001.011.063.936.936 0 00.508-.829V4.94a.936.936 0 00-.508-.828zM10.996 18A3.008 3.008 0 0014 14.996V5.004A3.008 3.008 0 0010.996 2H3.004A3.008 3.008 0 000 5.004v9.992A3.008 3.008 0 003.004 18h7.992z"
+                                                      fill="#bec2c9"></path>
+                                            </svg>
+                                        </a>
+                                    </div>
                                     <div class="col-auto">
                                         <a href="#" class="icon icon-lg text-muted" data-bs-toggle="offcanvas"
                                            data-bs-target="#offcanvas-more" aria-controls="offcanvas-more">
@@ -68,12 +78,14 @@
                                         <div class="avatar-group">
                                             <a href="#" class="avatar avatar-sm" data-bs-toggle="modal"
                                                data-bs-target="#modal-user-profile">
-                                                <img class="avatar-img" th:src="@{'/assets/image/' + ${userInRoom.image}}" alt="#">
+                                                <img class="avatar-img"
+                                                     th:src="@{'/assets/image/' + ${userInRoom.image}}" alt="#">
                                             </a>
 
                                             <a href="#" class="avatar avatar-sm" data-bs-toggle="modal"
                                                data-bs-target="#modal-profile">
-                                                <img class="avatar-img" th:src="@{'/assets/image/' + ${user.image}}" alt="#">
+                                                <img class="avatar-img" th:src="@{'/assets/image/' + ${user.image}}"
+                                                     alt="#">
                                             </a>
                                         </div>
                                     </div>
@@ -86,6 +98,12 @@
 
                     <!-- Mobile: more -->
                     <div class="col-2 d-xl-none text-end">
+                        <a href="#" data-toggle="tooltip" title="Chat video" onclick="callVideo();">
+                            <svg role="presentation" width="26px" height="26px" viewBox="-5 -5 30 30">
+                                <path d="M19.492 4.112a.972.972 0 00-1.01.063l-3.052 2.12a.998.998 0 00-.43.822v5.766a1 1 0 00.43.823l3.051 2.12a.978.978 0 001.011.063.936.936 0 00.508-.829V4.94a.936.936 0 00-.508-.828zM10.996 18A3.008 3.008 0 0014 14.996V5.004A3.008 3.008 0 0010.996 2H3.004A3.008 3.008 0 000 5.004v9.992A3.008 3.008 0 003.004 18h7.992z"
+                                      fill="#bec2c9"></path>
+                            </svg>
+                        </a>
                         <a href="#" class="icon icon-lg text-muted" data-bs-toggle="offcanvas"
                            data-bs-target="#offcanvas-more" aria-controls="offcanvas-more">
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
@@ -112,7 +130,8 @@
                     <div class="py-6 py-lg-10 " id="messageArea">
                         <th:block th:each="message:${messages}">
                             <div class="message message-out" th:if="${message.user.username == username}">
-                                <a href="#" data-bs-toggle="modal" data-bs-target="#modal-profile" class="avatar avatar-responsive">
+                                <a href="#" data-bs-toggle="modal" data-bs-target="#modal-profile"
+                                   class="avatar avatar-responsive">
                                     <img class='avatar-img' th:src="@{'/assets/image/' + ${message.user.image}}" alt=''>
                                 </a>
                                 <div class="message-inner">
@@ -123,15 +142,31 @@
                                             </div>
                                             <div class="message-action">
                                                 <div class="dropdown">
-                                                    <a class="icon text-muted" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-more-vertical"><circle cx="12" cy="12" r="1"></circle><circle cx="12" cy="5" r="1"></circle><circle cx="12" cy="19" r="1"></circle></svg>
+                                                    <a class="icon text-muted" href="#" role="button"
+                                                       data-bs-toggle="dropdown" aria-expanded="false">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                                             viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                                             stroke-width="2" stroke-linecap="round"
+                                                             stroke-linejoin="round"
+                                                             class="feather feather-more-vertical">
+                                                            <circle cx="12" cy="12" r="1"></circle>
+                                                            <circle cx="12" cy="5" r="1"></circle>
+                                                            <circle cx="12" cy="19" r="1"></circle>
+                                                        </svg>
                                                     </a>
                                                     <ul class="dropdown-menu">
                                                         <li>
                                                             <a class="dropdown-item d-flex align-items-center" href="#">
                                                                 <span class="me-auto">Edit</span>
                                                                 <div class="icon">
-                                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-edit-3"><path d="M12 20h9"></path><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path></svg>
+                                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24"
+                                                                         height="24" viewBox="0 0 24 24" fill="none"
+                                                                         stroke="currentColor" stroke-width="2"
+                                                                         stroke-linecap="round" stroke-linejoin="round"
+                                                                         class="feather feather-edit-3">
+                                                                        <path d="M12 20h9"></path>
+                                                                        <path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path>
+                                                                    </svg>
                                                                 </div>
                                                             </a>
                                                         </li>
@@ -139,7 +174,14 @@
                                                             <a class="dropdown-item d-flex align-items-center" href="#">
                                                                 <span class="me-auto">Reply</span>
                                                                 <div class="icon">
-                                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-corner-up-left"><polyline points="9 14 4 9 9 4"></polyline><path d="M20 20v-7a4 4 0 0 0-4-4H4"></path></svg>
+                                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24"
+                                                                         height="24" viewBox="0 0 24 24" fill="none"
+                                                                         stroke="currentColor" stroke-width="2"
+                                                                         stroke-linecap="round" stroke-linejoin="round"
+                                                                         class="feather feather-corner-up-left">
+                                                                        <polyline points="9 14 4 9 9 4"></polyline>
+                                                                        <path d="M20 20v-7a4 4 0 0 0-4-4H4"></path>
+                                                                    </svg>
                                                                 </div>
                                                             </a>
                                                         </li>
@@ -147,10 +189,20 @@
                                                             <hr class="dropdown-divider">
                                                         </li>
                                                         <li>
-                                                            <a class="dropdown-item d-flex align-items-center text-danger" href="#">
+                                                            <a class="dropdown-item d-flex align-items-center text-danger"
+                                                               href="#">
                                                                 <span class="me-auto">Delete</span>
                                                                 <div class="icon">
-                                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-trash-2"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path><line x1="10" y1="11" x2="10" y2="17"></line><line x1="14" y1="11" x2="14" y2="17"></line></svg>
+                                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24"
+                                                                         height="24" viewBox="0 0 24 24" fill="none"
+                                                                         stroke="currentColor" stroke-width="2"
+                                                                         stroke-linecap="round" stroke-linejoin="round"
+                                                                         class="feather feather-trash-2">
+                                                                        <polyline points="3 6 5 6 21 6"></polyline>
+                                                                        <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+                                                                        <line x1="10" y1="11" x2="10" y2="17"></line>
+                                                                        <line x1="14" y1="11" x2="14" y2="17"></line>
+                                                                    </svg>
                                                                 </div>
                                                             </a>
                                                         </li>
@@ -180,7 +232,8 @@
                             </div>
 
                             <div class='message' th:if="${message.user.username != username}">
-                                <a data-bs-toggle='modal' data-bs-target='#modal-user-profile' class='avatar avatar-responsive'>
+                                <a data-bs-toggle='modal' data-bs-target='#modal-user-profile'
+                                   class='avatar avatar-responsive'>
                                     <img class='avatar-img' th:src="@{'/assets/image/' + ${message.user.image}}" alt=''>
                                 </a>
                                 <div class='message-inner'>
@@ -214,7 +267,8 @@
 
                         </th:block>
                         <div class='message message-out' style="margin: 0px" id="statusMessageSend">
-                            <a data-bs-toggle='modal' data-bs-target='#modal-profile' style="height: 0px" class='avatar avatar-responsive'>
+                            <a data-bs-toggle='modal' data-bs-target='#modal-profile' style="height: 0px"
+                               class='avatar avatar-responsive'>
                             </a>
                             <div class='message-inner'>
                                 <div class='message-body'>

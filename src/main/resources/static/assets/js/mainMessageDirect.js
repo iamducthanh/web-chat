@@ -67,8 +67,7 @@ function sendMessage(event) {
             },
             success: function (data) {
                 let idMesss = data[0].idMessage;
-                console.log("id mess: " + data[0].idMessage)
-                var chatMessage = {
+                let chatMessage = {
                     id: data[0].idMessage,
                     sender: username,
                     content: messageInput.value,
@@ -77,8 +76,6 @@ function sendMessage(event) {
                 };
                 stompClient.send("/app/chat.sendMessage/" + room, {}, JSON.stringify(chatMessage));
                 messageInput.value = '';
-
-                console.log(data)
 
                 if (data[0].fileName != null) {
                     for (let i = 0; i < data.length; i++) {
@@ -133,7 +130,6 @@ function onMessageReceived(payload) {
         }
     }
     if (message.type === 'JOIN') {
-        console.log(document.querySelector('#name').value.trim())
         if (document.querySelector('#name').value.trim() != message.sender) {
             document.getElementById('statusOn').innerText = "Đang hoạt động";
 
@@ -320,8 +316,6 @@ async function scrollFunction_ct () {
                             "</svg>" + "</div>" + "</a>" + "</li>" + "</ul>" + "</div>" + "</div>" + "</div>";
 
                         if(message.listFile != null){
-                            console.log(message.content)
-                            console.log(message.listFile.length)
                             messagePlus +=
                                 "<div class='message-content'>"+
                                 "<div class='message-gallery'>"+
@@ -422,9 +416,7 @@ async function scrollFunction_ct () {
 }
 function loadImage(){
     let imageMessages = document.getElementsByClassName("imageMessage");
-    console.log(imageMessages)
     for(let i=0;i<imageMessages.length;i++){
-        console.log(imageMessages[i].name)
         fetch('https://api.github.com/repos/iamducthanh/image_webchat/contents/' + imageMessages[i].name, {
             method: 'GET',
             headers: {
@@ -443,3 +435,13 @@ function loadImage(){
 }
 loadImage();
 messageForm.addEventListener('submit', sendMessage, true)
+
+function callVideo(){
+    console.log(document.querySelector("#statusOn").innerHTML)
+    if(document.querySelector("#statusOn").innerHTML == 'Không hoạt động'){
+        // showi('Người dùng này hiện không hoạt động!');
+        showWaitCall();
+    } else {
+        showWaitCall();
+    }
+}

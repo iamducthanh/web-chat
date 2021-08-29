@@ -30,6 +30,12 @@ public class HomeController {
         return "views/trangchu";
     }
 
+    @GetMapping(value = "/call")
+    public String callvideo() {
+        return "views/message/videocall";
+    }
+
+
 
 //    @RequestMapping(value = "/message_empty", method = RequestMethod.GET)
 //    public String messageEmptyPage() {

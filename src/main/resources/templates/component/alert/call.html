@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org" xmlns:v-bind="http://www.w3.org/1999/xhtml">
+<div th:fragment="call" id="call" class="swal2-container swal2-center swal2-backdrop-show" style="overflow-y: auto; display: none">
+  <div aria-labelledby="swal2-title" aria-describedby="swal2-html-container"
+       class="swal2-popup swal2-modal swal2-icon-warning swal2-show" tabindex="-1" role="dialog"
+       aria-live="assertive" aria-modal="true" style="display: grid;">
+    <button type="button" class="swal2-close" aria-label="Close this dialog" onclick="closeCall()">×</button>
+    <div class="container has-text-centered" v-cloak id="app" style="text-align: center">
+      <link rel="stylesheet" href="./assets/css/mystyle.css">
+      <script src="https://cdn.jsdelivr.net/npm/vue@2.6.12/dist/vue.min.js"></script>
+      <script src="https://cdn.jsdelivr.net/npm/axios@0.20.0/dist/axios.min.js"></script>
+      <script src="https://cdn.stringee.com/sdk/web/2.2.1/stringee-web-sdk.min.js"></script>
+      <img class="swal2-image" id="avtCall"
+           src="http://localhost:8080/chatroom/assets/img/avatars/11.jpg" alt="Custom image"
+           style="width: 100px; height: 100px; border-radius: 50%;">
+      <div id='loadingMess' class="line-clamp me-auto load-message-page">
+        <h3 style="display: inline;" id="nameCall">Đang gọi</h3>
+        <span class='typing-dots' style="font-size: 20pt"><span>.</span><span>.</span><span>.</span></span>
+        <input type="hidden" value="wait" id="statusCall">
+      </div>
+      <div class="swal2-actions" style="display: flex;">
+        <div class="swal2-loader"></div>
+        <button type="button" class="btn btn-danger" onclick="closeCall()" style="display: inline-block;">Kết
+          thúc
+        </button>
+      </div>
+      <div>
+        <button class="btn btn-primary" style="display: none" id="createMeet" v-if="!room" @click="createRoom">
+          Tạo Meeting
+        </button>
+        <input type="hidden" value="" id="idRoomMeet">
+        <button class="btn btn-info" style="display: none" id="joinMeet" v-if="!room" @click="joinWithId">
+          Join Meeting
+        </button>
+      </div>
+    </div>
+    <div class="container" style="display:none;">
+      <button class="btn btn-info" v-if="room" @click="publish(true)">
+        Chia sẻ màn hình
+      </button>
+      <div id="videos"></div>
+    </div>
+    <script src="./assets/js/api.js"></script>
+    <script src="./assets/js/calljs.js"></script>
+  </div>
+</div>
+</html>
