@@ -91,14 +91,17 @@ public class MessageApi {
                 dataFile.add(new FileAttackDto(String.valueOf(uuid),id+type,mulFile));
                 attaches.add(new Attach(message, id+type));
                 AttackFile.messageAttackHashMap.get(roomId).getFilesAttack().remove(file);
+                System.out.println("file attach: " + attaches.get(0).getFilename());
             }
-            attachService.saveAttach(attaches);
             System.out.println("Lưu thành công");
         }
         if(dataFile.isEmpty()){
             dataFile.add(new FileAttackDto(String.valueOf(uuid),null,null));
         }
         messageService.saveMessage(message);
+        if(!attack.equals("[]")){
+            attachService.saveAttach(attaches);
+        }
         return dataFile;
     }
 }

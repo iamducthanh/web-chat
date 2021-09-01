@@ -16,6 +16,7 @@ function nghe(){
     document.getElementById("container2call").style.height = '90%'
     document.getElementsByClassName("waitCall1")[0].style.display = 'none';
     document.getElementById("containerCall").style.display = 'unset';
+    document.getElementById("inCall").style.display = 'unset';
     closeWaitCall();
     stompClientCall.send("/app/call/" + document.getElementById("caller1").value,
         {},

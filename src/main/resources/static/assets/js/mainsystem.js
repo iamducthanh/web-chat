@@ -52,6 +52,7 @@ function onCall(payload){
         document.getElementById("container2call").style.height = '90%'
         document.getElementsByClassName("waitCall1")[0].style.display = 'none';
         document.getElementById("containerCall").style.display = 'unset';
+        document.getElementById("inCall").style.display = 'unset';
     }
 }
 
@@ -67,8 +68,9 @@ function onMessageRealtime(payload){
         elms[0].className = 'me-auto mb-0 messageSend';
         elms[1].className = 'text-muted extra-small ms-2 messageSend';
         elms[2].className = 'line-clamp me-auto messageSend';
-        elms[2].innerText = messageRealtime.content.substring(0, 100);
-        elms[3].innerText = '1';
+        elms[2].innerText = messageRealtime.content;
+        console.log("count:  " + elms[3].innerText);
+        elms[3].innerText = Number(elms[3].innerText) + 1;
     }
 }
 

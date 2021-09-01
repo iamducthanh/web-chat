@@ -439,8 +439,8 @@ messageForm.addEventListener('submit', sendMessage, true)
 function callVideo(){
     console.log(document.querySelector("#statusOn").innerHTML)
     if(document.querySelector("#statusOn").innerHTML == 'Không hoạt động'){
-        // showi('Người dùng này hiện không hoạt động!');
-        showWaitCall();
+        showi('Người dùng này hiện không hoạt động!');
+        // showWaitCall();
     } else {
         showWaitCall();
     }
