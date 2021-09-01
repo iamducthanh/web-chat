@@ -42,7 +42,7 @@ function onError() {
 }
 
 
-function sendMessage(event) {
+async function sendMessage(event) {
     var messageContent = messageInput.value.trim();
     if (messageContent && stompClient) {
         var attack = document.getElementsByClassName("attackFiles");
@@ -65,7 +65,7 @@ function sendMessage(event) {
             error: function () {
                 console.log("error")
             },
-            success: function (data) {
+            success: async function (data) {
                 let idMesss = data[0].idMessage;
                 let chatMessage = {
                     id: data[0].idMessage,
@@ -89,14 +89,14 @@ function sendMessage(event) {
                             content: "",
                             type: 'ATTACK',
                             room: room,
-                            urlFile: "data:image/png;base64," + data[i].data
+                            // urlFile: "data:image/png;base64," + data[i].data
+                            urlFile: data[i].fileName
                         };
-                        stompClient.send("/app/chat.sendMessage/" + room, {}, JSON.stringify(attack));
                         document.querySelector("#dz-preview-row").innerHTML = "";
-                        fetch('https://api.github.com/repos/iamducthanh/image_webchat/contents/' + data[i].fileName, {
+                        await fetch('https://api.github.com/repos/iamducthanh/image_webchat/contents/' + data[i].fileName, {
                             method: 'PUT',
                             headers: {
-                                "Authorization": TO+KEN,
+                                "Authorization": TO + KEN,
                                 'Content-Type': 'application/json',
                             },
                             body: JSON.stringify(dataa),
@@ -108,6 +108,7 @@ function sendMessage(event) {
                             .catch((error) => {
                                 console.error('Error:', error);
                             });
+                        stompClient.send("/app/chat.sendMessage/" + room, {}, JSON.stringify(attack));
                     }
                 }
             },
@@ -118,7 +119,7 @@ function sendMessage(event) {
 }
 
 
-function onMessageReceived(payload) {
+async function onMessageReceived(payload) {
     let message = JSON.parse(payload.body);
     let messageArea = document.getElementById('messageArea');
     let date = new Date();
@@ -251,10 +252,26 @@ function onMessageReceived(payload) {
         }
     } else if(message.type === 'ATTACK'){
         let divAttack = document.getElementById(message.id);
+        let data = '';
+        console.log("file nameeee: " + message.urlFile)
+        await fetch('https://api.github.com/repos/iamducthanh/image_webchat/contents/' + message.urlFile, {
+            method: 'GET',
+            headers: {
+                "Authorization": TO+KEN,
+                "Accept":"application/vnd.github.v3+json"
+            },
+        })
+            .then(response => response.json())
+            .then(out => {
+                data = "data:image/png;base64," + out.content;
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+            });
         divAttack.innerHTML +=
             "<div class='col'>"+
                 "<img class='img-fluid rounded'"+
-                     "src='"+message.urlFile+"' data-action='zoom'"+
+                     "src='"+data+"' data-action='zoom'"+
                      "alt=''>"+
             "</div>"
     }
@@ -440,7 +457,6 @@ function callVideo(){
     console.log(document.querySelector("#statusOn").innerHTML)
     if(document.querySelector("#statusOn").innerHTML == 'Không hoạt động'){
         showi('Người dùng này hiện không hoạt động!');
-        // showWaitCall();
     } else {
         showWaitCall();
     }
