@@ -76,22 +76,30 @@ function onMessageRealtime(payload){
 
 function onMessageReceivedOnline(payload){
     let user = JSON.parse(payload.body);
-    console.log(user.username)
     let userClass = document.getElementById(user.username);
-    console.log("nguoi vua online: " +userClass)
+    let userClassFriend = document.getElementById(user.username + 'Friend');
+    let userStatus = document.getElementsByClassName(user.username)[0];
+    let userStatusFriend = document.getElementsByClassName(user.username+'Friend')[0];
+    console.log(userStatusFriend)
     if(userClass != null){
         if(user.type == 'ONLINE'){
             userClass.className = 'avatar avatar-online';
-            let userMess = document.getElementsByClassName(user.username)[0];
-            if(userMess != null){
-                userMess.innerText = 'Đang hoạt động';
+            userClassFriend.className = 'avatar avatar-online';
+            if(userStatus != null){
+                userStatus.innerText = 'Đang hoạt động';
+            }
+            if(userStatusFriend != null){
+                userStatusFriend.innerText = 'Đang hoạt động';
             }
         } else if(user.type == 'OFFLINE'){
-            let userMess = document.getElementsByClassName(user.username)[0];
-            if(userMess != null){
-                userMess.innerText = 'Không hoạt động';
+            if(userStatus != null){
+                userStatus.innerText = 'Không hoạt động';
+            }
+            if(userStatusFriend != null){
+                userStatusFriend.innerText = 'Không hoạt động';
             }
             userClass.className = 'avatar avatar-offline';
+            userClassFriend.className = 'avatar avatar-offline';
         }
     }
 }

@@ -99,6 +99,8 @@ public class DataIntercepter implements HandlerInterceptor {
                 }
             }
         }
+        req.setAttribute("friend", friends);
+        req.setAttribute("friendRequest", friendRequest);
     }
 
     @Override
