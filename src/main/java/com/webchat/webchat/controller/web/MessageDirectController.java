@@ -46,9 +46,6 @@ public class MessageDirectController {
     @Autowired
     private UploadUtil uploadUtil;
 
-//    @Autowired
-//    private Drive googleDrive;
-
     @RequestMapping(value = "/message_direct", method = RequestMethod.GET)
     public String messageDirectPage(Model model) {
         String view = "redirect:/trang-chu";

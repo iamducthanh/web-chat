@@ -18,15 +18,10 @@
 
                     <div class="profile-body">
                         <div class="avatar avatar-xl">
-                            <img class="avatar-img" src="./assets/img/avatars/9.jpg" alt="#">
-
-                            <a href="#" class="badge badge-lg badge-circle bg-primary text-white border-outline position-absolute bottom-0 end-0">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-plus"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
-                            </a>
+                            <img class="avatar-img" th:src="@{'/assets/image/' + ${userInRoom.image}}" alt="#">
                         </div>
 
-                        <h4 class="mb-1">William Wright</h4>
-                        <p>last seen 5 minutes ago</p>
+                        <h4 class="mb-1">[[${userInRoom.getFullname()}]]</h4>
                     </div>
                 </div>
                 <!-- Header -->
@@ -38,8 +33,8 @@
                     <li class="list-group-item">
                         <div class="row align-items-center gx-6">
                             <div class="col">
-                                <h5>Location</h5>
-                                <p>USA, Houston</p>
+                                <h5>Tên người dùng</h5>
+                                <p>[[${userInRoom.username}]]</p>
                             </div>
 
                             <div class="col-auto">
@@ -54,7 +49,7 @@
                         <div class="row align-items-center gx-6">
                             <div class="col">
                                 <h5>E-mail</h5>
-                                <p>william@studio.com</p>
+                                <p>[[${userInRoom.email}]]</p>
                             </div>
 
                             <div class="col-auto">

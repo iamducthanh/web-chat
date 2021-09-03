@@ -20,10 +20,10 @@ public class Friend {
     @Column(name = "id")
     private Integer id;
 
-    @ManyToOne @JoinColumn(name = "userId")
+    @ManyToOne @JoinColumn(name = "userid")
     private User user;
 
-    @ManyToOne @JoinColumn(name = "friendId")
+    @ManyToOne @JoinColumn(name = "friendid")
     private User friend;
 
     @Column(name = "day")

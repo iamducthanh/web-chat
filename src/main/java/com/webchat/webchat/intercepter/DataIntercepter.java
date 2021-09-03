@@ -1,10 +1,12 @@
 package com.webchat.webchat.intercepter;
 
 import com.webchat.webchat.constant.PropertiesConstant;
+import com.webchat.webchat.entities.Friend;
 import com.webchat.webchat.entities.Message;
 import com.webchat.webchat.entities.RoomDetail;
 import com.webchat.webchat.entities.User;
 import com.webchat.webchat.pojo.MessageUser;
+import com.webchat.webchat.service.impl.FriendService;
 import com.webchat.webchat.service.impl.MessageService;
 import com.webchat.webchat.service.impl.RoomDetailService;
 import com.webchat.webchat.service.impl.UserService;
@@ -23,24 +25,35 @@ import java.util.List;
 public class DataIntercepter implements HandlerInterceptor {
     @Autowired
     private RoomDetailService roomDetailService;
-
     @Autowired
     private UserService userService;
-
     @Autowired
     private MessageService messageService;
+    @Autowired
+    private FriendService friendService;
 
     @Override
     public boolean preHandle(HttpServletRequest req, HttpServletResponse resp, Object handler) throws Exception {
-        String uri = req.getRequestURI();
         User user = (User) SessionUtil.getSessionUtil().getObject(req, "USER");
         System.out.println("run");
+        req.setAttribute("user", user);
+        getUserOnline(req, user);
+        getMessageUser(req, user);
+        getFriendUser(req, user);
+        return true;
+    }
+
+    public void getUserOnline(HttpServletRequest req, User user) {
+        req.setAttribute("userOnline", user.getUsername());
+    }
+
+    public void getMessageUser(HttpServletRequest req, User user) {
         List<MessageUser> messageUsers = new ArrayList<>();
         List<RoomDetail> roomDetails = roomDetailService.findByUser(user.getId());
         String name = "";
-        for(RoomDetail roomDetail : roomDetails){
+        for (RoomDetail roomDetail : roomDetails) {
             List<User> userInRoom = userService.findInRoom(user.getId(), roomDetail.getRoom().getId());
-            if(userInRoom.size() == 1){
+            if (userInRoom.size() == 1) {
                 name = userInRoom.get(0).getFullname();
             } else {
                 name = roomDetail.getRoom().getName();
@@ -49,15 +62,15 @@ public class DataIntercepter implements HandlerInterceptor {
             int status = 0;
             String time = "";
             int countMess = 0;
-            if(messageLast != null){
+            if (messageLast != null) {
                 time = messageLast.getTimeChat();
                 countMess = messageService.countMessageSend(roomDetail.getRoom().getId(), userInRoom.get(0).getUsername());
-                if(!messageLast.getUser().getUsername().equals(user.getUsername())){
-                    if(messageLast.getStatus().equals(String.valueOf(PropertiesConstant.MessageStatus.SEND))){
+                if (!messageLast.getUser().getUsername().equals(user.getUsername())) {
+                    if (messageLast.getStatus().equals(String.valueOf(PropertiesConstant.MessageStatus.SEND))) {
                         status = 1;
                     }
                 }
-                if(user.getUsername().equals(messageLast.getUser().getUsername())){
+                if (user.getUsername().equals(messageLast.getUser().getUsername())) {
                     messageLast.setContent("Bạn: " + messageLast.getContent());
                 }
             } else {
@@ -66,10 +79,26 @@ public class DataIntercepter implements HandlerInterceptor {
             }
             messageUsers.add(new MessageUser(roomDetail, name, userInRoom, messageLast.getContent(), countMess, status, time, roomDetail.getRoom().getId()));
         }
-        req.setAttribute("user", user);
-        req.setAttribute("userOnline", user.getUsername());
         req.setAttribute("messageUsers", messageUsers);
-        return true;
+    }
+
+    public void getFriendUser(HttpServletRequest req, User user) {
+        List<Friend> listFriend = friendService.getFriendByUser(user.getUsername());
+        List<User> friends = new ArrayList<>();
+        List<User> friendRequest = new ArrayList<>();
+        if (listFriend != null) {
+            for (Friend friend : listFriend) {
+                if (friend.getStatus().equals("FRIEND")) {
+                    if (friend.getUser().getUsername().equals(user.getUsername())) {
+                        friends.add(friend.getFriend());
+                    } else {
+                        friends.add(friend.getUser());
+                    }
+                } else if (friend.getStatus().equals("WAIT") && friend.getFriend().getUsername().equals(user.getUsername())) {
+                    friendRequest.add(friend.getUser());
+                }
+            }
+        }
     }
 
     @Override

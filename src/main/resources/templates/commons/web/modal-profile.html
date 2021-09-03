@@ -17,11 +17,10 @@
 
           <div class="profile-body">
             <div class="avatar avatar-xl">
-              <img class="avatar-img" src="./assets/img/avatars/1.jpg" alt="#">
+              <img class="avatar-img" th:src="@{'/assets/image/' + ${user.image}}" alt="#">
             </div>
 
-<!--            <h4 class="mb-1">[[${user.getFullname()}]]</h4>-->
-            <p>last seen 5 minutes ago</p>
+            <h4 class="mb-1">[[${user.getFullname()}]]</h4>
           </div>
         </div>
         <!-- Header -->
@@ -33,8 +32,8 @@
           <li class="list-group-item">
             <div class="row align-items-center gx-6">
               <div class="col">
-                <h5>Location</h5>
-                <p>USA, Houston</p>
+                <h5>Tên người dùng</h5>
+                <p>[[${user.username}]]</p>
               </div>
 
               <div class="col-auto">
@@ -49,7 +48,7 @@
             <div class="row align-items-center gx-6">
               <div class="col">
                 <h5>E-mail</h5>
-                <p>william@studio.com</p>
+                <p>[[${user.email}]]</p>
               </div>
 
               <div class="col-auto">

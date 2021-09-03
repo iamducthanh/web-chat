@@ -8,6 +8,8 @@
     <title layout:fragment="title">Web Chat - By IamDucThanh</title>
 </head>
 <body layout:fragment="content">
+<div th:replace="/commons/web/modal-user-profile :: modal-user-profile"></div>
+
 <main class="main is-visible" data-dropzone-area="">
     <div class="container h-100">
         <div class="d-flex flex-column h-100 position-relative">
@@ -353,7 +355,7 @@
         </a>
 
         <div class="visibility-xl-invisible overflow-hidden text-center">
-            <h5 class="text-truncate">Ollie Chandler</h5>
+            <h5 class="text-truncate">[[${userInRoom.getFullname()}]]</h5>
             <p class="text-truncate">last seen 5 minutes ago</p>
         </div>
 
@@ -425,23 +427,12 @@
             <div class="row gy-6">
                 <div class="col-12">
                     <div class="avatar avatar-xl mx-auto">
-                        <img src="assets/img/avatars/11.jpg" alt="#" class="avatar-img">
-
-                        <a href="#"
-                           class="badge badge-lg badge-circle bg-primary text-white border-outline position-absolute bottom-0 end-0">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                                 fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                 stroke-linejoin="round" class="feather feather-plus">
-                                <line x1="12" y1="5" x2="12" y2="19"></line>
-                                <line x1="5" y1="12" x2="19" y2="12"></line>
-                            </svg>
-                        </a>
+                        <img th:src="@{'/assets/image/' + ${userInRoom.image}}" alt="#" class="avatar-img">
                     </div>
                 </div>
 
                 <div class="col-12">
-                    <h4>Ollie Chandler</h4>
-                    <p>Bootstrap is an open source <br> toolkit for developing web with <br> HTML, CSS, and JS.</p>
+                    <h5 class="text-truncate">[[${userInRoom.getFullname()}]]</h5>
                 </div>
             </div>
         </div>
@@ -452,14 +443,14 @@
             <li class="nav-item">
                 <a class="nav-link active" data-bs-toggle="pill" href="#offcanvas-tab-profile" role="tab"
                    aria-controls="offcanvas-tab-profile" aria-selected="true">
-                    Profile
+                    Thông tin
                 </a>
             </li>
 
             <li class="nav-item">
                 <a class="nav-link" data-bs-toggle="pill" href="#offcanvas-tab-media" role="tab"
                    aria-controls="offcanvas-tab-media" aria-selected="true">
-                    Media
+                    Ảnh
                 </a>
             </li>
 
@@ -573,7 +564,7 @@
                 <div class="row row-cols-3 g-3 py-6">
                     <div class="col">
                         <a href="#" data-bs-toggle="modal" data-bs-target="#modal-media-preview"
-                           data-theme-img-url="assets/img/chat/media-1.jpg">
+                           data-theme-img-url="assets/img/chat/1.jpg">
                             <img class="img-fluid rounded" src="assets/img/chat/1.jpg" alt="">
                         </a>
                     </div>
@@ -1257,6 +1248,7 @@
                 </ul>
             </div>
             <!-- Files -->
+            <div th:replace="/commons/web/modal-user-profile :: modal-user-profile"></div>
         </div>
         <!-- Tabs: Content -->
     </div>
