@@ -6,6 +6,7 @@ import com.webchat.webchat.entities.Message;
 import com.webchat.webchat.entities.RoomDetail;
 import com.webchat.webchat.entities.User;
 import com.webchat.webchat.pojo.MessageUser;
+import com.webchat.webchat.pojo.NotificationPojo;
 import com.webchat.webchat.service.impl.FriendService;
 import com.webchat.webchat.service.impl.MessageService;
 import com.webchat.webchat.service.impl.RoomDetailService;
@@ -48,6 +49,7 @@ public class DataIntercepter implements HandlerInterceptor {
     }
 
     public void getMessageUser(HttpServletRequest req, User user) {
+        int countMessage = 0;
         List<MessageUser> messageUsers = new ArrayList<>();
         List<RoomDetail> roomDetails = roomDetailService.findByUser(user.getId());
         String name = "";
@@ -67,6 +69,7 @@ public class DataIntercepter implements HandlerInterceptor {
                 countMess = messageService.countMessageSend(roomDetail.getRoom().getId(), userInRoom.get(0).getUsername());
                 if (!messageLast.getUser().getUsername().equals(user.getUsername())) {
                     if (messageLast.getStatus().equals(String.valueOf(PropertiesConstant.MessageStatus.SEND))) {
+                        countMessage ++;
                         status = 1;
                     }
                 }
@@ -80,12 +83,13 @@ public class DataIntercepter implements HandlerInterceptor {
             messageUsers.add(new MessageUser(roomDetail, name, userInRoom, messageLast.getContent(), countMess, status, time, roomDetail.getRoom().getId()));
         }
         req.setAttribute("messageUsers", messageUsers);
+        req.setAttribute("countMessage", countMessage);
     }
 
     public void getFriendUser(HttpServletRequest req, User user) {
         List<Friend> listFriend = friendService.getFriendByUser(user.getUsername());
         List<User> friends = new ArrayList<>();
-        List<User> friendRequest = new ArrayList<>();
+        List<NotificationPojo> notifications = new ArrayList<>();
         if (listFriend != null) {
             for (Friend friend : listFriend) {
                 if (friend.getStatus().equals("FRIEND")) {
@@ -95,12 +99,12 @@ public class DataIntercepter implements HandlerInterceptor {
                         friends.add(friend.getUser());
                     }
                 } else if (friend.getStatus().equals("WAIT") && friend.getFriend().getUsername().equals(user.getUsername())) {
-                    friendRequest.add(friend.getUser());
+                    notifications.add(new NotificationPojo(friend.getUser(), friend.getDay()));
                 }
             }
         }
         req.setAttribute("friend", friends);
-        req.setAttribute("friendRequest", friendRequest);
+        req.setAttribute("notifications", notifications);
     }
 
     @Override

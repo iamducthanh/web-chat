@@ -47,10 +47,10 @@
         <!-- Chats -->
         <li class="nav-item">
             <a class="nav-link active py-0 py-lg-8" id="tab-chats" href="#tab-content-chats" title="Chats" data-bs-toggle="tab" role="tab">
-                <div class="icon icon-xl icon-badged">
+                <div id="divCountMessage" th:class="@{'icon icon-xl ' + ${countMessage != 0 ? 'icon-badged' : ''}}">
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-message-square"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
-                    <div class="badge badge-circle bg-primary">
-                        <span>4</span>
+                    <div id="onRemoveCount" th:if="${countMessage != 0}" class="badge badge-circle bg-primary">
+                        <span id="countMessage">[[${countMessage}]]</span>
                     </div>
                 </div>
             </a>
@@ -59,8 +59,11 @@
         <!-- Notification -->
         <li class="nav-item">
             <a class="nav-link py-0 py-lg-8" id="tab-notifications" href="#tab-content-notifications" title="Notifications" data-bs-toggle="tab" role="tab">
-                <div class="icon icon-xl">
+                <div class="icon icon-xl icon-badged">
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-bell"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg>
+                    <div class="badge badge-circle bg-primary">
+                        <span>[[${countMessage}]]</span>
+                    </div>
                 </div>
             </a>
         </li>

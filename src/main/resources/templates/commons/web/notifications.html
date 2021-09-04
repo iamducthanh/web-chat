@@ -6,12 +6,10 @@
     <div class="hide-scrollbar">
       <div class="container py-8">
 
-        <!-- Title -->
         <div class="mb-8">
-          <h2 class="fw-bold m-0">Notifications</h2>
+          <h2 class="fw-bold m-0">Thông báo</h2>
         </div>
 
-        <!-- Search -->
         <div class="mb-6">
           <form action="#">
             <div class="input-group">
@@ -30,64 +28,60 @@
         <div class="card-list">
           <!-- Title -->
           <div class="d-flex align-items-center my-4 px-6">
-            <small class="text-muted me-auto">Today</small>
-
+            <small class="text-muted me-auto">Hôm nay</small>
             <a href="#" class="text-muted small">Clear all</a>
           </div>
           <!-- Title -->
 
           <!-- Card -->
-          <div class="card border-0 mb-5">
-            <div class="card-body">
-
-              <div class="row gx-5">
-                <div class="col-auto">
-                  <!-- Avatar -->
-                  <a href="#" class="avatar">
-                    <img class="avatar-img" src="assets/img/avatars/11.jpg" alt="">
-
-                    <div class="badge badge-circle bg-primary border-outline position-absolute bottom-0 end-0">
-                      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-user"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
-                    </div>
-                  </a>
-                </div>
-
-                <div class="col">
-                  <div class="d-flex align-items-center mb-2">
-                    <h5 class="me-auto mb-0">
-                      <a href="#">Mila White</a>
-                    </h5>
-                    <span class="extra-small text-muted ms-2">08:45 PM</span>
+          <th:block th:each="notification:${notifications}">
+            <div class="card border-0 mb-5">
+              <div class="card-body">
+                <div class="row gx-5">
+                  <div class="col-auto">
+                    <!-- Avatar -->
+                    <a href="#" class="avatar">
+                      <img class="avatar-img" th:src="@{'/assets/image/' + ${notification.user.image}}" alt="">
+                      <div class="badge badge-circle bg-primary border-outline position-absolute bottom-0 end-0">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-user"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+                      </div>
+                    </a>
                   </div>
-
-                  <div class="d-flex">
-                    <div class="me-auto">Send you a friend request.</div>
-
-                    <div class="dropdown ms-5">
-                      <a class="icon text-muted" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-more-horizontal"><circle cx="12" cy="12" r="1"></circle><circle cx="19" cy="12" r="1"></circle><circle cx="5" cy="12" r="1"></circle></svg>
-                      </a>
-                      <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="#">Show less often</a></li>
-                        <li><a class="dropdown-item" href="#">Hide</a></li>
-                      </ul>
+                  <div class="col">
+                    <div class="d-flex align-items-center mb-2">
+                      <h5 class="me-auto mb-0">
+                        <a href="#">[[${notification.getUser().getFullname()}]]</a>
+                      </h5>
+                      <span class="extra-small text-muted ms-2">[[${notification.getTime()}]]</span>
+                    </div>
+                    <div class="d-flex">
+                      <div class="me-auto">Đã gửi cho bạn lời mời kết bạn.</div>
+                      <div class="dropdown ms-5">
+                        <a class="icon text-muted" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-more-horizontal"><circle cx="12" cy="12" r="1"></circle><circle cx="19" cy="12" r="1"></circle><circle cx="5" cy="12" r="1"></circle></svg>
+                        </a>
+                        <ul class="dropdown-menu">
+                          <li><a class="dropdown-item" href="#">Show less often</a></li>
+                          <li><a class="dropdown-item" href="#">Hide</a></li>
+                        </ul>
+                      </div>
                     </div>
                   </div>
                 </div>
               </div>
-            </div>
 
-            <div class="card-footer">
-              <div class="row gx-5">
-                <div class="col">
-                  <a href="#" class="btn btn-sm btn-secondary w-100">Delete</a>
-                </div>
-                <div class="col">
-                  <a href="#" class="btn btn-sm btn-primary w-100">Confirm</a>
+              <div class="card-footer">
+                <div class="row gx-5">
+                  <div class="col">
+                    <a href="#" class="btn btn-sm btn-secondary w-100">Xoá</a>
+                  </div>
+                  <div class="col">
+                    <a href="#" class="btn btn-sm btn-primary w-100">Chấp nhận</a>
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
+          </th:block>
           <!-- Card -->
 
           <!-- Card -->
@@ -98,9 +92,9 @@
                 <div class="col-auto">
                   <!-- Avatar -->
                   <a href="#" class="avatar">
-                                                            <span class="avatar-text bg-warning">
-                                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-star"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
-                                                            </span>
+                     <span class="avatar-text bg-warning">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-star"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+                     </span>
 
                     <div class="badge badge-circle bg-warning border-outline position-absolute bottom-0 end-0">
                       <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-gift"><polyline points="20 12 20 22 4 22 4 12"></polyline><rect x="2" y="7" width="20" height="5"></rect><line x1="12" y1="22" x2="12" y2="7"></line><path d="M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7z"></path><path d="M12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z"></path></svg>
@@ -142,7 +136,7 @@
         <div class="card-list mt-8">
           <!-- Title -->
           <div class="d-flex align-items-center my-4 px-6">
-            <small class="text-muted me-auto">Yesterday</small>
+            <small class="text-muted me-auto">Hôm qua</small>
 
             <a href="#" class="text-muted small">Clear all</a>
           </div>
@@ -199,7 +193,7 @@
 
           <!-- Title -->
           <div class="d-flex align-items-center my-4 px-6">
-            <small class="text-muted me-auto">Previous</small>
+            <small class="text-muted me-auto">Trước đó</small>
 
             <a href="#" class="text-muted small">Clear all</a>
           </div>

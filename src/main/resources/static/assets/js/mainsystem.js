@@ -58,19 +58,32 @@ function onCall(payload){
 
 function onMessageRealtime(payload){
     let messageRealtime = JSON.parse(payload.body);
-    console.log(messageRealtime.sender)
-    console.log(messageRealtime.reader)
-    console.log(messageRealtime.content)
-    console.log(messageRealtime.time)
     let classname = 'messUser' + messageRealtime.reader + messageRealtime.sender;
     let elms = document.getElementsByName(classname);
     if(elms != null){
+        // tạo thông báo tin nhắn
         elms[0].className = 'me-auto mb-0 messageSend';
         elms[1].className = 'text-muted extra-small ms-2 messageSend';
         elms[2].className = 'line-clamp me-auto messageSend';
         elms[2].innerText = messageRealtime.content;
         console.log("count:  " + elms[3].innerText);
         elms[3].innerText = Number(elms[3].innerText) + 1;
+
+        // tạo số lượng tin nhắn
+        let countMessage = document.getElementById('countMessage');
+        if(countMessage != null){
+            countMessage.innerText = Number(countMessage.innerText) + 1;
+        } else {
+            let divCountMessage = document.getElementById("divCountMessage");
+            divCountMessage.className += 'icon-badged';
+            let divSpan = document.createElement('div');
+            divSpan.className = 'badge badge-circle bg-primary';
+            divCountMessage.appendChild(divSpan);
+            let span = document.createElement("span");
+            span.id = 'countMessage';
+            span.innerText = '1';
+            divSpan.appendChild(span);
+        }
     }
 }
 

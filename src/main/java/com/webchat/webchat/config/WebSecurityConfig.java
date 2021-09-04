@@ -51,7 +51,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .failureUrl("/signin?status=login_false")
                 .usernameParameter("username")
                 .passwordParameter("password")
-                .and().logout().logoutUrl("/signout").logoutSuccessUrl("/logoutSuccessful");
+                .and().logout().logoutUrl("/signout").logoutSuccessUrl("/trang-chu");
 
         http.authorizeRequests().and() //
                 .rememberMe().tokenRepository(this.persistentTokenRepository())

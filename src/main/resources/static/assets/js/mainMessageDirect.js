@@ -21,10 +21,23 @@ function connect() {
 
 function onConnected() {
     var names = 'messUser' + username + document.getElementById('userInRoomDirect').value;
+    // clear thông báo tin nhắn
     document.getElementsByName(names)[0].className = 'me-auto mb-0';
     document.getElementsByName(names)[1].className = 'text-muted extra-small ms-2';
     document.getElementsByName(names)[2].className = 'line-clamp me-auto';
     document.getElementsByName(names)[3].innerText = 0;
+    // reset số lượng tin nhắn
+    let countMessage = document.getElementById('countMessage');
+    if(countMessage != null){
+        if(Number(countMessage.innerText) - 1 == 0){
+            let divCountMessage = document.getElementById('divCountMessage');
+            divCountMessage.className = 'icon icon-xl ';
+            divCountMessage.removeChild(document.getElementById('onRemoveCount'));
+        } else {
+            countMessage.innerText = Number(countMessage.innerText) - 1;
+        }
+    }
+
     // Subscribe to the Public Topic
     stompClient.subscribe('/topic/' + room, onMessageReceived);
     // Tell your username to the server
