@@ -75,7 +75,7 @@ function onMessageRealtime(payload){
             countMessage.innerText = Number(countMessage.innerText) + 1;
         } else {
             let divCountMessage = document.getElementById("divCountMessage");
-            divCountMessage.className += 'icon-badged';
+            divCountMessage.className += ' icon-badged';
             let divSpan = document.createElement('div');
             divSpan.className = 'badge badge-circle bg-primary';
             divCountMessage.appendChild(divSpan);
