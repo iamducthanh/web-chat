@@ -104,4 +104,14 @@ public class MessageApi {
         }
         return dataFile;
     }
+
+    @GetMapping("/api/files")
+    @ResponseBody
+    public List<String> getFiles(
+            @RequestParam("room") String roomId,
+            @RequestParam("userInRoom") String userInRoom
+            ){
+        List<String> files = new ArrayList<>();
+        return files;
+    }
 }

@@ -474,3 +474,12 @@ function callVideo(){
         showWaitCall();
     }
 }
+
+function onLoadMedia(){
+    let status = document.getElementById("statusMedia").value;
+    if(status == 0){
+        status = 1;
+        let room = document.getElementById("room").value;
+        let userInRoom = document.getElementById("userInRoomDirect").value;
+    }
+}

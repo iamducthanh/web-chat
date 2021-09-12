@@ -448,7 +448,7 @@
             </li>
 
             <li class="nav-item">
-                <a class="nav-link" data-bs-toggle="pill" href="#offcanvas-tab-media" role="tab"
+                <a class="nav-link" data-bs-toggle="pill" href="#offcanvas-tab-media" role="tab" onclick="onLoadMedia();"
                    aria-controls="offcanvas-tab-media" aria-selected="true">
                     Ảnh
                 </a>
@@ -561,6 +561,7 @@
 
             <!-- Media -->
             <div class="tab-pane fade" id="offcanvas-tab-media" role="tabpanel">
+                <input type="hidden" value="0" id="statusMedia">
                 <div class="row row-cols-3 g-3 py-6">
                     <div class="col">
                         <a href="#" data-bs-toggle="modal" data-bs-target="#modal-media-preview"
