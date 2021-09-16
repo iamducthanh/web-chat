@@ -43,6 +43,9 @@ public class User {
     @Column(name = "birthdate")
     private Date birthDate;
 
+    @Column(name = "gender")
+    private boolean gender;
+
     @Column(name = "role")
     private String role;
 

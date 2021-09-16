@@ -8,7 +8,7 @@
     <title layout:fragment="title">Đăng kí</title>
 </head>
 <div class="container" layout:fragment="acount-content">
-        <div class="row align-items-center justify-content-center min-vh-100 gx-0">
+        <div class="row align-items-center justify-content-center min-vh-100 gx-0" style="margin-top: 10%; margin-bottom: 10%">
             <div class="col-12 col-md-5 col-lg-6">
                 <div class="card card-shadow border-0">
                     <div class="card-body">
@@ -19,41 +19,60 @@
                                     <p>Nhanh chóng và dễ dàng</p>
                                 </div>
                             </div>
-                            <form th:action="@{'/j_spring_security_check'}" method="post">
+                            <form method="post" id="signupform">
+                                <div class="col-12" style="margin-bottom: 20px">
+                                    <div class="">
+                                        <input class="form-control" name="username" type="text" placeholder="Tên người dùng">
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="row">
+                                        <div class="col-lg-6" style="margin-bottom: 20px">
+                                            <input name="firstName" type="text" class="form-control" id="firstname" placeholder="Họ">
+                                        </div>
+                                        <div class="col-lg-6" style="margin-bottom: 20px">
+                                            <input name="lastName" type="text" class="form-control" id="lastname" placeholder="Tên">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12" style="margin-bottom: 20px">
+                                    <div class="">
+                                        <input class="form-control" name="email" type="text" placeholder="Địa chỉ email">
+                                    </div>
+                                </div>
+                                <div class="col-12" style="margin-bottom: 20px">
+                                    <div class="">
+                                        <input class="form-control" name="password" type="password" placeholder="Mật khẩu">
+                                    </div>
+                                </div>
+                                <div class="col-12" style="margin-bottom: 20px">
+                                    <div class="">
+                                        <input class="form-control" name="comfirmPassword" type="password" placeholder="Nhập lại mật khẩu">
+                                    </div>
+                                </div>
                                 <div class="col-12" style="margin-bottom: 20px">
                                     <div class="row">
                                         <div class="col-lg-6">
-                                            <input name="username" type="text" class="form-control" id="firstname" placeholder="Họ">
-
+                                            <p>Ngày sinh</p>
+                                            <div class="">
+                                                <input name="birthDate" class="form-control" type="date">
+                                            </div>
                                         </div>
                                         <div class="col-lg-6">
-                                            <input name="username" type="text" class="form-control" id="lastname" placeholder="Tên">
+                                            <p>Giới tính</p>
+                                            <div class="row" style="padding: 0 20px">
+                                                <div class="col-lg-5" style="padding: 10px; border: 1px solid #a0b3ce; border-radius: 10px">
+                                                    <input name="gender" value="true" type="radio" checked> &ensp;Nam
+                                                </div> &ensp;&ensp;
+                                                <div class="col-lg-5" style="padding: 10px; border: 1px solid #a0b3ce; border-radius: 10px">
+                                                    <input name="gender" value="false" type="radio">&ensp;Nữ
+                                                </div>
+                                            </div>
                                         </div>
-                                    </div>
-                                </div>
-                                <div class="col-12" style="margin-bottom: 20px">
-                                    <div class="">
-                                        <input class="form-control" type="text" placeholder="Địa chỉ email">
-                                    </div>
-                                </div>
-                                <div class="col-12" style="margin-bottom: 20px">
-                                    <div class="">
-                                        <input class="form-control" type="password" placeholder="Mật khẩu">
-                                    </div>
-                                </div>
-                                <div class="col-12" style="margin-bottom: 20px">
-                                    <div class="">
-                                        <input class="form-control" type="password" placeholder="Nhập lại mật khẩu">
-                                    </div>
-                                </div>
-                                <div class="col-12" style="margin-bottom: 20px">
-                                    <p>Ngày sinh</p>
-                                    <div class="">
-                                        <input class="form-control" type="date" placeholder="Nhập lại mật khẩu">
                                     </div>
                                 </div>
                                 <div class="col-12 text-center" style="margin-bottom: 20px">
-                                    <button class="btn btn-block btn-lg btn-primary w-30" type="submit">Đăng kí</button>
+                                    <button class="btn btn-block btn-lg btn-primary w-50" type="submit">Đăng kí</button>
                                 </div>
                             </form>
                         </div>
@@ -62,10 +81,39 @@
 
                 <!-- Text -->
                 <div class="text-center mt-8">
-                    <p>Bạn đã có tài khoản? <a th:href="@{/signup}">Đăng nhập</a></p>
+                    <p>Bạn đã có tài khoản? <a th:href="@{/signin}">Đăng nhập</a></p>
                     <p><a href="./password-reset.html">Forgot Password?</a></p>
                 </div>
             </div>
         </div> <!-- / .row -->
+    <script>
+        document.querySelector("#signupform").addEventListener('submit', signup, true)
+        function signup(event) {
+            event.preventDefault();
+            let formData = $("#signupform").serializeArray();
+            let user = {};
+            for (let i = 0; i < formData.length; i++) {
+                user[formData[i].name] = formData[i].value;
+            }
+            console.log(user)
+            $.ajax({
+                url: 'signup',
+                data: user,
+                error: function () {
+                    console.log("error")
+                },
+                success: async function (data) {
+                    if(data.length != 0){
+                        for (let i = 0; i < data.length; i++) {
+                            toastDanger("Lỗi", data[i]);
+                        }
+                    } else {
+                        toastSuccess("Success", "Đăng kí thành công!")
+                    }
+                },
+                type: 'POST'
+            });
+        }
+    </script>
     </div>
 </html>
