@@ -9,50 +9,62 @@
 </head>
 <div class="container" layout:fragment="acount-content">
         <div class="row align-items-center justify-content-center min-vh-100 gx-0">
-            <div class="col-12 col-md-5 col-lg-4">
+            <div class="col-12 col-md-5 col-lg-6">
                 <div class="card card-shadow border-0">
                     <div class="card-body">
                         <div class="row g-6">
                             <div class="col-12">
                                 <div class="text-center">
-                                    <h3 class="fw-bold mb-2">Sign Up</h3>
-                                    <p>Follow the easy steps</p>
+                                    <h3 class="fw-bold mb-2">Tạo tài khoản mới</h3>
+                                    <p>Nhanh chóng và dễ dàng</p>
                                 </div>
                             </div>
+                            <form th:action="@{'/j_spring_security_check'}" method="post">
+                                <div class="col-12" style="margin-bottom: 20px">
+                                    <div class="row">
+                                        <div class="col-lg-6">
+                                            <input name="username" type="text" class="form-control" id="firstname" placeholder="Họ">
 
-                            <div class="col-12">
-                                <div class="form-floating">
-                                    <input type="text" class="form-control" id="signup-name" placeholder="Name">
-                                    <label for="signup-name">Name</label>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <input name="username" type="text" class="form-control" id="lastname" placeholder="Tên">
+                                        </div>
+                                    </div>
                                 </div>
-                            </div>
-
-                            <div class="col-12">
-                                <div class="form-floating">
-                                    <input type="email" class="form-control" id="signup-email" placeholder="Email">
-                                    <label for="signup-email">Email</label>
+                                <div class="col-12" style="margin-bottom: 20px">
+                                    <div class="">
+                                        <input class="form-control" type="text" placeholder="Địa chỉ email">
+                                    </div>
                                 </div>
-                            </div>
-
-                            <div class="col-12">
-                                <div class="form-floating">
-                                    <input type="password" class="form-control" id="signup-password" placeholder="Password">
-                                    <label for="signup-password">Password</label>
+                                <div class="col-12" style="margin-bottom: 20px">
+                                    <div class="">
+                                        <input class="form-control" type="password" placeholder="Mật khẩu">
+                                    </div>
                                 </div>
-                            </div>
-
-                            <div class="col-12">
-                                <button class="btn btn-block btn-lg btn-primary w-100" type="submit">Create Account</button>
-                            </div>
+                                <div class="col-12" style="margin-bottom: 20px">
+                                    <div class="">
+                                        <input class="form-control" type="password" placeholder="Nhập lại mật khẩu">
+                                    </div>
+                                </div>
+                                <div class="col-12" style="margin-bottom: 20px">
+                                    <p>Ngày sinh</p>
+                                    <div class="">
+                                        <input class="form-control" type="date" placeholder="Nhập lại mật khẩu">
+                                    </div>
+                                </div>
+                                <div class="col-12 text-center" style="margin-bottom: 20px">
+                                    <button class="btn btn-block btn-lg btn-primary w-30" type="submit">Đăng kí</button>
+                                </div>
+                            </form>
                         </div>
                     </div>
                 </div>
 
                 <!-- Text -->
                 <div class="text-center mt-8">
-                    <p>Already have an account? <a href="./signin.html">Sign in</a></p>
+                    <p>Bạn đã có tài khoản? <a th:href="@{/signup}">Đăng nhập</a></p>
+                    <p><a href="./password-reset.html">Forgot Password?</a></p>
                 </div>
-
             </div>
         </div> <!-- / .row -->
     </div>

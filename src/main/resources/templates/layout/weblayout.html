@@ -9,12 +9,12 @@
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700" rel="stylesheet">
     <!-- Template CSS -->
-    <link rel="stylesheet" href="./assets/css/template.bundle.css">
-    <link rel="stylesheet" href="./assets/css/sweetalert2.min.css">
-    <link rel="stylesheet" href="./assets/css/mystyle.css">
+    <link rel="stylesheet" th:href="@{/assets/css/template.bundle.css}">
+    <link rel="stylesheet" th:href="@{/assets/css/sweetalert2.min.css}">
+    <link rel="stylesheet" th:href="@{/assets/css/mystyle.css}">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <link rel="stylesheet" href="./assets/css/template.dark.bundle.css" media="(prefers-color-scheme: dark)">
-    <script src="./assets/js/token.js"></script>
+    <script th:src="@{/assets/js/token.js}"></script>
     <script src="https://cdn.jsdelivr.net/npm/vue@2.6.12/dist/vue.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/axios@0.20.0/dist/axios.min.js"></script>
     <script src="https://cdn.stringee.com/sdk/web/2.2.1/stringee-web-sdk.min.js"></script>
@@ -37,15 +37,15 @@
 <!--</th:block>-->
 <!--    <div th:replace="/commons/web/modal-media-preview :: modal-media-preview"></div>-->
 <!-- Scripts -->
-<script src="./assets/js/vendor.js"></script>
-<script src="./assets/js/template.js"></script>
+<script th:src="@{/assets/js/vendor.js}"></script>
+<script th:src="@{/assets/js/template.js}"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.1.4/sockjs.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
-<script src="./assets/js/mainsystem.js"></script>
-<script src="./assets/js/alert.js"></script>
-<script src="./assets/js/api.js"></script>
-<script src="./assets/js/calljs.js"></script>
-<script src="./assets/js/mainCall.js"></script>
+<script th:src="@{/assets/js/mainsystem.js}"></script>
+<script th:src="@{/assets/js/alert.js}"></script>
+<script th:src="@{/assets/js/api.js}"></script>
+<script th:src="@{/assets/js/calljs.js}"></script>
+<script th:src="@{/assets/js/mainCall.js}"></script>
 <style>
     .messageSend{
         font-weight: 900;

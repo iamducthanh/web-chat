@@ -9,8 +9,8 @@
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700" rel="stylesheet">
     <!-- Template CSS -->
-    <link rel="stylesheet" href="./assets/css/template.bundle.css">
-    <link rel="stylesheet" href="./assets/css/template.dark.bundle.css" media="(prefers-color-scheme: dark)">
+    <link rel="stylesheet" th:href="@{/assets/css/template.bundle.css}">
+    <link rel="stylesheet" th:href="@{/assets/css/template.dark.bundle.css}" media="(prefers-color-scheme: dark)">
 </head>
 <body class="bg-light">
 <div layout:fragment="acount-content">
@@ -18,7 +18,7 @@
 </div>
 <!-- Scripts -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<script src="./assets/js/vendor.js"></script>
-<script src="./assets/js/template.js"></script>
+<script th:src="@{/assets/js/vendor.js}"></script>
+<script th:src="@{/assets/js/template.js}"></script>
 </body>
 </html>
