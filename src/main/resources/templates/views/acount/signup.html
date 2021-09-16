@@ -41,6 +41,16 @@
                                     </div>
                                 </div>
                                 <div class="col-12" style="margin-bottom: 20px">
+                                    <div class="row">
+                                        <div class="col-6">
+                                            <input class="form-control" name="code" type="text" placeholder="Mã xác nhận">
+                                        </div>
+                                        <div class="col-3">
+                                            <div class="btn btn-primary" id="btnSend" onclick="sendCode()">Gửi</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12" style="margin-bottom: 20px">
                                     <div class="">
                                         <input class="form-control" name="password" type="password" placeholder="Mật khẩu">
                                     </div>
@@ -113,6 +123,28 @@
                 },
                 type: 'POST'
             });
+        }
+
+        let wait = 60;
+
+        function sendCode(){
+            let email = document.getElementsByName("email")[0].value;
+            if(email.trim().length > 0 && email.indexOf('@') > 0 && email.indexOf('.') > 0){
+                document.getElementById("btnSend").onclick = null;
+                wait = 62;
+                setWait();
+            }
+        }
+
+        function setWait(){
+            wait = Number(wait) - 1;
+            document.getElementById("btnSend").innerText = wait - 1 + 's';
+            if(wait > 0){
+                setTimeout(setWait, 100);
+            } else {
+                document.getElementById("btnSend").onclick = sendCode;
+                document.getElementById("btnSend").innerText = 'Gửi';
+            }
         }
     </script>
     </div>
