@@ -3,8 +3,12 @@ package com.webchat.webchat.controller.acount;
 import com.webchat.webchat.constant.CodeComfirm;
 import com.webchat.webchat.entities.User;
 import com.webchat.webchat.pojo.ErrorPojo;
+import com.webchat.webchat.pojo.MailPojo;
 import com.webchat.webchat.pojo.UserRegisterPojo;
 import com.webchat.webchat.service.impl.UserService;
+import com.webchat.webchat.utils.MailerUtil;
+import lombok.SneakyThrows;
+import org.aspectj.apache.bcel.classfile.Code;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -12,6 +16,7 @@ import org.springframework.validation.ObjectError;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.mail.MessagingException;
 import java.util.*;
 import java.util.concurrent.ThreadLocalRandom;
 
@@ -19,6 +24,9 @@ import java.util.concurrent.ThreadLocalRandom;
 public class SignUpController {
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private MailerUtil mailerUtil;
 
     @GetMapping("/signup")
     public String signupPage(){
@@ -59,24 +67,47 @@ public class SignUpController {
                 error.add(new ErrorPojo("email",message.getString("EmailExist")));
             }
         }
+        if(!user.getCode().isBlank()){
+            String code = String.valueOf(CodeComfirm.codeComfirm.get(user.getEmail()));
+            if(!code.equals(user.getCode())){
+                error.add(new ErrorPojo("code",message.getString("User.code")));
+            }
+        }
         return error;
     }
 
     @PostMapping("/signup/get-code")
     @ResponseBody
-    public String getCode(String email){
+    public String getCode(String email) throws MessagingException {
         String out = "";
         User userCheck = userService.findByEmail(email);
         if(userCheck != null){
             out = "exist";
         } else {
-            out = "success";
             int ranNum = ThreadLocalRandom.current().nextInt(100000,999999);
             Integer code = CodeComfirm.codeComfirm.get(email);
+            MailPojo mailPojo = new MailPojo();
+            mailPojo.setFrom("iamducthanh01@gmail.com");
+            mailPojo.setSubject("Đăng kí tài khoản");
+            mailPojo.setBody("Mã xác nhận để đăng kí tài khoản của bạn là: " + ranNum);
+            mailPojo.setTo(email);
+            mailerUtil.send(mailPojo);
+            out = "success";
             if (code != null){
                 CodeComfirm.codeComfirm.remove(email);
             }
             CodeComfirm.codeComfirm.put(email,ranNum);
+            Thread thread = new Thread(){
+                @SneakyThrows
+                @Override
+                public void run() {
+                    Thread.sleep(300000);
+                    CodeComfirm.codeComfirm.remove(email);
+                    System.out.println("size " + CodeComfirm.codeComfirm.size());
+                }
+            };
+            thread.start();
+            System.out.println("size " + CodeComfirm.codeComfirm.size());
         }
         return out;
     }

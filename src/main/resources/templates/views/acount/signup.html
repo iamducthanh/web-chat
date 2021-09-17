@@ -142,8 +142,10 @@
                     },
                     success: async function (data) {
                         if(data == 'success'){
+                            document.getElementsByName("email")[0].style.border = "1px solid #ebf1f7";
                             toastSuccess("Thành công","Đã gửi mã xác nhận tới " + email +"!")
                         } else {
+                            document.getElementsByName("email")[0].style.border = "1px solid red";
                             toastDanger("Lỗi", "Địa chỉ email này đã được đăng kí!");
                         }
                     },
