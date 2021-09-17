@@ -20,6 +20,12 @@ public class UserService implements IUserService {
     }
 
     @Override
+    public User findByEmail(String email) {
+        List<User> list = userRepo.findUserByEmail(email);
+        return list.isEmpty() ? null : list.get(0);
+    }
+
+    @Override
     public List<User> findInRoom(int userId, String roomId) {
         List<User> list = userRepo.findUserInRoom(userId, roomId);
         return list.isEmpty() ? null : list;

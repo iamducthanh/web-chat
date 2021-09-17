@@ -131,7 +131,7 @@
 
         function sendCode(){
             let email = document.getElementsByName("email")[0].value;
-            if(email.trim().length > 0 && email.indexOf('@') > 0 && email.indexOf('.') > 0){
+            if (/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(email)) {
                 $.ajax({
                     url: 'signup/get-code',
                     data: {
@@ -141,13 +141,19 @@
                         console.log("error")
                     },
                     success: async function (data) {
-                        console.log("ok")
+                        if(data == 'success'){
+                            toastSuccess("Thành công","Đã gửi mã xác nhận tới " + email +"!")
+                        } else {
+                            toastDanger("Lỗi", "Địa chỉ email này đã được đăng kí!");
+                        }
                     },
                     type: 'POST'
                 });
-                // document.getElementById("btnSend").onclick = null;
-                // wait = 62;
-                // setWait();
+                document.getElementById("btnSend").onclick = null;
+                wait = 62;
+                setWait();
+            } else {
+                toastDanger("Lỗi", "Sai định dạng email!");
             }
         }
 
