@@ -105,7 +105,6 @@
             for (let i = 0; i < formData.length; i++) {
                 user[formData[i].name] = formData[i].value;
             }
-            console.log(user)
             $.ajax({
                 url: 'signup',
                 data: user,
@@ -113,9 +112,12 @@
                     console.log("error")
                 },
                 success: async function (data) {
+                    closeError();
+                    console.log(data)
                     if(data.length != 0){
                         for (let i = 0; i < data.length; i++) {
-                            toastDanger("Lỗi", data[i]);
+                            document.getElementsByName(data[i].field)[0].style.border = '1px solid red';
+                            toastDanger("Lỗi", data[i].message);
                         }
                     } else {
                         toastSuccess("Success", "Đăng kí thành công!")
@@ -130,9 +132,22 @@
         function sendCode(){
             let email = document.getElementsByName("email")[0].value;
             if(email.trim().length > 0 && email.indexOf('@') > 0 && email.indexOf('.') > 0){
-                document.getElementById("btnSend").onclick = null;
-                wait = 62;
-                setWait();
+                $.ajax({
+                    url: 'signup/get-code',
+                    data: {
+                        email: email
+                    },
+                    error: function () {
+                        console.log("error")
+                    },
+                    success: async function (data) {
+                        console.log("ok")
+                    },
+                    type: 'POST'
+                });
+                // document.getElementById("btnSend").onclick = null;
+                // wait = 62;
+                // setWait();
             }
         }
 
@@ -145,6 +160,17 @@
                 document.getElementById("btnSend").onclick = sendCode;
                 document.getElementById("btnSend").innerText = 'Gửi';
             }
+        }
+
+        function closeError(){
+            document.getElementsByName("username")[0].style.border = '1px solid #ebf1f7';
+            document.getElementsByName("firstName")[0].style.border = '1px solid #ebf1f7';
+            document.getElementsByName("lastName")[0].style.border = '1px solid #ebf1f7';
+            document.getElementsByName("email")[0].style.border = '1px solid #ebf1f7';
+            document.getElementsByName("code")[0].style.border = '1px solid #ebf1f7';
+            document.getElementsByName("password")[0].style.border = '1px solid #ebf1f7';
+            document.getElementsByName("comfirmPassword")[0].style.border = '1px solid #ebf1f7';
+            document.getElementsByName("birthDate")[0].style.border = '1px solid #ebf1f7';
         }
     </script>
     </div>

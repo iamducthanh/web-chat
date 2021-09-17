@@ -30,4 +30,6 @@ public class UserRegisterPojo {
     private String birthDate;
     @NotNull(message = "NotBlank.user.gender")
     private boolean gender;
+    @NotBlank(message = "NotBlank.user.code")
+    private String code;
 }

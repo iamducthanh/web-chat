@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Máy chủ: 127.0.0.1
--- Thời gian đã tạo: Th9 03, 2021 lúc 11:48 AM
+-- Thời gian đã tạo: Th9 17, 2021 lúc 04:55 AM
 -- Phiên bản máy phục vụ: 10.4.17-MariaDB
 -- Phiên bản PHP: 8.0.0
 
@@ -28,9 +28,9 @@ SET time_zone = "+00:00";
 --
 
 CREATE TABLE `attach` (
-  `id` int(11) NOT NULL,
-  `messageId` varchar(50) DEFAULT NULL,
-  `filename` varchar(100) DEFAULT NULL
+                          `id` int(11) NOT NULL,
+                          `messageId` varchar(50) DEFAULT NULL,
+                          `filename` varchar(100) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
@@ -98,11 +98,11 @@ INSERT INTO `attach` (`id`, `messageId`, `filename`) VALUES
 --
 
 CREATE TABLE `friend` (
-  `id` int(11) NOT NULL,
-  `userId` int(11) DEFAULT NULL,
-  `friendId` int(11) DEFAULT NULL,
-  `day` date DEFAULT NULL,
-  `status` varchar(20) DEFAULT NULL
+                          `id` int(11) NOT NULL,
+                          `userId` int(11) DEFAULT NULL,
+                          `friendId` int(11) DEFAULT NULL,
+                          `day` date DEFAULT NULL,
+                          `status` varchar(20) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
@@ -112,7 +112,7 @@ CREATE TABLE `friend` (
 INSERT INTO `friend` (`id`, `userId`, `friendId`, `day`, `status`) VALUES
 (1, 1, 3, '2021-09-06', 'FRIEND'),
 (2, 3, 2, '2021-09-07', 'FRIEND'),
-(3, 1, 3, '2021-09-19', 'WAIT');
+(3, 1, 2, '2021-09-19', 'WAIT');
 
 -- --------------------------------------------------------
 
@@ -121,13 +121,13 @@ INSERT INTO `friend` (`id`, `userId`, `friendId`, `day`, `status`) VALUES
 --
 
 CREATE TABLE `message` (
-  `id` varchar(50) NOT NULL,
-  `userId` int(11) DEFAULT NULL,
-  `roomId` varchar(50) DEFAULT NULL,
-  `type` varchar(10) DEFAULT NULL,
-  `time` datetime DEFAULT NULL,
-  `content` text DEFAULT NULL,
-  `status` varchar(10) NOT NULL
+                           `id` varchar(50) NOT NULL,
+                           `userId` int(11) DEFAULT NULL,
+                           `roomId` varchar(50) DEFAULT NULL,
+                           `type` varchar(10) DEFAULT NULL,
+                           `time` datetime DEFAULT NULL,
+                           `content` text DEFAULT NULL,
+                           `status` varchar(10) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
@@ -135,6 +135,8 @@ CREATE TABLE `message` (
 --
 
 INSERT INTO `message` (`id`, `userId`, `roomId`, `type`, `time`, `content`, `status`) VALUES
+('02033b42-74c3-4f6f-9b10-e1a18de6db42', 1, 'a9cf354e-3c24-45b8-85f4-8a46197a15cd', 'CHAT', '2021-09-04 16:18:20', 'ok bro', 'READ'),
+('04f9ee2c-a5bf-4771-80b0-1d670e129929', 1, 'a9cf354e-3c24-45b8-85f4-8a46197a15cd', 'CHAT', '2021-09-04 16:27:41', 'uk', 'READ'),
 ('058280e4-9dcb-4f26-83fe-752c0dda5bac', 3, 'a9cf354e-3c24-45b8-85f4-8a46197a15cd', 'CHAT', '2021-09-01 14:54:16', 'lol', 'READ'),
 ('076391db-657e-4573-93ad-224f7ff4a1e2', 1, 'a9cf354e-3c24-45b8-85f4-8a46197a15cd', 'ATTACK', '2021-09-01 14:59:03', 'toph', 'READ'),
 ('07e2bb40-0c2c-49c1-84ed-ef214322a6af', 3, 'a9cf354e-3c24-45b8-85f4-8a46197a15cd', 'ATTACK', '2021-09-01 15:00:36', 'ok', 'READ'),
@@ -183,6 +185,7 @@ INSERT INTO `message` (`id`, `userId`, `roomId`, `type`, `time`, `content`, `sta
 ('27', 1, 'a9cf354e-3c24-45b8-85f4-8a46197a15cd', 'CHAT', '2021-08-16 21:33:48', 'fdđ', 'READ'),
 ('28', 1, 'a9cf354e-3c24-45b8-85f4-8a46197a15cd', 'CHAT', '2021-08-16 21:34:09', 'eeee', 'READ'),
 ('29', 1, 'a9cf354e-3c24-45b8-85f4-8a46197a15cd', 'CHAT', '2021-08-16 21:35:37', 'sao', 'READ'),
+('29d09699-4d8a-498d-a756-f994c0ffa4d7', 3, 'a9cf354e-3c24-45b8-85f4-8a46197a15cd', 'CHAT', '2021-09-04 16:27:08', 'sdf', 'READ'),
 ('2f8213f2-28c7-4fb3-9d5c-d7db92010513', 1, 'a9cf354e-3c24-45b8-85f4-8a46197a15cd', 'ATTACK', '2021-08-25 20:27:52', 'xem đi', 'READ'),
 ('2fbb73f2-11f1-4e90-acd8-72c733b56bc9', 3, 'a9cf354e-3c24-45b8-85f4-8a46197a15cd', 'CHAT', '2021-08-29 14:24:41', 'qqq', 'READ'),
 ('3', 1, 'a9cf354e-3c24-45b8-85f4-8a46197a15cd', 'CHAT', '2021-08-16 10:23:55', 'alo alo', 'READ'),
@@ -214,6 +217,7 @@ INSERT INTO `message` (`id`, `userId`, `roomId`, `type`, `time`, `content`, `sta
 ('42', 1, 'a9cf354e-3c24-45b8-85f4-8a46197a15cd', 'CHAT', '2021-08-17 17:08:08', 'eefef', 'READ'),
 ('43', 1, 'a9cf354e-3c24-45b8-85f4-8a46197a15cd', 'CHAT', '2021-08-17 17:19:08', 'w', 'READ'),
 ('437d329b-5215-4779-bf95-001c199c7642', 1, 'a9cf354e-3c24-45b8-85f4-8a46197a15cd', 'CHAT', '2021-08-26 14:16:04', 'sdfđ', 'READ'),
+('43fa38e5-61ea-46e7-8ba0-bd3ebbb1e756', 3, 'a9cf354e-3c24-45b8-85f4-8a46197a15cd', 'CHAT', '2021-09-07 14:34:13', 'ưer', 'READ'),
 ('44', 1, 'a9cf354e-3c24-45b8-85f4-8a46197a15cd', 'CHAT', '2021-08-17 17:19:15', 'ew', 'READ'),
 ('45', 1, 'a9cf354e-3c24-45b8-85f4-8a46197a15cd', 'CHAT', '2021-08-17 17:22:37', 'we', 'READ'),
 ('45f6b16d-ccfe-4037-9712-60ffd95ca08d', 3, 'a9cf354e-3c24-45b8-85f4-8a46197a15cd', 'CHAT', '2021-09-01 14:43:08', 'qq', 'READ'),
@@ -225,6 +229,7 @@ INSERT INTO `message` (`id`, `userId`, `roomId`, `type`, `time`, `content`, `sta
 ('497681b7-f484-4e6b-8a93-16d479654d6a', 3, 'a9cf354e-3c24-45b8-85f4-8a46197a15cd', 'CHAT', '2021-09-01 14:50:38', 'hello', 'READ'),
 ('5', 1, 'a9cf354e-3c24-45b8-85f4-8a46197a15cd', 'CHAT', '2021-08-16 10:26:00', 'w', 'READ'),
 ('50', 1, 'a9cf354e-3c24-45b8-85f4-8a46197a15cd', 'CHAT', '2021-08-17 17:32:05', 'alo alo', 'READ'),
+('50865bd2-f463-46a3-b547-b21f148bb0f2', 3, 'a9cf354e-3c24-45b8-85f4-8a46197a15cd', 'CHAT', '2021-09-04 16:27:00', 'fsd', 'READ'),
 ('51', 3, 'a9cf354e-3c24-45b8-85f4-8a46197a15cd', 'CHAT', '2021-08-17 20:47:40', 'qq', 'READ'),
 ('5187bc2e-24f8-4f44-a7f9-248a0b6e8983', 1, 'a9cf354e-3c24-45b8-85f4-8a46197a15cd', 'CHAT', '2021-08-24 20:48:30', 'df', 'READ'),
 ('52', 3, 'a9cf354e-3c24-45b8-85f4-8a46197a15cd', 'CHAT', '2021-08-17 20:48:01', 'f', 'READ'),
@@ -243,22 +248,26 @@ INSERT INTO `message` (`id`, `userId`, `roomId`, `type`, `time`, `content`, `sta
 ('60', 1, 'a9cf354e-3c24-45b8-85f4-8a46197a15cd', 'CHAT', '2021-08-17 20:53:54', 'reeeeee', 'READ'),
 ('601a3dc0-4664-4bf0-b74b-ae1d296c0c42', 3, 'a9cf354e-3c24-45b8-85f4-8a46197a15cd', 'ATTACK', '2021-08-25 21:46:38', 'xem', 'READ'),
 ('61', 3, 'a9cf354e-3c24-45b8-85f4-8a46197a15cd', 'CHAT', '2021-08-17 20:54:48', 'wer', 'READ'),
+('61005881-5f0e-42b9-a99b-843444950ed8', 1, 'a9cf354e-3c24-45b8-85f4-8a46197a15cd', 'CHAT', '2021-09-16 21:49:17', 'ok', 'SEND'),
 ('62', 1, 'a9cf354e-3c24-45b8-85f4-8a46197a15cd', 'CHAT', '2021-08-17 20:54:59', 'ads', 'READ'),
 ('63', 1, 'a9cf354e-3c24-45b8-85f4-8a46197a15cd', 'CHAT', '2021-08-17 20:58:32', 'asfdfs', 'READ'),
 ('64', 1, 'a9cf354e-3c24-45b8-85f4-8a46197a15cd', 'CHAT', '2021-08-17 21:04:52', 'afsdfaasdf', 'READ'),
 ('64882e9b-c27b-438f-aff5-2cb6e84dc329', 1, 'a9cf354e-3c24-45b8-85f4-8a46197a15cd', 'ATTACK', '2021-08-25 20:29:41', 'q', 'READ'),
 ('65', 1, 'a9cf354e-3c24-45b8-85f4-8a46197a15cd', 'CHAT', '2021-08-17 21:05:13', 'qqqqqqqqqqqqqq', 'READ'),
 ('66', 3, 'a9cf354e-3c24-45b8-85f4-8a46197a15cd', 'CHAT', '2021-08-17 21:05:23', 'qqqqqqqq', 'READ'),
+('664322dc-d418-41a5-abf5-d9e7a5bba176', 3, 'a9cf354e-3c24-45b8-85f4-8a46197a15cd', 'CHAT', '2021-09-04 16:26:36', 'bro', 'READ'),
 ('66b5b8a6-fa6b-4dca-b852-0221c9bfc258', 3, 'a9cf354e-3c24-45b8-85f4-8a46197a15cd', 'CHAT', '2021-09-01 14:48:48', 'okkk', 'READ'),
 ('67', 1, 'a9cf354e-3c24-45b8-85f4-8a46197a15cd', 'CHAT', '2021-08-17 21:10:00', 'd', 'READ'),
 ('68', 1, 'a9cf354e-3c24-45b8-85f4-8a46197a15cd', 'CHAT', '2021-08-17 21:11:08', 'qqqqqqqqqqqqqqqqqqqqqqqqqq', 'READ'),
 ('69', 1, 'a9cf354e-3c24-45b8-85f4-8a46197a15cd', 'CHAT', '2021-08-17 21:11:16', 'qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq', 'READ'),
 ('6ae4dee0-d90f-4dff-a0c1-7bcf59eac97f', 3, 'a9cf354e-3c24-45b8-85f4-8a46197a15cd', 'ATTACK', '2021-09-01 15:22:41', 'toph', 'READ'),
 ('6bb9c698-6b97-4def-9340-4d39abda6b2e', 3, 'a9cf354e-3c24-45b8-85f4-8a46197a15cd', 'CHAT', '2021-09-01 14:50:50', 'ok', 'READ'),
+('6fd6a51a-f989-4d1f-ae59-2b8731f15721', 3, 'a9cf354e-3c24-45b8-85f4-8a46197a15cd', 'CHAT', '2021-09-04 16:23:01', 'hello', 'READ'),
 ('7', 3, 'a9cf354e-3c24-45b8-85f4-8a46197a15cd', 'CHAT', '2021-08-16 10:26:34', 'qqq', 'READ'),
 ('70', 1, 'a9cf354e-3c24-45b8-85f4-8a46197a15cd', 'CHAT', '2021-08-17 21:11:29', 'àdssssssssssssssssssssssssssssssssssssssssss', 'READ'),
 ('71', 1, 'a9cf354e-3c24-45b8-85f4-8a46197a15cd', 'CHAT', '2021-08-17 21:11:32', 'e', 'READ'),
 ('72', 1, 'a9cf354e-3c24-45b8-85f4-8a46197a15cd', 'CHAT', '2021-08-17 21:11:44', 'qưrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrwqerwqrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr', 'READ'),
+('72c6e70e-94d3-4a71-ab04-5199a419fae2', 3, 'a9cf354e-3c24-45b8-85f4-8a46197a15cd', 'CHAT', '2021-09-07 14:32:33', 'alo', 'READ'),
 ('73', 1, 'a9cf354e-3c24-45b8-85f4-8a46197a15cd', 'CHAT', '2021-08-17 21:12:10', 'ádfasd\nấdfsadf\nádffd', 'READ'),
 ('74', 1, 'a9cf354e-3c24-45b8-85f4-8a46197a15cd', 'CHAT', '2021-08-17 21:12:17', 'dfffffffffff', 'READ'),
 ('75', 1, 'a9cf354e-3c24-45b8-85f4-8a46197a15cd', 'CHAT', '2021-08-17 21:12:20', 'ưeeeeeeeeeeefafsdf', 'READ'),
@@ -270,6 +279,7 @@ INSERT INTO `message` (`id`, `userId`, `roomId`, `type`, `time`, `content`, `sta
 ('78607fb6-11db-4302-a796-d2762616ec18', 1, 'a9cf354e-3c24-45b8-85f4-8a46197a15cd', 'CHAT', '2021-08-25 20:17:38', 'dddd', 'READ'),
 ('7892fe14-adc1-44c0-ae87-f8fed4d4caf3', 1, 'a9cf354e-3c24-45b8-85f4-8a46197a15cd', 'CHAT', '2021-08-24 09:55:19', 'a', 'READ'),
 ('79', 1, 'a9cf354e-3c24-45b8-85f4-8a46197a15cd', 'CHAT', '2021-08-17 21:59:42', 'alo chào các alo chào các alo chào các alo chào các alo chào các alo chào các alo chào các alo chào các', 'READ'),
+('7b3aec53-0e3f-4701-914c-0fa722f07975', 1, 'a9cf354e-3c24-45b8-85f4-8a46197a15cd', 'CHAT', '2021-09-04 16:14:16', 'uk', 'READ'),
 ('7bab22f5-e0b7-4abe-b5bc-c7bfa70fcefb', 1, 'a9cf354e-3c24-45b8-85f4-8a46197a15cd', 'ATTACK', '2021-09-01 15:06:08', 'ww', 'READ'),
 ('7e6f5054-56a6-42f2-8861-da659679221d', 1, 'a9cf354e-3c24-45b8-85f4-8a46197a15cd', 'ATTACK', '2021-08-25 21:59:46', 'aaaaaaaaaaaaa', 'READ'),
 ('7ff5246f-7b04-4d5c-b8cb-2d1adc43b8ff', 1, 'a9cf354e-3c24-45b8-85f4-8a46197a15cd', 'CHAT', '2021-08-25 09:42:18', 'sdf', 'READ'),
@@ -291,6 +301,7 @@ INSERT INTO `message` (`id`, `userId`, `roomId`, `type`, `time`, `content`, `sta
 ('88e25f1c-32f7-44dc-b0f6-71d6c6bf7807', 3, 'a9cf354e-3c24-45b8-85f4-8a46197a15cd', 'ATTACK', '2021-08-25 21:45:24', 'đc ko', 'READ'),
 ('89', 1, 'a9cf354e-3c24-45b8-85f4-8a46197a15cd', 'CHAT', '2021-08-19 17:51:47', 'àd', 'READ'),
 ('8c071fea-0a83-4a24-af33-ea52ad51e601', 1, 'a9cf354e-3c24-45b8-85f4-8a46197a15cd', 'CHAT', '2021-08-24 21:40:31', 'aaa', 'READ'),
+('8cdc7269-04e8-48af-a415-1a070e475b01', 3, 'a9cf354e-3c24-45b8-85f4-8a46197a15cd', 'CHAT', '2021-09-04 16:27:13', 'ew', 'READ'),
 ('9', 1, 'a9cf354e-3c24-45b8-85f4-8a46197a15cd', 'CHAT', '2021-08-16 10:28:35', 'qq', 'READ'),
 ('90', 1, 'a9cf354e-3c24-45b8-85f4-8a46197a15cd', 'CHAT', '2021-08-19 17:56:43', 'qq', 'READ'),
 ('91', 1, 'a9cf354e-3c24-45b8-85f4-8a46197a15cd', 'CHAT', '2021-08-19 18:01:38', 'ưq', 'READ'),
@@ -325,6 +336,7 @@ INSERT INTO `message` (`id`, `userId`, `roomId`, `type`, `time`, `content`, `sta
 ('c021743e-5f0a-4d8c-86b2-2fc2367b9eba', 1, 'a9cf354e-3c24-45b8-85f4-8a46197a15cd', 'ATTACK', '2021-09-01 14:57:58', 'oke', 'READ'),
 ('c2494de3-f09a-4fd1-9cc1-25e0a30c0936', 1, 'a9cf354e-3c24-45b8-85f4-8a46197a15cd', 'CHAT', '2021-08-23 17:41:43', 'qqq', 'READ'),
 ('c384cc01-32cf-4080-aae0-8417c34d994a', 1, 'a9cf354e-3c24-45b8-85f4-8a46197a15cd', 'CHAT', '2021-08-30 10:14:51', 'q', 'READ'),
+('cb3f570f-16bc-415e-bc11-43d4d391707a', 3, 'a9cf354e-3c24-45b8-85f4-8a46197a15cd', 'CHAT', '2021-09-07 14:33:25', 'www', 'READ'),
 ('cc33bc25-17d1-48fb-a326-a92ed86ad71c', 3, 'a9cf354e-3c24-45b8-85f4-8a46197a15cd', 'ATTACK', '2021-09-01 15:49:16', 'okkk', 'READ'),
 ('ce376b16-452c-4f7d-94cf-eba0f1810a82', 1, 'a9cf354e-3c24-45b8-85f4-8a46197a15cd', 'ATTACK', '2021-09-01 15:07:13', 'sdf', 'READ'),
 ('cec87e23-e02d-41b2-9277-2f2a76157e48', 3, 'a9cf354e-3c24-45b8-85f4-8a46197a15cd', 'ATTACK', '2021-09-01 15:00:46', 'yes', 'READ'),
@@ -334,9 +346,12 @@ INSERT INTO `message` (`id`, `userId`, `roomId`, `type`, `time`, `content`, `sta
 ('dba128a1-d8b0-4ec5-b7b0-e631b9d21933', 1, 'a9cf354e-3c24-45b8-85f4-8a46197a15cd', 'CHAT', '2021-08-24 21:59:25', 'sfa', 'READ'),
 ('ddbac792-7eda-4029-8497-ed10a1c95308', 3, 'a9cf354e-3c24-45b8-85f4-8a46197a15cd', 'CHAT', '2021-09-01 14:54:22', 'sdf', 'READ'),
 ('e1cb02f0-27ad-4334-8c15-45c7226539d7', 1, 'a9cf354e-3c24-45b8-85f4-8a46197a15cd', 'CHAT', '2021-08-23 22:20:20', 'qqq', 'READ'),
+('e43bb557-36fb-4236-be27-ae6982bd512f', 2, 'e35eb390-8854-4d74-aba5-7023d2c22f61', 'CHAT', '2021-09-04 16:28:17', 'hớ hớ', 'SEND'),
 ('e59556e0-a576-4710-a000-dd49e9ebb3cd', 1, 'a9cf354e-3c24-45b8-85f4-8a46197a15cd', 'CHAT', '2021-08-30 10:14:57', 'q', 'READ'),
 ('e828f9c8-7d29-4ecb-988e-f300868d48e5', 3, 'a9cf354e-3c24-45b8-85f4-8a46197a15cd', 'CHAT', '2021-09-01 14:51:55', 'df', 'READ'),
 ('e8de0d6f-1566-42e2-a48c-d669270f49f3', 1, 'a9cf354e-3c24-45b8-85f4-8a46197a15cd', 'ATTACK', '2021-09-01 15:02:40', 'okkk', 'READ'),
+('ea65f48c-acfd-4ebc-a9c9-79c3650d18bd', 1, 'a9cf354e-3c24-45b8-85f4-8a46197a15cd', 'CHAT', '2021-09-04 16:14:11', 'ok hello', 'READ'),
+('ec291260-c3b2-4897-a4c4-3694ff09b9cf', 3, 'a9cf354e-3c24-45b8-85f4-8a46197a15cd', 'CHAT', '2021-09-04 15:57:07', 'hello', 'READ'),
 ('ed1c0464-cad4-4a3d-9ae9-12399d13aa8f', 3, 'a9cf354e-3c24-45b8-85f4-8a46197a15cd', 'CHAT', '2021-09-01 14:48:52', 'ư', 'READ'),
 ('f089867a-16e5-4755-85a6-772d67267506', 1, 'a9cf354e-3c24-45b8-85f4-8a46197a15cd', 'CHAT', '2021-08-24 20:24:56', 'qqqqqqqqqqqqqqqqqq', 'READ');
 
@@ -347,9 +362,9 @@ INSERT INTO `message` (`id`, `userId`, `roomId`, `type`, `time`, `content`, `sta
 --
 
 CREATE TABLE `room` (
-  `id` varchar(50) NOT NULL,
-  `groupchat` bit(1) DEFAULT NULL,
-  `name` int(11) NOT NULL
+                        `id` varchar(50) NOT NULL,
+                        `groupchat` bit(1) DEFAULT NULL,
+                        `name` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
@@ -367,9 +382,9 @@ INSERT INTO `room` (`id`, `groupchat`, `name`) VALUES
 --
 
 CREATE TABLE `roomdetail` (
-  `id` int(11) NOT NULL,
-  `roomId` varchar(50) DEFAULT NULL,
-  `userId` int(11) DEFAULT NULL
+                              `id` int(11) NOT NULL,
+                              `roomId` varchar(50) DEFAULT NULL,
+                              `userId` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
@@ -389,26 +404,27 @@ INSERT INTO `roomdetail` (`id`, `roomId`, `userId`) VALUES
 --
 
 CREATE TABLE `users` (
-  `id` int(11) NOT NULL,
-  `username` varchar(20) NOT NULL,
-  `firstname` varchar(100) DEFAULT NULL,
-  `lastname` varchar(100) DEFAULT NULL,
-  `email` varchar(100) DEFAULT NULL,
-  `password` varchar(100) DEFAULT NULL,
-  `image` varchar(100) DEFAULT NULL,
-  `birthdate` date DEFAULT NULL,
-  `role` varchar(10) DEFAULT NULL,
-  `lastonline` datetime NOT NULL
+                         `id` int(11) NOT NULL,
+                         `username` varchar(20) NOT NULL,
+                         `firstname` varchar(100) DEFAULT NULL,
+                         `lastname` varchar(100) DEFAULT NULL,
+                         `email` varchar(100) DEFAULT NULL,
+                         `password` varchar(100) DEFAULT NULL,
+                         `image` varchar(100) DEFAULT NULL,
+                         `birthdate` date DEFAULT NULL,
+                         `gender` bit(1) NOT NULL,
+                         `role` varchar(10) DEFAULT NULL,
+                         `lastonline` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Đang đổ dữ liệu cho bảng `users`
 --
 
-INSERT INTO `users` (`id`, `username`, `firstname`, `lastname`, `email`, `password`, `image`, `birthdate`, `role`, `lastonline`) VALUES
-(1, 'admin', 'Thành', 'Nguyễn Đức', 'admin@gmail.com', '$2a$10$6LZucgkwCfXT8c0UWxp4tOYY1dH0frALxeFW4GnEJJwqU0f5epDgC', 'avt.png', '2021-08-03', 'ROLE_ADMIN', '0000-00-00 00:00:00'),
-(2, 'trung', 'Trung', 'Nguyễn Đức', 'trung@gmail.com', '$2a$10$6LZucgkwCfXT8c0UWxp4tOYY1dH0frALxeFW4GnEJJwqU0f5epDgC', 'avt.png', '2021-08-01', 'ROLE_ADMIN', '0000-00-00 00:00:00'),
-(3, 'quang', 'Quang', 'Đặng Tiến', 'quang@gmail.com', '$2a$10$6LZucgkwCfXT8c0UWxp4tOYY1dH0frALxeFW4GnEJJwqU0f5epDgC', 'avt.png', '2021-07-12', 'ROLE_ADMIN', '0000-00-00 00:00:00');
+INSERT INTO `users` (`id`, `username`, `firstname`, `lastname`, `email`, `password`, `image`, `birthdate`, `gender`, `role`, `lastonline`) VALUES
+(1, 'admin', 'Thành', 'Nguyễn Đức', 'admin@gmail.com', '$2a$10$6LZucgkwCfXT8c0UWxp4tOYY1dH0frALxeFW4GnEJJwqU0f5epDgC', 'avt.png', '2021-08-03', b'1', 'ROLE_ADMIN', '0000-00-00 00:00:00'),
+(2, 'trung', 'Trung', 'Nguyễn Đức', 'trung@gmail.com', '$2a$10$6LZucgkwCfXT8c0UWxp4tOYY1dH0frALxeFW4GnEJJwqU0f5epDgC', 'avt.png', '2021-08-01', b'1', 'ROLE_ADMIN', '0000-00-00 00:00:00'),
+(3, 'quang', 'Quang', 'Đặng Tiến', 'quang@gmail.com', '$2a$10$6LZucgkwCfXT8c0UWxp4tOYY1dH0frALxeFW4GnEJJwqU0f5epDgC', 'avt.png', '2021-07-12', b'1', 'ROLE_ADMIN', '0000-00-00 00:00:00');
 
 --
 -- Chỉ mục cho các bảng đã đổ
@@ -418,14 +434,14 @@ INSERT INTO `users` (`id`, `username`, `firstname`, `lastname`, `email`, `passwo
 -- Chỉ mục cho bảng `attach`
 --
 ALTER TABLE `attach`
-  ADD PRIMARY KEY (`id`),
+    ADD PRIMARY KEY (`id`),
   ADD KEY `messageId` (`messageId`);
 
 --
 -- Chỉ mục cho bảng `friend`
 --
 ALTER TABLE `friend`
-  ADD PRIMARY KEY (`id`),
+    ADD PRIMARY KEY (`id`),
   ADD KEY `userId` (`userId`),
   ADD KEY `friendId` (`friendId`);
 
@@ -433,7 +449,7 @@ ALTER TABLE `friend`
 -- Chỉ mục cho bảng `message`
 --
 ALTER TABLE `message`
-  ADD PRIMARY KEY (`id`),
+    ADD PRIMARY KEY (`id`),
   ADD KEY `userId` (`userId`),
   ADD KEY `roomId` (`roomId`);
 
@@ -441,13 +457,13 @@ ALTER TABLE `message`
 -- Chỉ mục cho bảng `room`
 --
 ALTER TABLE `room`
-  ADD PRIMARY KEY (`id`);
+    ADD PRIMARY KEY (`id`);
 
 --
 -- Chỉ mục cho bảng `roomdetail`
 --
 ALTER TABLE `roomdetail`
-  ADD PRIMARY KEY (`id`),
+    ADD PRIMARY KEY (`id`),
   ADD KEY `roomId` (`roomId`),
   ADD KEY `userId` (`userId`);
 
@@ -455,7 +471,7 @@ ALTER TABLE `roomdetail`
 -- Chỉ mục cho bảng `users`
 --
 ALTER TABLE `users`
-  ADD PRIMARY KEY (`id`);
+    ADD PRIMARY KEY (`id`);
 
 --
 -- AUTO_INCREMENT cho các bảng đã đổ
@@ -465,25 +481,25 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT cho bảng `attach`
 --
 ALTER TABLE `attach`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=169;
+    MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=169;
 
 --
 -- AUTO_INCREMENT cho bảng `friend`
 --
 ALTER TABLE `friend`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+    MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT cho bảng `roomdetail`
 --
 ALTER TABLE `roomdetail`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+    MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT cho bảng `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+    MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- Các ràng buộc cho các bảng đã đổ
@@ -493,27 +509,27 @@ ALTER TABLE `users`
 -- Các ràng buộc cho bảng `attach`
 --
 ALTER TABLE `attach`
-  ADD CONSTRAINT `attach_ibfk_1` FOREIGN KEY (`messageId`) REFERENCES `message` (`id`);
+    ADD CONSTRAINT `attach_ibfk_1` FOREIGN KEY (`messageId`) REFERENCES `message` (`id`);
 
 --
 -- Các ràng buộc cho bảng `friend`
 --
 ALTER TABLE `friend`
-  ADD CONSTRAINT `friend_ibfk_1` FOREIGN KEY (`userId`) REFERENCES `users` (`id`),
+    ADD CONSTRAINT `friend_ibfk_1` FOREIGN KEY (`userId`) REFERENCES `users` (`id`),
   ADD CONSTRAINT `friend_ibfk_2` FOREIGN KEY (`friendId`) REFERENCES `users` (`id`);
 
 --
 -- Các ràng buộc cho bảng `message`
 --
 ALTER TABLE `message`
-  ADD CONSTRAINT `message_ibfk_1` FOREIGN KEY (`userId`) REFERENCES `users` (`id`),
+    ADD CONSTRAINT `message_ibfk_1` FOREIGN KEY (`userId`) REFERENCES `users` (`id`),
   ADD CONSTRAINT `message_ibfk_2` FOREIGN KEY (`roomId`) REFERENCES `room` (`id`);
 
 --
 -- Các ràng buộc cho bảng `roomdetail`
 --
 ALTER TABLE `roomdetail`
-  ADD CONSTRAINT `roomdetail_ibfk_1` FOREIGN KEY (`roomId`) REFERENCES `room` (`id`),
+    ADD CONSTRAINT `roomdetail_ibfk_1` FOREIGN KEY (`roomId`) REFERENCES `room` (`id`),
   ADD CONSTRAINT `roomdetail_ibfk_2` FOREIGN KEY (`userId`) REFERENCES `users` (`id`);
 COMMIT;
 
