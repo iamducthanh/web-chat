@@ -8,22 +8,7 @@
 
         <!-- Title -->
         <div class="mb-8">
-          <h2 class="fw-bold m-0">Settings</h2>
-        </div>
-
-        <!-- Search -->
-        <div class="mb-6">
-          <form action="#">
-            <div class="input-group">
-              <div class="input-group-text">
-                <div class="icon icon-lg">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
-                </div>
-              </div>
-
-              <input type="text" class="form-control form-control-lg ps-0" placeholder="Search messages or users" aria-label="Search for messages or users...">
-            </div>
-          </form>
+          <h2 class="fw-bold m-0">Cài đặt</h2>
         </div>
 
         <!-- Profile -->
@@ -32,8 +17,7 @@
             <div class="row align-items-center gx-5">
               <div class="col-auto">
                 <div class="avatar">
-                  <img src="assets/img/avatars/1.jpg" alt="#" class="avatar-img">
-
+                  <img th:if="${user.image == 'avt.png'}" class="avatar-img" th:src="@{'/assets/image/' + ${user.image}}" alt="">
                   <div class="badge badge-circle bg-secondary border-outline position-absolute bottom-0 end-0">
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-image"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><polyline points="21 15 16 10 5 21"></polyline></svg>
                   </div>
@@ -42,8 +26,8 @@
                 </div>
               </div>
               <div class="col">
-                <h5>William Pearson</h5>
-                <p>wright@studio.com</p>
+                <h5>[[${user.getFullname()}]]</h5>
+                <p>[[${user.email}]]</p>
               </div>
               <div class="col-auto">
                 <a th:href="@{'/signout'}" class="text-muted">
@@ -60,7 +44,7 @@
         <!-- Account -->
         <div class="mt-8">
           <div class="d-flex align-items-center mb-4 px-6">
-            <small class="text-muted me-auto">Account</small>
+            <small class="text-muted me-auto">Tài khoản</small>
           </div>
 
           <div class="card border-0">
@@ -71,8 +55,8 @@
                   <div class="accordion-header" id="accordion-profile-1">
                     <a href="#" class="accordion-button text-reset collapsed" data-bs-toggle="collapse" data-bs-target="#accordion-profile-body-1" aria-expanded="false" aria-controls="accordion-profile-body-1">
                       <div>
-                        <h5>Profile settings</h5>
-                        <p>Change your profile settings</p>
+                        <h5>Thông tin cá nhân</h5>
+                        <p>Thay đổi thông tin cá nhân</p>
                       </div>
                     </a>
                   </div>
@@ -108,8 +92,8 @@
                   <div class="accordion-header" id="accordion-profile-2">
                     <a href="#" class="accordion-button text-reset collapsed" data-bs-toggle="collapse" data-bs-target="#accordion-profile-body-2" aria-expanded="false" aria-controls="accordion-profile-body-2">
                       <div>
-                        <h5>Connected accounts</h5>
-                        <p>Connect with your accounts</p>
+                        <h5>Kết nối</h5>
+                        <p>Kết nối với các tài khoản</p>
                       </div>
                     </a>
                   </div>
@@ -144,7 +128,7 @@
         <!-- Security -->
         <div class="mt-8">
           <div class="d-flex align-items-center my-4 px-6">
-            <small class="text-muted me-auto">Security</small>
+            <small class="text-muted me-auto">Bảo mật</small>
           </div>
 
           <div class="card border-0">
@@ -155,8 +139,8 @@
                   <div class="accordion-header" id="accordion-security-1">
                     <a href="#" class="accordion-button text-reset collapsed" data-bs-toggle="collapse" data-bs-target="#accordion-security-body-1" aria-expanded="false" aria-controls="accordion-security-body-1">
                       <div>
-                        <h5>Password</h5>
-                        <p>Change your password</p>
+                        <h5>Mật khẩu</h5>
+                        <p>Thay đổi mật khẩu</p>
                       </div>
                     </a>
                   </div>
