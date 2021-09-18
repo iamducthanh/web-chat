@@ -53,34 +53,36 @@ public class DataIntercepter implements HandlerInterceptor {
         List<MessageUser> messageUsers = new ArrayList<>();
         List<RoomDetail> roomDetails = roomDetailService.findByUser(user.getId());
         String name = "";
-        for (RoomDetail roomDetail : roomDetails) {
-            List<User> userInRoom = userService.findInRoom(user.getId(), roomDetail.getRoom().getId());
-            if (userInRoom.size() == 1) {
-                name = userInRoom.get(0).getFullname();
-            } else {
-                name = roomDetail.getRoom().getName();
-            }
-            Message messageLast = messageService.findMessageLast(roomDetail.getRoom().getId());
-            int status = 0;
-            String time = "";
-            int countMess = 0;
-            if (messageLast != null) {
-                time = messageLast.getTimeChat();
-                countMess = messageService.countMessageSend(roomDetail.getRoom().getId(), userInRoom.get(0).getUsername());
-                if (!messageLast.getUser().getUsername().equals(user.getUsername())) {
-                    if (messageLast.getStatus().equals(String.valueOf(PropertiesConstant.MessageStatus.SEND))) {
-                        countMessage ++;
-                        status = 1;
+        if(roomDetails != null){
+            for (RoomDetail roomDetail : roomDetails) {
+                List<User> userInRoom = userService.findInRoom(user.getId(), roomDetail.getRoom().getId());
+                if (userInRoom.size() == 1) {
+                    name = userInRoom.get(0).getFullname();
+                } else {
+                    name = roomDetail.getRoom().getName();
+                }
+                Message messageLast = messageService.findMessageLast(roomDetail.getRoom().getId());
+                int status = 0;
+                String time = "";
+                int countMess = 0;
+                if (messageLast != null) {
+                    time = messageLast.getTimeChat();
+                    countMess = messageService.countMessageSend(roomDetail.getRoom().getId(), userInRoom.get(0).getUsername());
+                    if (!messageLast.getUser().getUsername().equals(user.getUsername())) {
+                        if (messageLast.getStatus().equals(String.valueOf(PropertiesConstant.MessageStatus.SEND))) {
+                            countMessage ++;
+                            status = 1;
+                        }
                     }
+                    if (user.getUsername().equals(messageLast.getUser().getUsername())) {
+                        messageLast.setContent("Bạn: " + messageLast.getContent());
+                    }
+                } else {
+                    messageLast = new Message();
+                    messageLast.setContent("Bắt đầu trò chuyện");
                 }
-                if (user.getUsername().equals(messageLast.getUser().getUsername())) {
-                    messageLast.setContent("Bạn: " + messageLast.getContent());
-                }
-            } else {
-                messageLast = new Message();
-                messageLast.setContent("Bắt đầu trò chuyện");
+                messageUsers.add(new MessageUser(roomDetail, name, userInRoom, messageLast.getContent(), countMess, status, time, roomDetail.getRoom().getId()));
             }
-            messageUsers.add(new MessageUser(roomDetail, name, userInRoom, messageLast.getContent(), countMess, status, time, roomDetail.getRoom().getId()));
         }
         req.setAttribute("messageUsers", messageUsers);
         req.setAttribute("countMessage", countMessage);

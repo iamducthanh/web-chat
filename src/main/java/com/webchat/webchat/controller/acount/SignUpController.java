@@ -10,6 +10,7 @@ import com.webchat.webchat.utils.MailerUtil;
 import lombok.SneakyThrows;
 import org.aspectj.apache.bcel.classfile.Code;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
@@ -123,11 +124,11 @@ public class SignUpController {
         userSignup.setFirstName(user.getFirstName());
         userSignup.setLastName(user.getLastName());
         userSignup.setEmail(user.getEmail());
-        userSignup.setPassword(user.getPassword());
+        BCryptPasswordEncoder pass = new BCryptPasswordEncoder();
+        userSignup.setPassword(pass.encode(user.getPassword()));
         userSignup.setImage("avt.png");
         userSignup.setGender(user.isGender());
-        userSignup.setRole(user.getFirstName());
-        System.out.println(user.getBirthDate());
+        userSignup.setRole("ROLE_USER");
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         userSignup.setLastonline(new Date());
         try {
@@ -136,7 +137,6 @@ public class SignUpController {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        System.out.println(userSignup.toString());
         userService.saveUser(userSignup);
     }
 

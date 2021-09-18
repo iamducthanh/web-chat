@@ -40,9 +40,6 @@ public class User {
     @Column(name = "image")
     private String image;
 
-    @Column(name = "birthdate")
-    private Date birthDate;
-
     @Column(name = "lastonline")
     private Date lastonline;
 
@@ -51,6 +48,9 @@ public class User {
 
     @Column(name = "role")
     private String role;
+
+    @Column(name = "birthdate")
+    private Date birthDate;
 
     @OneToMany(mappedBy = "user")
     private List<Message> messages;
