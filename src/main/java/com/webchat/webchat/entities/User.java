@@ -43,6 +43,9 @@ public class User {
     @Column(name = "birthdate")
     private Date birthDate;
 
+    @Column(name = "lastonline")
+    private Date lastonline;
+
     @Column(name = "gender")
     private boolean gender;
 
@@ -67,6 +70,21 @@ public class User {
         } else {
             return false;
         }
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "username='" + username + '\'' +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", email='" + email + '\'' +
+                ", password='" + password + '\'' +
+                ", image='" + image + '\'' +
+                ", birthDate=" + birthDate +
+                ", gender=" + gender +
+                ", role='" + role + '\'' +
+                '}';
     }
 
     public String getFullname(){

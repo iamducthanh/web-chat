@@ -17,6 +17,8 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.mail.MessagingException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.concurrent.ThreadLocalRandom;
 
@@ -35,7 +37,7 @@ public class SignUpController {
 
     @PostMapping("/signup")
     @ResponseBody
-    public List<ErrorPojo> signup(@Validated UserRegisterPojo user, BindingResult result){
+    public List<ErrorPojo> signup(@Validated UserRegisterPojo user, BindingResult result) {
         List<ErrorPojo> error = new ArrayList<>();
         ResourceBundle message = ResourceBundle.getBundle("message");
         if (result.hasErrors()) {
@@ -72,6 +74,9 @@ public class SignUpController {
             if(!code.equals(user.getCode())){
                 error.add(new ErrorPojo("code",message.getString("User.code")));
             }
+        }
+        if(error.size() == 0){
+            saveUser(user);
         }
         return error;
     }
@@ -111,4 +116,28 @@ public class SignUpController {
         }
         return out;
     }
+
+    public void saveUser(UserRegisterPojo user) {
+        User userSignup = new User();
+        userSignup.setUsername(user.getUsername());
+        userSignup.setFirstName(user.getFirstName());
+        userSignup.setLastName(user.getLastName());
+        userSignup.setEmail(user.getEmail());
+        userSignup.setPassword(user.getPassword());
+        userSignup.setImage("avt.png");
+        userSignup.setGender(user.isGender());
+        userSignup.setRole(user.getFirstName());
+        System.out.println(user.getBirthDate());
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        userSignup.setLastonline(new Date());
+        try {
+            Date birthDate = sdf.parse(user.getBirthDate());
+            userSignup.setBirthDate(birthDate);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        System.out.println(userSignup.toString());
+        userService.saveUser(userSignup);
+    }
+
 }

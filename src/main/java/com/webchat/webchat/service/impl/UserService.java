@@ -26,6 +26,11 @@ public class UserService implements IUserService {
     }
 
     @Override
+    public void saveUser(User user) {
+        userRepo.save(user);
+    }
+
+    @Override
     public List<User> findInRoom(int userId, String roomId) {
         List<User> list = userRepo.findUserInRoom(userId, roomId);
         return list.isEmpty() ? null : list;

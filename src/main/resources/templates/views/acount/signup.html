@@ -142,6 +142,9 @@
                     },
                     success: async function (data) {
                         if(data == 'success'){
+                            document.getElementById("btnSend").onclick = null;
+                            wait = 62;
+                            setWait();
                             document.getElementsByName("email")[0].style.border = "1px solid #ebf1f7";
                             toastSuccess("Thành công","Đã gửi mã xác nhận tới " + email +"!")
                         } else {
@@ -151,9 +154,6 @@
                     },
                     type: 'POST'
                 });
-                document.getElementById("btnSend").onclick = null;
-                wait = 62;
-                setWait();
             } else {
                 toastDanger("Lỗi", "Sai định dạng email!");
             }

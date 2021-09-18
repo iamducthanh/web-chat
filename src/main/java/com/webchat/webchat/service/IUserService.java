@@ -8,5 +8,6 @@ import java.util.List;
 public interface IUserService {
     User findByUsername(String username);
     User findByEmail(String email);
+    void saveUser(User user);
     List<User> findInRoom(int userId, String roomId);
 }
