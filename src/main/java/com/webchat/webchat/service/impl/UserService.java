@@ -35,4 +35,12 @@ public class UserService implements IUserService {
         List<User> list = userRepo.findUserInRoom(userId, roomId);
         return list.isEmpty() ? null : list;
     }
+
+    @Override
+    public List<User> findByKeyword(String username, String email) {
+        username = "%" + username + "%";
+        email = "%" + email + "%";
+        List<User> list = userRepo.findUserByKeyword(username, email);
+        return list.isEmpty() ? null : list;
+    }
 }

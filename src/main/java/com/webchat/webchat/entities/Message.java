@@ -2,6 +2,7 @@ package com.webchat.webchat.entities;
 
 import com.webchat.webchat.service.impl.AttachService;
 import lombok.AllArgsConstructor;
+import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -16,8 +17,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "message", uniqueConstraints = {@UniqueConstraint(columnNames = {"userid", "roomid"})})
-@Getter
-@Setter
+@Data
 @AllArgsConstructor
 @NoArgsConstructor
 public class Message {

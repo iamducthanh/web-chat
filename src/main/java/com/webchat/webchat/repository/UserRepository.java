@@ -10,6 +10,9 @@ public interface UserRepository extends JpaRepository<User, Integer> {
     @Query("select o from User o where o.username = ?1")
     List<User> findUserByUsername(String username);
 
+    @Query("select o from User o where o.username like ?1 or o.email like ?2 ")
+    List<User> findUserByKeyword(String username, String email);
+
     @Query("select o from User o where o.email = ?1")
     List<User> findUserByEmail(String email);
 

@@ -10,4 +10,5 @@ public interface IUserService {
     User findByEmail(String email);
     void saveUser(User user);
     List<User> findInRoom(int userId, String roomId);
+    List<User> findByKeyword(String username, String email);
 }
