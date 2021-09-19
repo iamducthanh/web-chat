@@ -37,7 +37,10 @@
                                 <div class="row align-items-center gx-5">
                                     <div class="col-auto">
                                         <div class="avatar d-none d-xl-inline-block">
-                                            <img id="userImageRoom" class="avatar-img" th:src="@{'/assets/image/' + ${userInRoom.image}}"
+                                            <img id="userImageRoom" class="avatar-img" th:if="${userInRoom.image == 'avt.png'}" th:src="@{'/assets/image/' + ${userInRoom.image}}" alt="">
+                                            <img id="userImageRoom" class="avatar-img"
+                                                 th:if="${userInRoom.image != 'avt.png'}"
+                                                 th:src="@{'https://github.com/phonghotkgd2k1/image_public/blob/main/' + ${userInRoom.image} + '?raw=true'}"
                                                  alt="">
                                         </div>
                                     </div>
@@ -80,13 +83,20 @@
                                         <div class="avatar-group">
                                             <a href="#" class="avatar avatar-sm" data-bs-toggle="modal"
                                                data-bs-target="#modal-user-profile">
-                                                <img class="avatar-img"
+                                                <img class="avatar-img" th:if="${userInRoom.image == 'avt.png'}"
                                                      th:src="@{'/assets/image/' + ${userInRoom.image}}" alt="#">
+                                                <img class="avatar-img" th:if="${userInRoom.image != 'avt.png'}"
+                                                     th:src="@{'https://github.com/phonghotkgd2k1/image_public/blob/main/' + ${userInRoom.image} + '?raw=true'}"
+                                                     alt="#">
                                             </a>
 
                                             <a href="#" class="avatar avatar-sm" data-bs-toggle="modal"
                                                data-bs-target="#modal-profile">
-                                                <img class="avatar-img" id="avtMyUser" th:src="@{'/assets/image/' + ${user.image}}"
+                                                <img class="avatar-img" id="avtMyUser" th:if="${user.image == 'avt.png'}"
+                                                     th:src="@{'/assets/image/' + ${user.image}}"
+                                                     alt="#">
+                                                <img class="avatar-img" id="avtMyUser" th:if="${user.image != 'avt.png'}"
+                                                     th:src="@{'https://github.com/phonghotkgd2k1/image_public/blob/main/' + ${user.image} + '?raw=true'}"
                                                      alt="#">
                                             </a>
                                         </div>
@@ -134,7 +144,10 @@
                             <div class="message message-out" th:if="${message.user.username == username}">
                                 <a href="#" data-bs-toggle="modal" data-bs-target="#modal-profile"
                                    class="avatar avatar-responsive">
-                                    <img class='avatar-img' th:src="@{'/assets/image/' + ${message.user.image}}" alt=''>
+                                    <img class='avatar-img' th:if="${message.user.image == 'avt.png'}" th:src="@{'/assets/image/' + ${message.user.image}}" alt=''>
+                                    <img class='avatar-img' th:if="${message.user.image != 'avt.png'}"
+                                         th:src="@{'https://github.com/phonghotkgd2k1/image_public/blob/main/' + ${message.user.image} + '?raw=true'}"
+                                         alt=''>
                                 </a>
                                 <div class="message-inner">
                                     <div class="message-body">
@@ -236,7 +249,10 @@
                             <div class='message' th:if="${message.user.username != username}">
                                 <a data-bs-toggle='modal' data-bs-target='#modal-user-profile'
                                    class='avatar avatar-responsive'>
-                                    <img class='avatar-img' th:src="@{'/assets/image/' + ${message.user.image}}" alt=''>
+                                    <img class='avatar-img' th:if="${message.user.image == 'avt.png'}" th:src="@{'/assets/image/' + ${message.user.image}}" alt=''>
+                                    <img class='avatar-img' th:if="${message.user.image != 'avt.png'}"
+                                         th:src="@{'https://github.com/phonghotkgd2k1/image_public/blob/main/' + ${message.user.image} + '?raw=true'}"
+                                         alt=''>
                                 </a>
                                 <div class='message-inner'>
                                     <div class='message-body'>
@@ -427,7 +443,10 @@
             <div class="row gy-6">
                 <div class="col-12">
                     <div class="avatar avatar-xl mx-auto">
-                        <img th:src="@{'/assets/image/' + ${userInRoom.image}}" alt="#" class="avatar-img">
+                        <img th:if="${userInRoom.image == 'avt.png'}" th:src="@{'/assets/image/' + ${userInRoom.image}}" alt="#" class="avatar-img">
+                        <img th:if="${userInRoom.image != 'avt.png'}"
+                             th:src="@{'https://github.com/phonghotkgd2k1/image_public/blob/main/' + ${userInRoom.image} + '?raw=true'}"
+                             alt="#" class="avatar-img">
                     </div>
                 </div>
 

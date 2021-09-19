@@ -94,7 +94,7 @@ public class MessageDirectController {
         String fileName = file.getOriginalFilename();
         byte[] fileContent = file.getBytes();
         String encodedString = Base64.getEncoder().encodeToString(fileContent);
-
+        System.out.println(encodedString);
         System.out.println(fileName);
         FilesAttack filesAttack = AttackFile.messageAttackHashMap.get(roomId);
         if(filesAttack == null){
