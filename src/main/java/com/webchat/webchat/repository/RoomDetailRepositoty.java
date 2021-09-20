@@ -12,4 +12,8 @@ public interface RoomDetailRepositoty extends JpaRepository<RoomDetail, Integer>
 
     @Query("select o from RoomDetail o where o.user.id = ?1 and o.room.id = ?2")
     List<RoomDetail> findRoomDetailByUserAndRoom(Integer userId, String roomId);
+
+//    SELECT * FROM `roomdetail` WHERE userId = 1 and roomId in (SELECT roomId FROM `roomdetail` WHERE userId = 2)
+    @Query("select o from RoomDetail o where o.user.id = ?1 and o.room.id in (select o.room.id from RoomDetail o where o.user.id = ?2)")
+    List<RoomDetail> findRoomDetailBy2User(Integer userId1, Integer userId2);
 }
