@@ -22,17 +22,23 @@
                         <form th:action="@{'/j_spring_security_check'}" method="post">
                             <div class="col-12" style="margin-bottom: 20px">
                                 <div class="">
-                                    <input name="username" value="admin" type="text" class="form-control" id="signin-email" placeholder="Họ tên">
+                                    <input name="username" value="admin" type="text" class="form-control" id="signin-username" placeholder="Tên người dùng">
                                 </div>
                             </div>
-                            <div class="col-12" style="margin-bottom: 20px">
+                            <div class="col-12" style="margin-bottom: 10px">
                                 <div class="">
                                     <input name="password" type="password" value="123" class="form-control" id="signin-password"
                                            placeholder="Mật khẩu">
                                 </div>
                             </div>
+                                <div class="col-12" style="margin-bottom: 20px; margin-left: 5px">
+                                    <div class="">
+                                        <input name="remember" type="checkbox" id="remember"> Nhớ tài khoản
+                                    </div>
+                                </div>
                             <div class="col-12" style="margin-bottom: 20px">
-                                <button class="btn btn-block btn-lg btn-primary w-100" type="submit">Đăng nhập</button>
+                                <div onclick="remember()" class="btn btn-block btn-lg btn-primary w-100">Đăng nhập</div>
+                                <button class="btn btn-block btn-lg btn-primary w-100" type="submit" style="display: none" id="submitLogin">Đăng nhập</button>
                             </div>
                         </form>
                     </div>
@@ -46,5 +52,29 @@
             </div>
         </div>
     </div> <!-- / .row -->
+    <script>
+        function remember(){
+            let remember = document.getElementById("remember");
+            if(remember.checked == true){
+                console.log(document.querySelector("#signin-username").value)
+                console.log(document.querySelector("#signin-password").value)
+                $.ajax({
+                    url: 'signin/remember',
+                    data: {
+                        username: document.querySelector("#signin-username").value,
+                        password: document.querySelector("#signin-password").value
+                    },
+                    error: function () {
+                        console.log("error")
+                    },
+                    success: async function (data) {
+                        console.log("done")
+                    },
+                    type: 'POST'
+                });
+            }
+            document.getElementById("submitLogin").click();
+        }
+    </script>
 </div>
 </html>

@@ -121,6 +121,9 @@
                         }
                     } else {
                         toastSuccess("Success", "Đăng kí thành công!")
+                        setTimeout(()=>{
+                            window.location.href = 'signin'
+                        }, 1000)
                     }
                 },
                 type: 'POST'

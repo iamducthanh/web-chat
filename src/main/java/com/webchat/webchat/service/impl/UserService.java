@@ -20,6 +20,12 @@ public class UserService implements IUserService {
     }
 
     @Override
+    public User findByUsernameAndPassword(String username, String password) {
+        List<User> list = userRepo.findUserByUsernameAndPassword(username, password);
+        return list.isEmpty() ? null : list.get(0);
+    }
+
+    @Override
     public User findByEmail(String email) {
         List<User> list = userRepo.findUserByEmail(email);
         return list.isEmpty() ? null : list.get(0);
