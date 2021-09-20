@@ -36,7 +36,7 @@
                 <!-- List -->
                 <div class="card-list">
                     <th:block th:each="friend:${friend}">
-                        <div class="card border-0">
+                        <div class="card border-0" th:id="${'friend' + friend.username}">
                             <div class="card-body">
                                 <div class="row align-items-center gx-5">
                                     <div class="col-auto">

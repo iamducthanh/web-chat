@@ -1,5 +1,6 @@
 package com.webchat.webchat.intercepter;
 
+import com.webchat.webchat.constant.ListConstant;
 import com.webchat.webchat.constant.PropertiesConstant;
 import com.webchat.webchat.entities.Friend;
 import com.webchat.webchat.entities.Message;

@@ -47,6 +47,7 @@ public class MessageDirectController {
     private SessionUtil sessionUtil;
 
     @RequestMapping(value = "/message_direct", method = RequestMethod.GET)
+
     public String messageDirectPage(Model model) {
         String view = "redirect:/trang-chu";
         User user = (User) sessionUtil.getObject("USER");

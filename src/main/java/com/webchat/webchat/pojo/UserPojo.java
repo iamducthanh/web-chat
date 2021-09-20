@@ -1,5 +1,6 @@
 package com.webchat.webchat.pojo;
 
+import com.webchat.webchat.constant.UsersOnline;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -18,8 +19,6 @@ public class UserPojo {
     private boolean gender;
     private String role;
     private Date birthDate;
-
-    public void setImage(String image) {
-        this.image = image;
-    }
+    private String isFriend;
+    private boolean online;
 }

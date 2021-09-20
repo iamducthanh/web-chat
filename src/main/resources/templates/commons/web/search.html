@@ -53,17 +53,32 @@
                     let userSearchList = document.getElementById("UserSearchList");
                     userSearchList.innerHTML = "";
                     for (let i = 0; i < data.length; i++) {
+                        let isFriend = document.querySelector("#friend" + data[i].username) == null ? false : true;
+                        let avatarOnline = "";
+                        let status = "";
+                        if(isFriend){
+                            if(data[i].online){
+                                avatarOnline = 'avatar-online';
+                                status = "Đang hoạt động";
+                            } else {
+                                avatarOnline = 'avatar-offline';
+                                status = "Không hoạt động";
+                            }
+
+                        } else {
+                            status = data[i].username;
+                        }
                         userSearchList.innerHTML +=
                             "<div class='card border-0'>" +
                             "<div class='card-body'>" +
                             "<div class='row align-items-center gx-5'>" +
                             "<div class='col-auto'>" +
-                            "<a href='#' class='avatar avatar-online' id=''>" +
+                            "<a href='#' class='avatar "+avatarOnline+"' id=''>" +
                             "<img class='avatar-img' src='"+data[i].image+"' alt=''></a>" +
                             "</div>" +
                             "<div class='col'>" +
                             "<h5><a href='#'>"+data[i].fullName+"</a></h5>" +
-                            "<p class='text-truncate'>Đang hoạt động</p>" +
+                            "<p class='text-truncate'>"+status+"</p>" +
                             "</div>" +
                             "<div class='col-auto'>" +
                             "<div class='dropdown'>" +
