@@ -23,35 +23,31 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Controller
-public class SignInController implements UserDetailsService {
+public class SignInController {
     @Autowired
     private CookieUtil cookieUtil;
 
     @Autowired
-    private UserService userService;
-
-    @Autowired
-    HttpServletRequest req;
-
-    User user = null;
+    private HttpServletRequest req;
 
     @GetMapping("/signin")
     public String signinPage(Model model){
-        String view = "views/acount/signin";
-//        String username = cookieUtil.get("username");
-//        String password = cookieUtil.get("password");
-//        System.out.println(username);
-//        System.out.println(password);
-//        if(username != null && password != null){
-//            System.out.println("bat dau tim");
-//            user = userService.findByUsernameAndPassword(username, password);
-//            if(user != null){
-//                System.out.println("tim thay user");
-//                loadUserByUsername(username);
-//                view = "redirect:/trang-chu";
-//            }
-//        }
-        return view;
+        String status = req.getParameter("status");
+        if(status != null && status.equals("logout")){
+            cookieUtil.add("username","username", 0);
+            cookieUtil.add("remember","on", 0);
+            cookieUtil.add("password","password", 0);
+        } else {
+            String username = cookieUtil.get("username");
+            String password = cookieUtil.get("password");
+            String remember = cookieUtil.get("remember");
+            if(remember != null && remember.equals("on")){
+                model.addAttribute("username", username);
+                model.addAttribute("password", password);
+                model.addAttribute("rememberOn", remember);
+            }
+        }
+        return "views/acount/signin";
     }
 
     @GetMapping("/logoutSuccessful")
@@ -63,29 +59,20 @@ public class SignInController implements UserDetailsService {
     @ResponseBody
     public String rememberSignin(
             @RequestParam("username") String username,
-            @RequestParam("password") String password
+            @RequestParam("password") String password,
+            @RequestParam("remember") String remember
             ){
-        BCryptPasswordEncoder pass = new BCryptPasswordEncoder();
-        String passwordEncoded = pass.encode(password);
-        int hour = 60 * 60 * 24 * 10;
-        cookieUtil.add("username",username, hour);
-        cookieUtil.add("password",passwordEncoded, hour);
+        if(remember.equals("true")){
+            int hour = 60 * 60 * 24 * 10;
+            cookieUtil.add("username",username, hour);
+            cookieUtil.add("remember","on", 0);
+            cookieUtil.add("password",password, hour);
+        } else {
+            cookieUtil.add("username",username, 0);
+            cookieUtil.add("remember","on", 0);
+            cookieUtil.add("password",password, 0);
+        }
         return "";
     }
 
-    @Override
-    public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
-        List<String> roleNames = new ArrayList<>();
-        roleNames.add(user.getRole());
-        SessionUtil.getSessionUtil().addObject(req, "USER", user);
-        List<GrantedAuthority> grantList = new ArrayList<>();
-        if (roleNames != null) {
-            for (String role : roleNames) {
-                GrantedAuthority authority = new SimpleGrantedAuthority(role);
-                grantList.add(authority);
-            }
-        }
-        UserDetails userDetails = (UserDetails) new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(), grantList);
-        return userDetails;
-    }
 }

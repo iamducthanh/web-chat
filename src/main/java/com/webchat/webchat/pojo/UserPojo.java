@@ -4,7 +4,6 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Column;
 import java.util.Date;
 
 @Data
@@ -19,4 +18,8 @@ public class UserPojo {
     private boolean gender;
     private String role;
     private Date birthDate;
+
+    public void setImage(String image) {
+        this.image = image;
+    }
 }

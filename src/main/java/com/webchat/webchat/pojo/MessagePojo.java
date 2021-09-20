@@ -18,4 +18,5 @@ public class MessagePojo {
     private String time;
     private String image;
     private List<String> listFile;
+
 }

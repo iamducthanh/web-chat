@@ -44,12 +44,12 @@ public class MessageDirectController {
     private UserService userService;
 
     @Autowired
-    private UploadUtil uploadUtil;
+    private SessionUtil sessionUtil;
 
     @RequestMapping(value = "/message_direct", method = RequestMethod.GET)
     public String messageDirectPage(Model model) {
         String view = "redirect:/trang-chu";
-        User user = (User) SessionUtil.getSessionUtil().getObject(req, "USER");
+        User user = (User) sessionUtil.getObject("USER");
         model.addAttribute("username", user.getUsername());
         String roomId = req.getParameter("room");
         if(roomId != null){

@@ -41,7 +41,7 @@
                                 <div class="row align-items-center gx-5">
                                     <div class="col-auto">
                                         <a href="#" th:class="${friend.isOnline() ? 'avatar avatar-online' : 'avatar avatar-offline'}" th:id="@{${friend.username} + 'Friend'}">
-                                            <img class="avatar-img" th:src="@{'/assets/image/' + ${friend.image}}" alt="">
+                                            <img class="avatar-img" th:src="@{${friend.image}}" alt="">
                                         </a>
                                     </div>
                                     <div class="col">

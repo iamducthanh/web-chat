@@ -101,9 +101,7 @@
                                 <div class="row gx-5">
                                     <div class="col-auto">
                                         <div th:class="${messageUser.isOnline() ? 'avatar avatar-online' : 'avatar avatar-offline'}" th:id="@{${messageUser.users.get(0).username}}">
-                                            <img th:if="${messageUser.users.get(0).image == 'avt.png'}" th:src="@{'/assets/image/' + ${messageUser.users.get(0).image}}" alt="#" class="avatar-img">
-                                            <img th:if="${messageUser.users.get(0).image != 'avt.png'}"
-                                                 th:src="@{'https://github.com/phonghotkgd2k1/image_public/blob/main/' + ${messageUser.users.get(0).image} + '?raw=true'}" alt="#" class="avatar-img">
+                                            <img th:src="@{${messageUser.users.get(0).image}}" alt="#" class="avatar-img">
                                         </div>
                                     </div>
 

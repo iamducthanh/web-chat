@@ -35,7 +35,7 @@ public class MessageApi {
     private AttachService attachService;
 
     @Autowired
-    private HttpServletRequest req;
+    private SessionUtil sessionUtil;
 
     @GetMapping("/api/message")
     @ResponseBody
@@ -61,7 +61,7 @@ public class MessageApi {
     @ResponseBody
     public List<FileAttackDto> saveMessage(@RequestParam("content") String content, @RequestParam("room") String roomId, @RequestParam("sendto") String sendTo, @RequestParam("attack") String attack) throws IOException {
         Message message = new Message();
-        User user = (User) SessionUtil.getSessionUtil().getObject(req, "USER");
+        User user = (User) sessionUtil.getObject("USER");
         Room room = new Room(roomId, 0, "");
         UUID uuid = UUID.randomUUID();
         message.setId(String.valueOf(uuid));

@@ -87,22 +87,15 @@
 
         <!-- Profile -->
         <li class="nav-item">
-            <a th:if="${user.image == 'avt.png'}" href="#" class="nav-link p-0 mt-lg-2" data-bs-toggle="modal" data-bs-target="#modal-profile">
+
+            <a href="#" class="nav-link p-0 mt-lg-2" data-bs-toggle="modal" data-bs-target="#modal-profile">
                 <div class="avatar avatar-online mx-auto d-none d-xl-block">
-                    <img class="avatar-img" th:src="@{'/assets/image/' + ${user.image}}" alt="">
+                    <img
+                         class="avatar-img avatarView" th:src="@{${user.image}}" alt="">
                 </div>
                 <div class="avatar avatar-online avatar-xs d-xl-none">
-                    <img class="avatar-img" th:src="@{'/assets/image/' + ${user.image}}" alt="">
-                </div>
-            </a>
-            <a th:if="${user.image != 'avt.png'}" href="#" class="nav-link p-0 mt-lg-2" data-bs-toggle="modal" data-bs-target="#modal-profile">
-                <div class="avatar avatar-online mx-auto d-none d-xl-block">
-                    <img th:if="${user.image != 'avt.png'}"
-                         class="avatar-img avatarView" th:src="@{'https://github.com/phonghotkgd2k1/image_public/blob/main/' + ${user.image} + '?raw=true'}" alt="">
-                </div>
-                <div class="avatar avatar-online avatar-xs d-xl-none">
-                    <img th:if="${user.image != 'avt.png'}"
-                         class="avatar-img avatarView" th:src="@{'https://github.com/phonghotkgd2k1/image_public/blob/main/' + ${user.image} + '?raw=true'}" alt="">
+                    <img
+                         class="avatar-img avatarView" th:src="@{${user.image}}" alt="">
                 </div>
             </a>
         </li>

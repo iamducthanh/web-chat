@@ -2,6 +2,7 @@ package com.webchat.webchat.service.impl;
 
 import com.webchat.webchat.constant.UsersOnline;
 import com.webchat.webchat.entities.User;
+import com.webchat.webchat.utils.CookieUtil;
 import com.webchat.webchat.utils.SessionUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
@@ -21,16 +22,28 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     private UserService userService;
 
     @Autowired
-    HttpServletRequest req;
+    private CookieUtil cookieUtil;
+
+    @Autowired
+    private SessionUtil sessionUtil;
 
     @Override
     public UserDetails loadUserByUsername(String userName) throws UsernameNotFoundException {
         User user = userService.findByUsername(userName);
+
         if (user == null) {
             System.out.println("User not found! " + userName);
             throw new UsernameNotFoundException("User " + userName + " was not found in the database");
         }
-        SessionUtil.getSessionUtil().addObject(req, "USER", user);
+        String usernameCookie = cookieUtil.get("username");
+        String passwordCookie = cookieUtil.get("password");
+        if(usernameCookie != null && usernameCookie.equals(user.getUsername()) && passwordCookie != null){
+            int hour = 60 * 60 * 24 * 10;
+            cookieUtil.add("remember","on", hour);
+        } else {
+            cookieUtil.add("remember","on", 0);
+        }
+        sessionUtil.addObject("USER", user);
 //        UsersOnline.usersEmtityOnline.add(user);
         System.out.println("Found User: " + user);
 

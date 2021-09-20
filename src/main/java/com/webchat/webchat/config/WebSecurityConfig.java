@@ -28,6 +28,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
+        System.out.println("222222222222222222");
         auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder());
 
     }
@@ -51,7 +52,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .failureUrl("/signin?status=login_false")
                 .usernameParameter("username")
                 .passwordParameter("password")
-                .and().logout().logoutUrl("/signout").logoutSuccessUrl("/trang-chu");
+                .and().logout().logoutUrl("/signout").logoutSuccessUrl("/signin?status=logout");
 
         http.authorizeRequests().and() //
                 .rememberMe().tokenRepository(this.persistentTokenRepository())

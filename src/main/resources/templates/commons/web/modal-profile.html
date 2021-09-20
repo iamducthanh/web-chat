@@ -17,9 +17,7 @@
 
           <div class="profile-body">
             <div class="avatar avatar-xl">
-              <img th:if="${user.image == 'avt.png'}" class="avatar-img avatarView" th:src="@{'/assets/image/' + ${user.image}}" alt="#">
-              <img th:if="${user.image != 'avt.png'}"
-                   class="avatar-img avatarView" th:src="@{'https://github.com/phonghotkgd2k1/image_public/blob/main/' + ${user.image} + '?raw=true'}" alt="">
+              <img class="avatar-img avatarView" th:src="@{${user.image}}" alt="">
             </div>
 
             <h4 class="mb-1">[[${user.getFullname()}]]</h4>

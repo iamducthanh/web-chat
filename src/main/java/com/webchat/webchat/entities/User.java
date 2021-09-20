@@ -93,6 +93,10 @@ public class User {
                 '}';
     }
 
+    public String getImage() {
+        return "https://github.com/phonghotkgd2k1/image_public/blob/main/" + image + "?raw=true";
+    }
+
     public String getFullname(){
         return this.lastName + " " + this.firstName;
     }

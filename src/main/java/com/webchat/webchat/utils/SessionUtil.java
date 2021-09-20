@@ -1,26 +1,24 @@
 package com.webchat.webchat.utils;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 import javax.servlet.http.HttpServletRequest;
 
+@Service
 public class SessionUtil {
-    public static SessionUtil sessionUtil = null;
+    @Autowired
+    private HttpServletRequest req;
 
-    public static SessionUtil getSessionUtil(){
-        if(sessionUtil == null){
-            return new SessionUtil();
-        }
-        return sessionUtil;
-    }
-
-    public void addObject(HttpServletRequest req, String key, Object value){
+    public void addObject(String key, Object value){
         req.getSession().setAttribute(key, value);
     }
 
-    public Object getObject(HttpServletRequest req, String key){
+    public Object getObject(String key){
         return req.getSession().getAttribute(key);
     }
 
-    public void removeObject(HttpServletRequest req, String key){
+    public void removeObject(String key){
         req.getSession().removeAttribute(key);
     }
 

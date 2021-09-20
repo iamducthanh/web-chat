@@ -13,11 +13,11 @@ import javax.servlet.http.HttpServletRequest;
 @Controller
 public class MessageGroupController {
     @Autowired
-    private HttpServletRequest req;
+    private SessionUtil sessionUtil;
 
     @RequestMapping(value = "/message_group", method = RequestMethod.GET)
     public String messageGroupPage(Model model) {
-        User user = (User) SessionUtil.getSessionUtil().getObject(req, "USER");
+        User user = (User) sessionUtil.getObject("USER");
         model.addAttribute("username", user.getUsername());
         return "views/message/message-group";
     }

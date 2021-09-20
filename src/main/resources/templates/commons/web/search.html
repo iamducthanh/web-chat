@@ -53,17 +53,13 @@
                     let userSearchList = document.getElementById("UserSearchList");
                     userSearchList.innerHTML = "";
                     for (let i = 0; i < data.length; i++) {
-                        let image = "";
-                        if(data[i].image == 'avt.png'){
-                            image = "assets/image/avt.png";
-                        }
                         userSearchList.innerHTML +=
                             "<div class='card border-0'>" +
                             "<div class='card-body'>" +
                             "<div class='row align-items-center gx-5'>" +
                             "<div class='col-auto'>" +
                             "<a href='#' class='avatar avatar-online' id=''>" +
-                            "<img class='avatar-img' src='"+image+"' alt=''></a>" +
+                            "<img class='avatar-img' src='"+data[i].image+"' alt=''></a>" +
                             "</div>" +
                             "<div class='col'>" +
                             "<h5><a href='#'>"+data[i].fullName+"</a></h5>" +

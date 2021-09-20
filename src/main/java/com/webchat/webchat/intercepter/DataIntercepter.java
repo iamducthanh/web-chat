@@ -32,10 +32,12 @@ public class DataIntercepter implements HandlerInterceptor {
     private MessageService messageService;
     @Autowired
     private FriendService friendService;
+    @Autowired
+    private SessionUtil sessionUtil;
 
     @Override
     public boolean preHandle(HttpServletRequest req, HttpServletResponse resp, Object handler) throws Exception {
-        User user = (User) SessionUtil.getSessionUtil().getObject(req, "USER");
+        User user = (User) sessionUtil.getObject("USER");
         System.out.println("run");
         req.setAttribute("user", user);
         getUserOnline(req, user);

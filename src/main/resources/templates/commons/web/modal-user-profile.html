@@ -18,11 +18,7 @@
 
                     <div class="profile-body">
                         <div class="avatar avatar-xl">
-                            <img class="avatar-img" th:if="${userInRoom.image == 'avt.png'}"
-                                 th:src="@{'/assets/image/' + ${userInRoom.image}}"
-                                 alt="#">
-                            <img class="avatar-img" th:if="${userInRoom.image != 'avt.png'}"
-                                 th:src="@{'https://github.com/phonghotkgd2k1/image_public/blob/main/' + ${userInRoom.image} + '?raw=true'}"
+                            <img class="avatar-img" th:src="@{${userInRoom.image}}"
                                  alt="#">
                         </div>
 

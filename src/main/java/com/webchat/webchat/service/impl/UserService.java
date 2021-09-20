@@ -3,7 +3,9 @@ package com.webchat.webchat.service.impl;
 import com.webchat.webchat.entities.User;
 import com.webchat.webchat.repository.UserRepository;
 import com.webchat.webchat.service.IUserService;
+import com.webchat.webchat.utils.SessionUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -12,6 +14,8 @@ import java.util.List;
 public class UserService implements IUserService {
     @Autowired
     UserRepository userRepo;
+    @Autowired
+    private SessionUtil sessionUtil;
 
     @Override
     public User findByUsername(String username) {
@@ -46,7 +50,9 @@ public class UserService implements IUserService {
     public List<User> findByKeyword(String username, String email) {
         username = "%" + username + "%";
         email = "%" + email + "%";
-        List<User> list = userRepo.findUserByKeyword(username, email);
+        User user = (User) sessionUtil.getObject("USER");
+        System.out.println(user.getUsername());
+        List<User> list = userRepo.findUserByKeyword(username, email, user.getUsername(), PageRequest.of(0, 30));
         return list.isEmpty() ? null : list;
     }
 }

@@ -17,10 +17,7 @@
                         <div class="row align-items-center gx-5">
                             <div class="col-auto">
                                 <div class="avatar">
-                                    <img onclick="chooseFile()" th:if="${user.image == 'avt.png'}" id="avatarView"
-                                         class="avatar-img" th:src="@{'/assets/image/' + ${user.image}}" alt="">
-                                    <img onclick="chooseFile()" th:if="${user.image != 'avt.png'}" id="avatarView"
-                                         class="avatar-img" th:src="@{'https://github.com/phonghotkgd2k1/image_public/blob/main/' + ${user.image} + '?raw=true'}" alt="">
+                                    <img onclick="chooseFile()" id="avatarView" class="avatar-img" th:src="@{${user.image}}" alt="">
                                     <div class="badge badge-circle bg-secondary border-outline position-absolute bottom-0 end-0">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
                                              viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"

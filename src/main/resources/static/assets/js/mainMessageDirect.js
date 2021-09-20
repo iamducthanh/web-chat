@@ -167,7 +167,7 @@ async function onMessageReceived(payload) {
             elem.parentNode.removeChild(elem);
             messageArea.innerHTML +=
                 "<div class='message message-out'><a href='#' data-bs-toggle='modal' data-bs-target='#modal-profile' class='avatar avatar-responsive'>" +
-                "<img class='avatar-img' src='assets/image/" + document.getElementById("imageUserLogin").value + "'" + " alt=''>" +
+                "<img class='avatar-img' src='" + document.getElementById("imageUserLogin").value + "'" + " alt=''>" +
                 "</a>" +
                 "<div class='message-inner'>" +
                 "<div class='message-body'>" +
@@ -239,7 +239,7 @@ async function onMessageReceived(payload) {
                 "<div class='message'>" +
                 "<a data-bs-toggle='modal' data-bs-target='#modal-user-profile'" +
                 "class='avatar avatar-responsive'>" +
-                "<img class='avatar-img' src='assets/image/" + document.getElementById("imageUserInRoom").value + "'" + " alt=''>" +
+                "<img class='avatar-img' src='" + document.getElementById("imageUserInRoom").value + "'" + " alt=''>" +
                 "</a>" +
                 "<div class='message-inner'>" + "<div class='message-body'>" +
                 "<div class='message-content'>" +
@@ -326,7 +326,7 @@ async function scrollFunction_ct () {
                     if (username == message.sender) {
                         messagePlus +=
                             "<div class='message message-out'><a href='#' data-bs-toggle='modal' data-bs-target='#modal-profile' class='avatar avatar-responsive'>" +
-                            "<img class='avatar-img' src='assets/image/" + document.getElementById("imageUserLogin").value + "'" + " alt=''>" +
+                            "<img class='avatar-img' src='" + document.getElementById("imageUserLogin").value + "'" + " alt=''>" +
                             "</a>" + "<div class='message-inner'>" + "<div class='message-body'>" + "<div class='message-content'>" + "<div class='message-text'>" +
 
                             "<p>" + message.content + "</p>" +
@@ -389,7 +389,7 @@ async function scrollFunction_ct () {
                             "<div class='message'>" +
                             "<a data-bs-toggle='modal' data-bs-target='#modal-user-profile'" +
                             "class='avatar avatar-responsive'>" +
-                            "<img class='avatar-img' src='assets/image/" + document.getElementById("imageUserInRoom").value + "'" + " alt=''>" +
+                            "<img class='avatar-img' src='" + document.getElementById("imageUserInRoom").value + "'" + " alt=''>" +
                             "</a>" +
                             "<div class='message-inner'>" + "<div class='message-body'>" + "<div class='message-content'>" + "<div class='message-text'>" +
                             "<p>" + message.content + "</p>" +
