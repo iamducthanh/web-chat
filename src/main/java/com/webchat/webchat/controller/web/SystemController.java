@@ -1,6 +1,7 @@
 package com.webchat.webchat.controller.web;
 
 import com.webchat.webchat.constant.UsersOnline;
+import com.webchat.webchat.pojo.MessageUserConnectPojo;
 import com.webchat.webchat.pojo.MessageUserRealtime;
 import com.webchat.webchat.pojo.UserOnline;
 import org.springframework.messaging.handler.annotation.MessageMapping;
@@ -33,5 +34,12 @@ public class SystemController {
         String strDate = dateFormat.format(new Date());
         messageUserRealtime.setTime(strDate);
         return messageUserRealtime;
+    }
+
+    @MessageMapping("/system/{username}")
+    @SendTo("/topic/system/{username}")
+    public MessageUserConnectPojo onMessage(@Payload MessageUserConnectPojo messageUserConnectPojo) {
+        System.out.println(messageUserConnectPojo.toString());
+        return messageUserConnectPojo;
     }
 }

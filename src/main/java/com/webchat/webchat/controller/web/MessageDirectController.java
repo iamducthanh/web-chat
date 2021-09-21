@@ -2,10 +2,7 @@ package com.webchat.webchat.controller.web;
 
 import com.webchat.webchat.constant.AttackFile;
 import com.webchat.webchat.constant.PropertiesConstant;
-import com.webchat.webchat.entities.Attach;
-import com.webchat.webchat.entities.Message;
-import com.webchat.webchat.entities.RoomDetail;
-import com.webchat.webchat.entities.User;
+import com.webchat.webchat.entities.*;
 import com.webchat.webchat.pojo.FilesAttack;
 import com.webchat.webchat.service.impl.MessageService;
 import com.webchat.webchat.service.impl.RoomDetailService;
@@ -55,6 +52,10 @@ public class MessageDirectController {
         String roomId = req.getParameter("room");
         if(roomId != null){
             RoomDetail roomDetail = roomDetailService.findRoomDetailByUserAndRoom(user.getId(), roomId);
+            Room room = roomDetail.getRoom();
+            if(!room.getUsername().isEmpty()){
+                model.addAttribute("first", "onFirst");
+            }
             if(roomDetail != null){
                 view = "views/message/message-direct";
                 List<User> userInRoom = userService.findInRoom(user.getId(), roomId);
@@ -76,6 +77,7 @@ public class MessageDirectController {
             }
         }
         model.addAttribute("room", roomId);
+
         return view;
     }
 

@@ -10,9 +10,7 @@ import com.webchat.webchat.service.impl.UserService;
 import com.webchat.webchat.utils.SessionUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
@@ -26,9 +24,6 @@ public class MessageController {
 
     @Autowired
     private RoomService roomService;
-
-    @Autowired
-    private UserService userService;
 
     @Autowired
     private RoomDetailService roomDetailService;
@@ -48,6 +43,17 @@ public class MessageController {
             e.printStackTrace();
         }
         return view;
+    }
+
+    @PostMapping("/message/change-status")
+    @ResponseBody
+    public String changeStatus(String roomId){
+        Room room = roomService.findRoomById(roomId);
+        if(room != null){
+            room.setUsername("");
+            roomService.saveRoom(room);
+        }
+        return "done";
     }
 
     public String createRoomChat(String id, User user){

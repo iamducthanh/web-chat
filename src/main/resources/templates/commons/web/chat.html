@@ -28,7 +28,7 @@
                 </div>
 
                 <!-- Chats -->
-                <div class="card-list">
+                <div class="card-list" id="contentUserMessage">
                     <!-- Card -->
                     <th:block th:each="messageUser: ${messageUsers}">
                         <a th:if="${messageUser.active}" th:href="@{'/message_direct?room=' + ${messageUser.roomCode}}" class="card border-0 text-reset">

@@ -57,6 +57,34 @@ function onError() {
 
 async function sendMessage(event) {
     var messageContent = messageInput.value.trim();
+    let first = document.querySelector("#first");
+    console.log("value ----" + first.value)
+    if(first.value == 'onFirst'){
+        first.value = "";
+        $.ajax({
+            url: 'message/change-status',
+            data: {
+                roomId: room
+            },
+            error: function () {
+                console.log("error")
+            },
+            success: async function (data) {
+                if(data == 'done'){
+                    let user = {
+                        roomId: room,
+                        fullname: document.querySelector("#fullname").value,
+                        image: document.querySelector("#avtMyUser").src
+                    }
+                    stompClientRoom.send("/app/system/" + document.getElementById("userInRoomDirect").value,
+                        {},
+                        JSON.stringify(user)
+                    );
+                }
+            },
+            type: 'POST'
+        });
+    }
     if (messageContent && stompClient) {
         var attack = document.getElementsByClassName("attackFiles");
         let attacks = "";

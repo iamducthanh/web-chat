@@ -3,6 +3,7 @@
 let stompClientSystem = null;
 let stompClientMessageListen = null;
 let stompClientCall = null;
+let stompClientRoom = null;
 let userOnline = null;
 
 function online(event) {
@@ -19,6 +20,10 @@ function online(event) {
         let socketCall = new SockJS('/chatroom/system');
         stompClientCall = Stomp.over(socketCall);
         stompClientCall.connect({}, onOnlined, onError1);
+
+        let socketRoom = new SockJS('/chatroom/system');
+        stompClientRoom = Stomp.over(socketRoom);
+        stompClientRoom.connect({}, onOnlined, onError1);
     }
 }
 
@@ -29,6 +34,8 @@ function onOnlined() {
 
     stompClientSystem.subscribe('/topic/system.adduser', onMessageReceivedOnline);
 
+    stompClientRoom.subscribe('/topic/system/' + userOnline, onAddRoom);
+
     stompClientCall.subscribe('/topic/call/' + userOnline, onCall);
 
     stompClientMessageListen.subscribe('/topic/system.onmessage/' + userOnline, onMessageRealtime);
@@ -36,6 +43,49 @@ function onOnlined() {
         {},
         JSON.stringify({username: userOnline, type: 'ONLINE'})
     );
+}
+
+function onAddRoom(payload){
+    let messageUser = JSON.parse(payload.body);
+    let contentUserMessage = document.getElementById("contentUserMessage");
+    contentUserMessage.innerHTML =
+        <a href='message_direct?room='"
+           className='card border-0 text-reset'>
+            <div className='card-body'>
+                <div className='row gx-5'>
+                    <div className='col-auto'>
+                        <div class='avatar avatar-online' id='themee'>
+                            <img src='' alt='#' className='avatar-img'>
+                        </div>
+                    </div>
+
+                    <div className='col'>
+                        <div className='d-flex align-items-center mb-3'>
+                            <h5 class='me-auto mb-0 '
+                                name='messUser'>Nguyen duc thanh</h5>
+                            <span
+                                class='text-muted extra-small ms-2 '"
+                                name='messUser'></span>
+                        </div>
+
+                        <div className="d-flex align-items-center">
+                            <div class='line-clamp me-auto '
+                                 name='messUser'>
+                                Bắt đầu trò chuyện
+                            </div>
+                            <div className='badge badge-circle bg-primary ms-5'>
+                                <span name=''>0</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </a>
+
+
+
+    console.log("messag user -------------------")
+    console.log(messageUser);
 }
 
 function onCall(payload){

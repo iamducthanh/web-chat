@@ -6,6 +6,8 @@ import com.webchat.webchat.service.IRoomService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class RoomService implements IRoomService {
     @Autowired
@@ -14,5 +16,11 @@ public class RoomService implements IRoomService {
     @Override
     public void saveRoom(Room room) {
         roomRepositoty.save(room);
+    }
+
+    @Override
+    public Room findRoomById(String id) {
+        List<Room> list = roomRepositoty.findRoomById(id);
+        return list.isEmpty() ? null : list.get(0);
     }
 }
