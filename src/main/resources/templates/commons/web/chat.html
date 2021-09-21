@@ -30,73 +30,8 @@
                 <!-- Chats -->
                 <div class="card-list">
                     <!-- Card -->
-                    <a th:href="@{'/message_group'}" class="card border-0 text-reset">
-                        <div class="card-body">
-                            <div class="row gx-5">
-                                <div class="col-auto">
-                                    <div class="avatar avatar-online">
-                                        <img src="assets/img/avatars/7.jpg" alt="#" class="avatar-img">
-                                    </div>
-                                </div>
-
-                                <div class="col">
-                                    <div class="d-flex align-items-center mb-3">
-                                        <h5 class="me-auto mb-0">William Wright</h5>
-                                        <span class="text-muted extra-small ms-2">12:45 PM</span>
-                                    </div>
-
-                                    <div class="d-flex align-items-center">
-                                        <div class="line-clamp me-auto">
-                                            Hello! Yeah, I'm going to meet my friend of mine at the departments stores now.
-                                        </div>
-
-                                        <div class="badge badge-circle bg-primary ms-5">
-                                            <span>3</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div><!-- .card-body -->
-
-                        <div class="card-footer">
-                            <div class="row align-items-center gx-4">
-                                <div class="col-auto">
-                                    <div class="avatar avatar-xs">
-                                        <img class="avatar-img" src="assets/img/avatars/bootstrap.svg" alt="Bootstrap Community">
-                                    </div>
-                                </div>
-
-                                <div class="col">
-                                    <h6 class="mb-0">Bootstrap Community</h6>
-                                </div>
-
-                                <div class="col-auto">
-                                    <div class="avatar-group">
-                                        <div class="avatar avatar-xs">
-                                            <img src="assets/img/avatars/12.jpg" alt="#" class="avatar-img">
-                                        </div>
-
-                                        <div class="avatar avatar-xs">
-                                            <img src="assets/img/avatars/11.jpg" alt="#" class="avatar-img">
-                                        </div>
-
-                                        <div class="avatar avatar-xs">
-                                            <img src="assets/img/avatars/9.jpg" alt="#" class="avatar-img">
-                                        </div>
-
-                                        <div class="avatar avatar-xs">
-                                            <span class="avatar-text">+5</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div><!-- .row -->
-                        </div><!-- .card-footer -->
-                    </a>
-                    <!-- Card -->
-
-                    <!-- Card -->
                     <th:block th:each="messageUser: ${messageUsers}">
-                        <a th:href="@{'/message_direct?room=' + ${messageUser.roomCode}}" class="card border-0 text-reset">
+                        <a th:if="${messageUser.active}" th:href="@{'/message_direct?room=' + ${messageUser.roomCode}}" class="card border-0 text-reset">
                             <div class="card-body">
                                 <div class="row gx-5">
                                     <div class="col-auto">
@@ -127,67 +62,40 @@
                     <!-- Card -->
 
                     <!-- Card -->
-                    <a th:href="@{'/message_empty'}" class="card border-0 text-reset">
-                        <div class="card-body">
-                            <div class="row gx-5">
-                                <div class="col-auto">
-                                    <div class="avatar avatar-online">
-                                        <img src="assets/img/avatars/8.jpg" alt="#" class="avatar-img">
-                                    </div>
-                                </div>
+<!--                    <a href="chat-direct.html" class="card border-0 text-reset">-->
+<!--                        <div class="card-body">-->
+<!--                            <div class="row gx-5">-->
+<!--                                <div class="col-auto">-->
+<!--                                    <div class="avatar-group-trigon avatar-group-trigon-sm">-->
+<!--                                        <div class="avatar avatar-sm">-->
+<!--                                            <img class="avatar-img" src="assets/img/avatars/7.jpg" alt="#">-->
+<!--                                        </div>-->
 
-                                <div class="col">
-                                    <div class="d-flex align-items-center mb-3">
-                                        <h5 class="me-auto mb-0">Elise Dennis</h5>
-                                        <span class="text-muted extra-small ms-2">08:35 PM</span>
-                                    </div>
+<!--                                        <div class="avatar avatar-sm">-->
+<!--                                            <img class="avatar-img" src="assets/img/avatars/9.jpg" alt="#">-->
+<!--                                        </div>-->
 
-                                    <div class="d-flex align-items-center">
-                                        <div class="line-clamp me-auto">
-                                            is typing<span class='typing-dots'><span>.</span><span>.</span><span>.</span></span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div><!-- .card-body -->
-                    </a>
-                    <!-- Card -->
+<!--                                        <div class="avatar avatar-sm">-->
+<!--                                            <span class="avatar-text bg-primary">D</span>-->
+<!--                                        </div>-->
+<!--                                    </div>-->
+<!--                                </div>-->
 
-                    <!-- Card -->
-                    <a href="chat-direct.html" class="card border-0 text-reset">
-                        <div class="card-body">
-                            <div class="row gx-5">
-                                <div class="col-auto">
-                                    <div class="avatar-group-trigon avatar-group-trigon-sm">
-                                        <div class="avatar avatar-sm">
-                                            <img class="avatar-img" src="assets/img/avatars/7.jpg" alt="#">
-                                        </div>
+<!--                                <div class="col">-->
+<!--                                    <div class="d-flex align-items-center mb-3">-->
+<!--                                        <h5 class="me-auto mb-0">Don Knight</h5>-->
+<!--                                        <span class="text-muted extra-small ms-2">08:35 PM</span>-->
+<!--                                    </div>-->
 
-                                        <div class="avatar avatar-sm">
-                                            <img class="avatar-img" src="assets/img/avatars/9.jpg" alt="#">
-                                        </div>
-
-                                        <div class="avatar avatar-sm">
-                                            <span class="avatar-text bg-primary">D</span>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="col">
-                                    <div class="d-flex align-items-center mb-3">
-                                        <h5 class="me-auto mb-0">Don Knight</h5>
-                                        <span class="text-muted extra-small ms-2">08:35 PM</span>
-                                    </div>
-
-                                    <div class="d-flex align-items-center">
-                                        <div class="line-clamp me-auto">
-                                            I'm going to meet my friend of mine at the departments stores as soon as possible.
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div><!-- .card-body -->
-                    </a>
+<!--                                    <div class="d-flex align-items-center">-->
+<!--                                        <div class="line-clamp me-auto">-->
+<!--                                            I'm going to meet my friend of mine at the departments stores as soon as possible.-->
+<!--                                        </div>-->
+<!--                                    </div>-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                        </div>&lt;!&ndash; .card-body &ndash;&gt;-->
+<!--                    </a>-->
                     <!-- Card -->
                 </div>
                 <!-- Chats -->

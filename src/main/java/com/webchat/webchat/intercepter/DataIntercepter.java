@@ -84,7 +84,12 @@ public class DataIntercepter implements HandlerInterceptor {
                     messageLast = new Message();
                     messageLast.setContent("Bắt đầu trò chuyện");
                 }
-                messageUsers.add(new MessageUser(roomDetail, name, userInRoom, messageLast.getContent(), countMess, status, time, roomDetail.getRoom().getId()));
+                boolean active = false;
+                String usernameCheck = roomDetail.getRoom().getUsername();
+                if(usernameCheck.equals(user.getUsername()) || usernameCheck.equals("")){
+                    active = true;
+                }
+                messageUsers.add(new MessageUser(roomDetail, name, userInRoom, messageLast.getContent(), countMess, status, time, roomDetail.getRoom().getId(), active));
             }
         }
         req.setAttribute("messageUsers", messageUsers);

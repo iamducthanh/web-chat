@@ -11,6 +11,7 @@ import java.util.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 public class UserPojo {
+    private Integer id;
     private String username;
     private String fullName;
     private String email;

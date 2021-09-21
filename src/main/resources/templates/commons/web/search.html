@@ -93,16 +93,13 @@
                             "</svg>" +
                             "</a>" +
                             "<ul class='dropdown-menu'>" +
-                            "<li><a href='message/check?username="+data[i].username+"' class='dropdown-item'>Gửi tin nhắn</a></li>" +
+                            "<li><a href='message/check/"+data[i].id+"' class='dropdown-item'>Gửi tin nhắn</a></li>" +
                             "<li><a class='dropdown-item'>Kết bạn</a></li>" +
                             "</ul> </div> </div> </div> </div> </div>"
                     }
                 },
                 type: 'POST'
             });
-        }
-        function checkMessage(username){
-            console.log(username)
         }
     </script>
 </div>

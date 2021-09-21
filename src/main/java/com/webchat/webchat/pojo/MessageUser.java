@@ -16,8 +16,21 @@ public class MessageUser {
     private int status;
     private String time;
     private String roomCode;
+    private boolean active;
 
     public MessageUser() {
+    }
+
+    public MessageUser(RoomDetail roomDetail, String name, List<User> users, String messageLast, int countMess, int status, String time, String roomCode, boolean active) {
+        this.roomDetail = roomDetail;
+        this.name = name;
+        this.users = users;
+        this.messageLast = messageLast;
+        this.countMess = countMess;
+        this.status = status;
+        this.time = time;
+        this.roomCode = roomCode;
+        this.active = active;
     }
 
     public MessageUser(RoomDetail roomDetail, String name, List<User> users, String messageLast, int countMess, int status, String time, String roomCode) {
@@ -101,5 +114,13 @@ public class MessageUser {
 
     public void setTime(String time) {
         this.time = time;
+    }
+
+    public boolean isActive() {
+        return active;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
     }
 }

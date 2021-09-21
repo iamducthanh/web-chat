@@ -62,7 +62,7 @@ public class MessageApi {
     public List<FileAttackDto> saveMessage(@RequestParam("content") String content, @RequestParam("room") String roomId, @RequestParam("sendto") String sendTo, @RequestParam("attack") String attack) throws IOException {
         Message message = new Message();
         User user = (User) sessionUtil.getObject("USER");
-        Room room = new Room(roomId, 0, "");
+        Room room = new Room(roomId, 0, "","");
         UUID uuid = UUID.randomUUID();
         message.setId(String.valueOf(uuid));
         message.setUser(user);

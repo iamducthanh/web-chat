@@ -24,4 +24,9 @@ public class RoomDetail {
 
     @ManyToOne @JoinColumn(name = "roomid")
     private Room room;
+
+    public RoomDetail(User user, Room room) {
+        this.user = user;
+        this.room = room;
+    }
 }

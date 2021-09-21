@@ -25,10 +25,14 @@ public class Room {
     @Column(name = "name")
     private String name;
 
-    public Room(String id, int groupChat, String name) {
+    @Column(name = "username")
+    private String username;
+
+    public Room(String id, int groupChat, String name, String username) {
         this.id = id;
         this.groupChat = groupChat;
         this.name = name;
+        this.username = username;
     }
 
     @OneToMany(mappedBy = "room")

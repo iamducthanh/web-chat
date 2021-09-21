@@ -30,4 +30,9 @@ public class RoomDetailService implements IRoomDetailService {
         List<RoomDetail> list = roomDetailRepo.findRoomDetailBy2User(userId1, userId2);
         return list.isEmpty() ? null : list.get(0);
     }
+
+    @Override
+    public void saveRoomDetail(List<RoomDetail> roomDetails) {
+        roomDetailRepo.saveAll(roomDetails);
+    }
 }
