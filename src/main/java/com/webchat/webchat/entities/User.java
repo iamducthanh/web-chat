@@ -1,5 +1,7 @@
 package com.webchat.webchat.entities;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
@@ -52,6 +54,12 @@ public class User {
     @Column(name = "gender")
     private boolean gender;
 
+    @Column(name = "description")
+    private String description;
+
+    @Column(name = "phone")
+    private String phone;
+
     @Column(name = "role")
     private String role;
 
@@ -99,5 +107,10 @@ public class User {
 
     public String getFullname(){
         return this.lastName + " " + this.firstName;
+    }
+
+    public String getBirthDayString(){
+        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        return dateFormat.format(this.birthDate);
     }
 }

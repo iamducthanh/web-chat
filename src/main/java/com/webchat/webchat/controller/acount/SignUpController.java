@@ -129,6 +129,8 @@ public class SignUpController {
         userSignup.setImage("avt.png");
         userSignup.setGender(user.isGender());
         userSignup.setRole("ROLE_USER");
+        userSignup.setDescription("");
+        userSignup.setPhone("");
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         userSignup.setLastonline(new Date());
         try {

@@ -1,7 +1,7 @@
 package com.webchat.webchat.api;
 
 import com.webchat.webchat.constant.UsersOnline;
-import com.webchat.webchat.entities.Friend;
+import com.webchat.webchat.dto.UserUpdateDto;
 import com.webchat.webchat.entities.User;
 import com.webchat.webchat.pojo.UserPojo;
 import com.webchat.webchat.service.impl.FriendService;
@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.client.RestTemplate;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -83,6 +82,13 @@ public class UserApi {
         ResponseEntity<UserPojo> responseEntity = restTemplate
                 .exchange(uri, HttpMethod.GET, entity, UserPojo.class);
 //        System.out.println(responseEntity.getBody().getData());
+    }
+
+    @PutMapping("/user/update")
+    @ResponseBody
+    public String updateProfile(UserUpdateDto userUpdateDto){
+        userUpdateDto.toString();
+        return "";
     }
 
 }

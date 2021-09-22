@@ -82,34 +82,51 @@
 
                                     <div id="accordion-profile-body-1" class="accordion-collapse collapse"
                                          aria-labelledby="accordion-profile-1" data-parent="#accordion-profile">
+                                        <form id="updateUser">
                                         <div class="accordion-body">
-                                            <div class="form-floating mb-6">
-                                                <input type="text" class="form-control" id="profile-name"
-                                                       placeholder="Name">
-                                                <label for="profile-name">Name</label>
+                                            <div class="col-lg-12" style="margin-bottom: 20px">
+                                                <input name="username" th:value="${user.username}" type="text" class="form-control" placeholder="Tên người dùng">
+                                            </div>
+                                            <div class="col-lg-12" style="margin-bottom: 20px">
+                                                <input name="lastName" th:value="${user.lastName}" type="text" class="form-control" placeholder="Họ">
+                                            </div>
+                                            <div class="col-lg-12" style="margin-bottom: 20px">
+                                                <input name="firstName" th:value="${user.firstName}" type="text" class="form-control" placeholder="Tên">
+                                            </div>
+                                            <div class="col-lg-12" style="margin-bottom: 20px">
+                                                <input name="phone" th:value="${user.phone}" type="text" class="form-control" placeholder="Số điện thoại">
+                                            </div>
+                                            <div class="col-lg-12" style="margin-bottom: 20px">
+                                                <p>Ngày sinh</p>
+                                                <input name="birthdate" th:value="${user.getBirthDayString()}" type="date" class="form-control">
+                                            </div>
+                                            <div class="col-lg-12" style="margin-bottom: 20px">
+                                                <div th:if="${user.gender == true}" class="row" style="padding: 0 20px">
+                                                    <div class="col-lg-5" style="padding: 10px; border: 1px solid #a0b3ce; border-radius: 10px">
+                                                        <input name="gender" value="true" checked type="radio"> &ensp;Nam
+                                                    </div> &ensp;&ensp;
+                                                    <div class="col-lg-5" style="padding: 10px; border: 1px solid #a0b3ce; border-radius: 10px">
+                                                        <input name="gender" value="false" type="radio">&ensp;Nữ
+                                                    </div>
+                                                </div>
+                                                <div th:if="${user.gender != true}" class="row" style="padding: 0 20px">
+                                                    <div class="col-lg-5" style="padding: 10px; border: 1px solid #a0b3ce; border-radius: 10px">
+                                                        <input name="gender" value="true" type="radio"> &ensp;Nam
+                                                    </div> &ensp;&ensp;
+                                                    <div class="col-lg-5" style="padding: 10px; border: 1px solid #a0b3ce; border-radius: 10px">
+                                                        <input name="gender" value="false" checked type="radio">&ensp;Nữ
+                                                    </div>
+                                                </div>
                                             </div>
 
-                                            <div class="form-floating mb-6">
-                                                <input type="email" class="form-control" id="profile-email"
-                                                       placeholder="Email address">
-                                                <label for="profile-email">Email</label>
+                                            <div class="col-lg-12" style="margin-bottom: 20px">
+                                                <p>Mô tả ngắn</p>
+                                                <textarea name="description" class="form-control" cols="8" maxlength="100">[[${user.description}]]</textarea>
                                             </div>
-
-                                            <div class="form-floating mb-6">
-                                                <input type="text" class="form-control" id="profile-phone"
-                                                       placeholder="Phone">
-                                                <label for="profile-phone">Phone</label>
-                                            </div>
-
-                                            <div class="form-floating mb-6">
-                                                <textarea class="form-control" placeholder="Bio" id="profile-bio"
-                                                          data-autosize="true" style="min-height: 120px;"></textarea>
-                                                <label for="profile-bio">Bio</label>
-                                            </div>
-
-                                            <button type="button" class="btn btn-block btn-lg btn-primary w-100">Save
+                                            <button type="submit" class="btn btn-block btn-lg btn-primary w-100">Cập nhật
                                             </button>
                                         </div>
+                                        </form>
                                     </div>
                                 </div>
 
@@ -513,6 +530,27 @@
                 .catch((error) => {
                     console.error('Error:', error);
                 });
+        }
+
+        document.querySelector("#updateUser").addEventListener('submit', updateUser, true)
+        function updateUser(event){
+            event.preventDefault();
+            let formData = $("#updateUser").serializeArray();
+            let user = {};
+            for (let i = 0; i < formData.length; i++) {
+                user[formData[i].name] = formData[i].value;
+            }
+            $.ajax({
+                url: 'user/update',
+                data: user,
+                error: function () {
+                    console.log("error")
+                },
+                success: async function (data) {
+                    console.log("done")
+                },
+                type: 'PUT'
+            });
         }
     </script>
 </div>
