@@ -5,23 +5,27 @@ let stompClientMessageListen = null;
 let stompClientCall = null;
 let stompClientRoom = null;
 let userOnline = null;
+let socket = null;
+let socketSystem = null;
+let socketCall = null;
+let socketRoom = null;
 
 function online(event) {
     userOnline = document.querySelector('#userOnline').value.trim();
     if (userOnline) {
-        let socket = new SockJS('/chatroom/system');
+         socket = new SockJS('/chatroom/system');
         stompClientSystem = Stomp.over(socket);
         stompClientSystem.connect({}, onOnlined, onError1);
 
-        let socketSystem = new SockJS('/chatroom/system');
+         socketSystem = new SockJS('/chatroom/system');
         stompClientMessageListen = Stomp.over(socketSystem);
         stompClientMessageListen.connect({}, onOnlined, onError1);
 
-        let socketCall = new SockJS('/chatroom/system');
+         socketCall = new SockJS('/chatroom/system');
         stompClientCall = Stomp.over(socketCall);
         stompClientCall.connect({}, onOnlined, onError1);
 
-        let socketRoom = new SockJS('/chatroom/system');
+         socketRoom = new SockJS('/chatroom/system');
         stompClientRoom = Stomp.over(socketRoom);
         stompClientRoom.connect({}, onOnlined, onError1);
     }
@@ -48,44 +52,37 @@ function onOnlined() {
 function onAddRoom(payload){
     let messageUser = JSON.parse(payload.body);
     let contentUserMessage = document.getElementById("contentUserMessage");
+    let name = 'messUser' + document.querySelector("#userOnline").value + messageUser.sender;
     contentUserMessage.innerHTML =
-        <a href='message_direct?room='"
-           className='card border-0 text-reset'>
-            <div className='card-body'>
-                <div className='row gx-5'>
-                    <div className='col-auto'>
-                        <div class='avatar avatar-online' id='themee'>
-                            <img src='' alt='#' className='avatar-img'>
-                        </div>
-                    </div>
+        "<a href='message_direct?room="+messageUser.roomId+"'"+
+           "class='card border-0 text-reset'>"+
+            "<div class='card-body'>"+
+                "<div class='row gx-5'>"+
+                    "<div class='col-auto'>"+
+                        "<div class='avatar avatar-online' id='"+messageUser.sender+"'>"+
+                            "<img src='"+messageUser.image+"' alt='#' class='avatar-img'>"+
+                       "</div>"+
+                    "</div>"+
 
-                    <div className='col'>
-                        <div className='d-flex align-items-center mb-3'>
-                            <h5 class='me-auto mb-0 '
-                                name='messUser'>Nguyen duc thanh</h5>
-                            <span
-                                class='text-muted extra-small ms-2 '"
-                                name='messUser'></span>
-                        </div>
+                    "<div class='col'>"+
+                        "<div class='d-flex align-items-center mb-3'>"+
+                            "<h5 class='me-auto mb-0 messageSend' name='"+name+"'>"+messageUser.fullname+"</h5>"+
+                            "<span class='text-muted extra-small ms-2 messageSend' name='"+name+"'></span>"+
+                        "</div>"+
 
-                        <div className="d-flex align-items-center">
-                            <div class='line-clamp me-auto '
-                                 name='messUser'>
-                                Bắt đầu trò chuyện
-                            </div>
-                            <div className='badge badge-circle bg-primary ms-5'>
-                                <span name=''>0</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </a>
+                        "<div class='d-flex align-items-center'>"+
+                            "<div class='line-clamp me-auto messageSend' name='"+name+"'>"+
+                                messageUser.content+
+                            "</div>"+
+                            "<div class='badge badge-circle bg-primary ms-5'>"+
+                                "<span name='"+name+"'>1</span>" +
+                            "</div>"+
+                        "</div>"+
+                    "</div>"+
+                "</div>"+
+            "</div>"+
+        "</a>" + contentUserMessage.innerHTML;
 
-
-
-    console.log("messag user -------------------")
-    console.log(messageUser);
 }
 
 function onCall(payload){
@@ -109,7 +106,9 @@ function onCall(payload){
 function onMessageRealtime(payload){
     let messageRealtime = JSON.parse(payload.body);
     let classname = 'messUser' + messageRealtime.reader + messageRealtime.sender;
+    console.log("classname: ---------------- " + classname)
     let elms = document.getElementsByName(classname);
+    console.log(elms)
     if(elms != null){
         // tạo thông báo tin nhắn
         elms[0].className = 'me-auto mb-0 messageSend';

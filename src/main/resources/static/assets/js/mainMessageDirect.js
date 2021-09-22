@@ -12,7 +12,7 @@ function connect() {
     room = document.querySelector('#room').value.trim();
     if (username) {
         stompClient = null;
-        var socket = new SockJS('/chatroom/wss');
+        let socket = new SockJS('/chatroom/wss');
         stompClient = Stomp.over(socket);
         stompClient.connect({}, onConnected, onError);
     }
@@ -58,7 +58,6 @@ function onError() {
 async function sendMessage(event) {
     var messageContent = messageInput.value.trim();
     let first = document.querySelector("#first");
-    console.log("value ----" + first.value)
     if(first.value == 'onFirst'){
         first.value = "";
         $.ajax({
@@ -74,7 +73,9 @@ async function sendMessage(event) {
                     let user = {
                         roomId: room,
                         fullname: document.querySelector("#fullname").value,
-                        image: document.querySelector("#avtMyUser").src
+                        image: document.querySelector("#avtMyUser").src,
+                        sender: username,
+                        content: messageContent
                     }
                     stompClientRoom.send("/app/system/" + document.getElementById("userInRoomDirect").value,
                         {},

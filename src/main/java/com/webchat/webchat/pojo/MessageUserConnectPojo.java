@@ -11,4 +11,6 @@ public class MessageUserConnectPojo {
     private String roomId;
     private String fullname;
     private String image;
+    private String sender;
+    private String content;
 }
