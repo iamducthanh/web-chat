@@ -87,7 +87,8 @@ public class UserApi {
     @PutMapping("/user/update")
     @ResponseBody
     public String updateProfile(UserUpdateDto userUpdateDto){
-        userUpdateDto.toString();
+
+        System.out.println(userUpdateDto.toString());
         return "";
     }
 
