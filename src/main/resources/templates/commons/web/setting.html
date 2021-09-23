@@ -84,21 +84,22 @@
                                          aria-labelledby="accordion-profile-1" data-parent="#accordion-profile">
                                         <form id="updateUser">
                                         <div class="accordion-body">
+                                            <input type="hidden" name="id" th:value="${user.id}">
                                             <div class="col-lg-12" style="margin-bottom: 20px">
-                                                <input name="username" th:value="${user.username}" type="text" class="form-control" placeholder="Tên người dùng">
+                                                <input onkeydown="onUpdateProfile()" name="username" th:value="${user.username}" type="text" class="form-control" placeholder="Tên người dùng">
                                             </div>
                                             <div class="col-lg-12" style="margin-bottom: 20px">
-                                                <input name="lastName" th:value="${user.lastName}" type="text" class="form-control" placeholder="Họ">
+                                                <input onkeydown="onUpdateProfile()" name="lastName" th:value="${user.lastName}" type="text" class="form-control" placeholder="Họ">
                                             </div>
                                             <div class="col-lg-12" style="margin-bottom: 20px">
-                                                <input name="firstName" th:value="${user.firstName}" type="text" class="form-control" placeholder="Tên">
+                                                <input onkeydown="onUpdateProfile()" name="firstName" th:value="${user.firstName}" type="text" class="form-control" placeholder="Tên">
                                             </div>
                                             <div class="col-lg-12" style="margin-bottom: 20px">
-                                                <input name="phone" th:value="${user.phone}" type="text" class="form-control" placeholder="Số điện thoại">
+                                                <input onkeydown="onUpdateProfile()" name="phone" th:value="${user.phone}" type="text" class="form-control" placeholder="Số điện thoại">
                                             </div>
                                             <div class="col-lg-12" style="margin-bottom: 20px">
                                                 <p>Ngày sinh</p>
-                                                <input name="birthday" th:value="${user.getBirthDayString()}" type="date" class="form-control">
+                                                <input name="birthday" onchange="onUpdateProfile()" th:value="${user.getBirthDayString()}" type="date" class="form-control">
                                             </div>
                                             <div class="col-lg-12" style="margin-bottom: 20px">
                                                 <div th:if="${user.gender == true}" class="row" style="padding: 0 20px">
@@ -106,12 +107,12 @@
                                                         <input name="gender" value="true" checked type="radio"> &ensp;Nam
                                                     </div> &ensp;&ensp;
                                                     <div class="col-lg-5" style="padding: 10px; border: 1px solid #a0b3ce; border-radius: 10px">
-                                                        <input name="gender" value="false" type="radio">&ensp;Nữ
+                                                        <input onclick="onUpdateProfile()" name="gender" value="false" type="radio">&ensp;Nữ
                                                     </div>
                                                 </div>
                                                 <div th:if="${user.gender != true}" class="row" style="padding: 0 20px">
                                                     <div class="col-lg-5" style="padding: 10px; border: 1px solid #a0b3ce; border-radius: 10px">
-                                                        <input name="gender" value="true" type="radio"> &ensp;Nam
+                                                        <input name="gender" onclick="onUpdateProfile()" value="true" type="radio"> &ensp;Nam
                                                     </div> &ensp;&ensp;
                                                     <div class="col-lg-5" style="padding: 10px; border: 1px solid #a0b3ce; border-radius: 10px">
                                                         <input name="gender" value="false" checked type="radio">&ensp;Nữ
@@ -121,9 +122,9 @@
 
                                             <div class="col-lg-12" style="margin-bottom: 20px">
                                                 <p>Mô tả ngắn</p>
-                                                <textarea name="description" class="form-control" cols="8" maxlength="100">[[${user.description}]]</textarea>
+                                                <textarea onclick="onUpdateProfile()" name="description" class="form-control" cols="8" maxlength="100">[[${user.description}]]</textarea>
                                             </div>
-                                            <button type="submit" class="btn btn-block btn-lg btn-primary w-100">Cập nhật
+                                            <button type="submit" id="btnUpdateProfile" disabled class="btn btn-block btn-lg btn-primary w-100">Cập nhật
                                             </button>
                                         </div>
                                         </form>
@@ -476,6 +477,10 @@
         </div>
     </div>
     <script>
+        function onUpdateProfile(){
+            document.getElementById("btnUpdateProfile").disabled = false;
+        }
+
         function chooseFile() {
             document.getElementById("uploadProfilePhoto").click();
         }
@@ -541,13 +546,19 @@
                 user[formData[i].name] = formData[i].value;
             }
             $.ajax({
-                url: 'user/update',
+                url: 'user/update/profile',
                 data: user,
                 error: function () {
                     console.log("error")
                 },
                 success: async function (data) {
-                    console.log("done")
+                    if(data.length != 0){
+                        for (let i = 0; i < data.length; i++) {
+                            toastDanger("Lỗi", data[i].message);
+                        }
+                    } else {
+                        toastSuccess("Success", "Cập nhật thành công!")
+                    }
                 },
                 type: 'PUT'
             });

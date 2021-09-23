@@ -12,9 +12,10 @@ import java.util.Date;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class UserUpdateDto {
+public class UserProfileUpdateDto {
     @NotBlank(message = "NotBlank.user.username")
     private String username;
+    private String id;
     @NotBlank(message = "NotBlank.user.firstName")
     private String firstName;
     @NotBlank(message = "NotBlank.user.lastName")

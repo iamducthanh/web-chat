@@ -142,4 +142,15 @@ public class SignUpController {
         userService.saveUser(userSignup);
     }
 
+    public static void main(String[] args) {
+        BCryptPasswordEncoder pass = new BCryptPasswordEncoder();
+        String code = "123";
+        System.out.println(pass.encode(code));
+        System.out.println(pass.encode(code));
+        System.out.println(pass.encode(code));
+        System.out.println(pass.encode(code));
+        System.out.println(pass.encode(code));
+        System.out.println(pass.encode(code));
+    }
+
 }

@@ -7,6 +7,7 @@ import java.util.List;
 
 public interface IUserService {
     User findByUsername(String username);
+    User findById(Integer id);
     User findByUsernameAndPassword(String username, String password);
     User findByEmail(String email);
     void saveUser(User user);

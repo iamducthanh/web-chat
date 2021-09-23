@@ -24,6 +24,12 @@ public class UserService implements IUserService {
     }
 
     @Override
+    public User findById(Integer id) {
+        List<User> list = userRepo.findUserById(id);
+        return list.isEmpty() ? null : list.get(0);
+    }
+
+    @Override
     public User findByUsernameAndPassword(String username, String password) {
         List<User> list = userRepo.findUserByUsernameAndPassword(username, password);
         return list.isEmpty() ? null : list.get(0);
