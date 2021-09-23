@@ -28,6 +28,9 @@ public class SignInController {
     private CookieUtil cookieUtil;
 
     @Autowired
+    private UserService userService;
+
+    @Autowired
     private HttpServletRequest req;
 
     @GetMapping("/signin")
@@ -41,10 +44,16 @@ public class SignInController {
             String username = cookieUtil.get("username");
             String password = cookieUtil.get("password");
             String remember = cookieUtil.get("remember");
-            if(remember != null && remember.equals("on")){
-                model.addAttribute("username", username);
-                model.addAttribute("password", password);
-                model.addAttribute("rememberOn", remember);
+            User user = userService.findByUsername(username);
+            BCryptPasswordEncoder pass = new BCryptPasswordEncoder();
+            if(user != null){
+                if(pass.matches(password, user.getPassword())){
+                    if(remember != null && remember.equals("on")){
+                        model.addAttribute("username", username);
+                        model.addAttribute("password", password);
+                        model.addAttribute("rememberOn", remember);
+                    }
+                }
             }
         }
         return "views/acount/signin";

@@ -1,6 +1,7 @@
 package com.webchat.webchat.api;
 
 import com.webchat.webchat.constant.UsersOnline;
+import com.webchat.webchat.dto.ChangePasswordDto;
 import com.webchat.webchat.dto.UserProfileUpdateDto;
 import com.webchat.webchat.entities.User;
 import com.webchat.webchat.pojo.ErrorPojo;
@@ -10,6 +11,7 @@ import com.webchat.webchat.service.impl.UserService;
 import com.webchat.webchat.utils.SessionUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.*;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
@@ -141,6 +143,33 @@ public class UserApi {
             e.printStackTrace();
         }
         userService.saveUser(user);
+    }
+
+    @PutMapping("/user/change_password")
+    @ResponseBody
+    public List<ErrorPojo> changePassword(@Validated ChangePasswordDto changePasswordDto, BindingResult result){
+        List<ErrorPojo> error = new ArrayList<>();
+        User user = (User) sessionUtil.getObject("USER");
+        ResourceBundle message = ResourceBundle.getBundle("message");
+        if (result.hasErrors()) {
+            List<ObjectError> errors = result.getAllErrors();
+            for (ObjectError objectError : errors) {
+                String messageError = objectError.getDefaultMessage();
+                error.add(new ErrorPojo(messageError.substring(messageError.lastIndexOf(".") + 1, messageError.length()), message.getString(messageError)));
+            }
+        }
+        String password = changePasswordDto.getPassword();
+        BCryptPasswordEncoder pass = new BCryptPasswordEncoder();
+        if(!changePasswordDto.getPassword().isBlank()){
+            if(!pass.matches(password, user.getPassword())){
+                error.add(new ErrorPojo("password",message.getString("User.password")));
+            }
+        }
+        if(error.isEmpty()){
+            user.setPassword(pass.encode(changePasswordDto.getNewPassword()));
+            userService.saveUser(user);
+        }
+        return error;
     }
 
 }

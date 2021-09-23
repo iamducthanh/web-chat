@@ -200,27 +200,19 @@
                                     <div id="accordion-security-body-1" class="accordion-collapse collapse"
                                          aria-labelledby="accordion-security-1" data-parent="#accordion-security">
                                         <div class="accordion-body">
-                                            <form action="#" autocomplete="on">
-                                                <div class="form-floating mb-6">
-                                                    <input type="password" class="form-control"
-                                                           id="profile-current-password" placeholder="Current Password">
-                                                    <label for="profile-current-password">Current Password</label>
+                                            <form autocomplete="on" id="changePassword">
+                                                <div class="col-lg-12" style="margin-bottom: 20px">
+                                                    <input name="password" type="password" class="form-control" placeholder="Mật khẩu cũ">
                                                 </div>
-
-                                                <div class="form-floating mb-6">
-                                                    <input type="password" class="form-control"
-                                                           id="profile-new-password" placeholder="New password">
-                                                    <label for="profile-new-password">New password</label>
+                                                <div class="col-lg-12" style="margin-bottom: 20px">
+                                                    <input name="newPassword" type="password" class="form-control" placeholder="Mật khẩu mới">
                                                 </div>
-
-                                                <div class="form-floating mb-6">
-                                                    <input type="password" class="form-control"
-                                                           id="profile-verify-password" placeholder="Verify Password">
-                                                    <label for="profile-verify-password">Verify Password</label>
+                                                <div class="col-lg-12" style="margin-bottom: 20px">
+                                                    <input name="comfirmPassword" type="password" class="form-control" placeholder="Nhập lại mật khẩu mới">
                                                 </div>
+                                                <button type="submit" class="btn btn-block btn-lg btn-primary w-100">Đổi mật khẩu
+                                                </button>
                                             </form>
-                                            <button type="button" class="btn btn-block btn-lg btn-primary w-100">Save
-                                            </button>
                                         </div>
                                     </div>
                                 </div>
@@ -477,6 +469,35 @@
         </div>
     </div>
     <script>
+        document.querySelector("#updateUser").addEventListener('submit', updateUser, true)
+        document.querySelector("#changePassword").addEventListener('submit', changePassword, true)
+
+        function changePassword(event){
+            event.preventDefault();
+            let formData = $("#changePassword").serializeArray();
+            let changePassword = {};
+            for (let i = 0; i < formData.length; i++) {
+                changePassword[formData[i].name] = formData[i].value;
+            }
+            console.log(changePassword)
+            $.ajax({
+                url: 'user/change_password',
+                data: changePassword,
+                error: function () {
+                    console.log("error")
+                },
+                success: async function (data) {
+                    if(data.length != 0){
+                        for (let i = 0; i < data.length; i++) {
+                            toastDanger("Lỗi", data[i].message);
+                        }
+                    } else {
+                        toastSuccess("Success", "Thay đổi mật khẩu thành công!")
+                    }
+                },
+                type: 'PUT'
+            });
+        }
         function onUpdateProfile(){
             document.getElementById("btnUpdateProfile").disabled = false;
         }
@@ -537,7 +558,6 @@
                 });
         }
 
-        document.querySelector("#updateUser").addEventListener('submit', updateUser, true)
         function updateUser(event){
             event.preventDefault();
             let formData = $("#updateUser").serializeArray();

@@ -145,12 +145,11 @@ public class SignUpController {
     public static void main(String[] args) {
         BCryptPasswordEncoder pass = new BCryptPasswordEncoder();
         String code = "123";
-        System.out.println(pass.encode(code));
-        System.out.println(pass.encode(code));
-        System.out.println(pass.encode(code));
-        System.out.println(pass.encode(code));
-        System.out.println(pass.encode(code));
-        System.out.println(pass.encode(code));
+        String a = pass.encode(code);
+        String b = pass.encode(code);
+        System.out.println(a);
+        System.out.println(b);
+        System.out.println(pass.matches(code, b));
     }
 
 }
