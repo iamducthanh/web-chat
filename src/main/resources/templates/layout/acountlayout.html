@@ -10,8 +10,10 @@
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700" rel="stylesheet">
     <link rel="stylesheet" th:href="@{/assets/css/template.bundle.css}">
     <link th:href="@{/toastr/css/toastr.min.css}" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" th:href="@{/assets/css/sweetalert2.min.css}">
 </head>
 <body class="bg-light">
+<div th:replace="/component/alert/erroralert :: erroralert"></div>
 <div layout:fragment="acount-content">
 
 </div>

@@ -65,8 +65,8 @@
                     <li class="list-group-item">
                         <div class="row align-items-center gx-6">
                             <div class="col">
-                                <h5>Phone</h5>
-                                <p>1-800-275-2273</p>
+                                <h5>Số điện thoại</h5>
+                                <p>[[${userInRoom.phone}]]</p>
                             </div>
 
                             <div class="col-auto">
@@ -76,24 +76,31 @@
                             </div>
                         </div>
                     </li>
-                </ul>
-                <!-- List -->
-
-                <hr class="hr-bold modal-gx-n my-0">
-
-                <!-- List -->
-                <ul class="list-group list-group-flush">
                     <li class="list-group-item">
                         <div class="row align-items-center gx-6">
                             <div class="col">
-                                <h5>Notifications</h5>
-                                <p>Enable sound notifications</p>
+                                <div class="row">
+                                    <div class="col-3">
+                                        <h5>Ngày sinh</h5>
+                                    </div>
+                                    <div class="col-9">
+                                        <input class="w-100" style="border: none" type="date" th:value="${userInRoom.getBirthDayString()}">
+                                    </div>
+                                </div>
                             </div>
-
-                            <div class="col-auto">
-                                <div class="form-check form-switch">
-                                    <input class="form-check-input" type="checkbox" id="user-notification-check">
-                                    <label class="form-check-label" for="user-notification-check"></label>
+                        </div>
+                    </li>
+                    <li class="list-group-item">
+                        <div class="row align-items-center gx-6">
+                            <div class="col">
+                                <div class="row">
+                                    <div class="col-3">
+                                        <h5>Giới tính</h5>
+                                    </div>
+                                    <div class="col-9">
+                                        <p th:if="${userInRoom.gender}">Nam</p>
+                                        <p th:if="${!userInRoom.gender}">Nữ</p>
+                                    </div>
                                 </div>
                             </div>
                         </div>

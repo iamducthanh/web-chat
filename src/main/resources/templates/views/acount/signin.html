@@ -67,7 +67,7 @@
         function remember() {
             let remember = document.getElementById("remember");
             $.ajax({
-                url: 'signin/remember',
+                url: 'signin',
                 data: {
                     username: document.querySelector("#signin-username").value,
                     password: document.querySelector("#signin-password").value,
@@ -77,12 +77,16 @@
                     console.log("error")
                 },
                 success: async function (data) {
-                    console.log("done")
+                    if(data.length == 0){
+                        document.getElementById("submitLogin").click();
+                    } else {
+                        document.getElementById("errorAlert").style.overflowY = 'auto';
+                        document.getElementById("errorAlert").style.display = "unset";
+                        document.getElementById("errormessage").innerText = data;
+                    }
                 },
                 type: 'POST'
             });
-
-            document.getElementById("submitLogin").click();
         }
     </script>
 </div>

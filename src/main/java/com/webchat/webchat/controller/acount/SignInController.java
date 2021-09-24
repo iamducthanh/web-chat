@@ -36,6 +36,9 @@ public class SignInController {
     @GetMapping("/signin")
     public String signinPage(Model model){
         String status = req.getParameter("status");
+        if(status != null && status.equals("login_false")){
+            req.setAttribute("errormessage","Thông tin tài khoản hoặc mật khẩu không chính xác!");
+        }
         if(status != null && status.equals("logout")){
             cookieUtil.add("username","username", 0);
             cookieUtil.add("remember","on", 0);
@@ -59,14 +62,26 @@ public class SignInController {
         return "views/acount/signin";
     }
 
+//    @PostMapping("/signin")
+//    @ResponseBody
+//    public String checkSignin(
+//            @RequestParam("username") String username,
+//            @RequestParam("password") String password
+//    ){
+//        String message = "";
+//        System.out.println(username);
+//        System.out.println(password);
+//        return message;
+//    }
+
     @GetMapping("/logoutSuccessful")
     public String signoutSuccess(){
         return "views/acount/signin";
     }
 
-    @PostMapping("/signin/remember")
+    @PostMapping("/signin")
     @ResponseBody
-    public String rememberSignin(
+    public String checkSignin(
             @RequestParam("username") String username,
             @RequestParam("password") String password,
             @RequestParam("remember") String remember
@@ -81,7 +96,17 @@ public class SignInController {
             cookieUtil.add("remember","on", 0);
             cookieUtil.add("password",password, 0);
         }
-        return "";
+        String message = "";
+        User user = userService.findByUsername(username);
+        if(user == null){
+            message = "Thông tin tài khoản hoặc mật khẩu không chính xác!";
+        } else {
+            BCryptPasswordEncoder pass = new BCryptPasswordEncoder();
+            if(!pass.matches(password, user.getPassword())){
+                message = "Thông tin tài khoản hoặc mật khẩu không chính xác!";
+            }
+        }
+        return message;
     }
 
 }
