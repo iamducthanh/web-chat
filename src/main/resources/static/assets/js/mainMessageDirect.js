@@ -6,13 +6,13 @@ var messageInput = document.querySelector('#message');
 var stompClient = null;
 var username = null;
 var room = null;
+let socket = null;
 
 function connect() {
     username = document.querySelector('#name').value.trim();
     room = document.querySelector('#room').value.trim();
     if (username) {
-        stompClient = null;
-        let socket = new SockJS('/chatroom/wss');
+        socket = new SockJS('/chatroom/wss');
         stompClient = Stomp.over(socket);
         stompClient.connect({}, onConnected, onError);
     }
@@ -185,7 +185,9 @@ async function onMessageReceived(payload) {
                 })
             )
         }
-        messageArea.innerHTML += "<div class='on-conect'><p>" + message.sender + " đang hoạt động!</p></div>";
+        if(username != message.sender){
+            document.getElementById('statusMessage').innerText = "Đã xem"
+        }
     } else if (message.type === 'LEAVE') {
         messageArea.innerHTML += "<div class='close-conect'><p>" + message.sender + " đã thoát!</p></div>";
     } else if (message.type === 'CHAT') {
@@ -251,7 +253,7 @@ async function onMessageReceived(payload) {
                 "class='avatar avatar-responsive'>" + "</a>" +
                 "<div class='message-inner'>" + "<div class='message-body'>" + "</div>" +
                 "<div class='message-footer'>" +
-                "<span class='extra-small text-muted'>" + message.statusMessage + "</span><br/>" +
+                "<span class='extra-small text-muted' id='statusMessage'>" + message.statusMessage + "</span><br/>" +
                 "</div>" + "</div>" + "</div>";
             let classRe = document.getElementsByName(names);
             if (classRe != null) {
