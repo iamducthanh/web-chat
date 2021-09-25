@@ -38,7 +38,8 @@
                             <div class="card-body">
                                 <div class="row gx-5">
                                     <div class="col-auto">
-                                        <div th:class="${messageUser.isOnline() ? 'avatar avatar-online' : 'avatar avatar-offline'}" th:id="${messageUser.users.get(0).username}">
+                                        <div th:class="${messageUser.isFriend ? (messageUser.isOnline() ? 'avatar avatar-online' : 'avatar avatar-offline') : 'avatar'}"
+                                             th:id="${messageUser.isFriend ? messageUser.users.get(0).username : messageUser.users.get(0).username + 'NotFriend'}">
                                             <img th:src="@{${messageUser.users.get(0).image}}" alt="#" class="avatar-img">
                                         </div>
                                     </div>

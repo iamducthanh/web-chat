@@ -37,8 +37,6 @@ public class DataIntercepter implements HandlerInterceptor {
     @Autowired
     private SessionUtil sessionUtil;
 
-    List<User> friends = new ArrayList<>();
-
     @Override
     public boolean preHandle(HttpServletRequest req, HttpServletResponse resp, Object handler) throws Exception {
         User user = (User) sessionUtil.getObject("USER");
@@ -46,7 +44,6 @@ public class DataIntercepter implements HandlerInterceptor {
         req.setAttribute("user", user);
         getUserOnline(req, user);
         getFriendUser(req, user);
-        getMessageUser(req, user);
         return true;
     }
 
@@ -54,7 +51,7 @@ public class DataIntercepter implements HandlerInterceptor {
         req.setAttribute("userOnline", user.getUsername());
     }
 
-    public void getMessageUser(HttpServletRequest req, User user) {
+    public void getMessageUser(HttpServletRequest req, User user, List<User> friends) {
         int countMessage = 0;
         List<MessageUser> messageUsers = new ArrayList<>();
         List<RoomDetail> roomDetails = roomDetailService.findByUser(user.getId());
@@ -65,8 +62,7 @@ public class DataIntercepter implements HandlerInterceptor {
                 List<User> userInRoom = userService.findInRoom(user.getId(), roomDetail.getRoom().getId());
                 if (userInRoom.size() == 1) {
                     name = userInRoom.get(0).getFullname();
-                    isFriend = isFriend(userInRoom.get(0));
-                    System.out.println("laf bajn bef" + isFriend);
+                    isFriend = isFriend(userInRoom.get(0), friends); // check bạn bè
 
                 } else {
                     name = roomDetail.getRoom().getName();
@@ -96,7 +92,7 @@ public class DataIntercepter implements HandlerInterceptor {
                 if (usernameCheck.equals(user.getUsername()) || usernameCheck.equals("")) {
                     active = true;
                 }
-                messageUsers.add(new MessageUser(roomDetail, name, userInRoom, messageLast.getContent(), countMess, status, time, roomDetail.getRoom().getId(), active, messageLast.getTime()));
+                messageUsers.add(new MessageUser(roomDetail, name, userInRoom, messageLast.getContent(), countMess, status, time, roomDetail.getRoom().getId(), active, messageLast.getTime(), isFriend));
                 messageUsers.sort((o1, o2) -> {
                     return o2.getTimeDate().compareTo(o1.getTimeDate());
                 });
@@ -107,6 +103,7 @@ public class DataIntercepter implements HandlerInterceptor {
     }
 
     public void getFriendUser(HttpServletRequest req, User user) {
+        List<User> friends = new ArrayList<>();
         List<Friend> listFriend = friendService.getFriendByUser(user.getUsername());
         List<NotificationPojo> notifications = new ArrayList<>();
         if (listFriend != null) {
@@ -124,9 +121,10 @@ public class DataIntercepter implements HandlerInterceptor {
         }
         req.setAttribute("friend", friends);
         req.setAttribute("notifications", notifications);
+        getMessageUser(req, user, friends);
     }
 
-    public boolean isFriend(User user) {
+    public boolean isFriend(User user, List<User> friends) {
         for (User user1 : friends) {
             if (user1.getUsername().equals(user.getUsername())) {
                 return true;

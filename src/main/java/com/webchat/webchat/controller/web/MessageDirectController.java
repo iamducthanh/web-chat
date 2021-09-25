@@ -77,7 +77,6 @@ public class MessageDirectController {
             }
         }
         model.addAttribute("room", roomId);
-
         return view;
     }
 

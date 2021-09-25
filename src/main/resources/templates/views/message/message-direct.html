@@ -43,7 +43,7 @@
 
                                     <div class="col overflow-hidden">
                                         <h5 class="text-truncate" id="userNameRoom">[[${userInRoom.getFullname()}]]</h5>
-                                        <p class="text-truncate" id="statusOn" th:class="@{${userInRoom.username}}"
+                                        <p class="text-truncate" id="statusOn" th:class="${userInRoom.username}"
                                            th:text="${userInRoom.isOnline() ? 'Đang hoạt động' : 'Không hoạt động'}"></p>
                                     </div>
                                 </div>
