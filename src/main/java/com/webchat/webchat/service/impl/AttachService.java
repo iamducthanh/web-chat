@@ -24,4 +24,10 @@ public class AttachService implements IAttachService {
         List<Attach> list = repo.findByMessage(messageId);
         return list.isEmpty() ? null : list;
     }
+
+    @Override
+    public List<Attach> findByRoom(String roomId) {
+        List<Attach> list = repo.findByRoom(roomId);
+        return list.isEmpty() ? null : list;
+    }
 }

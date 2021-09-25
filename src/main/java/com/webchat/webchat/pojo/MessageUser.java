@@ -18,6 +18,7 @@ public class MessageUser {
     private String roomCode;
     private boolean active;
     private Date timeDate;
+    private boolean isFriend;
 
     public MessageUser() {
     }

@@ -509,8 +509,55 @@ function onLoadMedia(){
         console.log("onload media")
         document.getElementById("statusMedia").value = 1;
         let room = document.getElementById("room").value;
-        let userInRoom = document.getElementById("userInRoomDirect").value;
-        console.log(room)
-        console.log(userInRoom)
+        $.ajax({
+            url: 'api/files',
+            data: {
+                room: room
+            },
+            error: function () {
+                console.log("error")
+            },
+            success: async function (data) {
+                let contentMedia = document.getElementById("contentMedia");
+                if(data.length > 0){
+                    for(let i=0;i<data.length;i++){
+                        let src = "";
+                        await fetch('https://api.github.com/repos/iamducthanh/image_webchat/contents/' + data[i], {
+                            method: 'GET',
+                            headers: {
+                                "Authorization": TO+KEN,
+                                "Accept":"application/vnd.github.v3+json"
+                            },
+                        })
+                            .then(response => response.json())
+                            .then(out => {
+                                src = "data:image/png;base64," + out.content;
+                                let divCol = document.createElement("div");
+                                divCol.className = 'col';
+                                let aa = document.createElement("a");
+                                aa.setAttribute('data-bs-toggle','modal');
+                                aa.setAttribute('data-bs-target','#modal-media-preview');
+                                aa.setAttribute('data-theme-img-url',src);
+                                divCol.appendChild(aa)
+                                let img = document.createElement("img");
+                                img.className = 'img-fluid rounded';
+                                img.onclick = showImage.bind(this,i);
+                                img.src = src;
+                                aa.appendChild(img);
+                                contentMedia.appendChild(divCol);
+                            })
+                            .catch((error) => {
+                                console.error('Error:', error);
+                            });
+                    }
+                }
+            },
+            type: 'GET'
+        });
     }
+}
+
+function showImage(index){
+    console.log(index)
+    document.getElementById("modal-media-preview").style.display='block'
 }

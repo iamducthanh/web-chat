@@ -5,14 +5,12 @@ import com.webchat.webchat.constant.AttackFile;
 import com.webchat.webchat.constant.UsersOnline;
 import com.webchat.webchat.dto.FileAttackDto;
 import com.webchat.webchat.dto.MessagePageDto;
-import com.webchat.webchat.entities.Attach;
-import com.webchat.webchat.entities.Message;
-import com.webchat.webchat.entities.Room;
-import com.webchat.webchat.entities.User;
+import com.webchat.webchat.entities.*;
 import com.webchat.webchat.pojo.MessagePojo;
 import com.webchat.webchat.pojo.UserConnectPojo;
 import com.webchat.webchat.service.impl.AttachService;
 import com.webchat.webchat.service.impl.MessageService;
+import com.webchat.webchat.service.impl.RoomDetailService;
 import com.webchat.webchat.utils.SessionUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
@@ -36,6 +34,9 @@ public class MessageApi {
 
     @Autowired
     private SessionUtil sessionUtil;
+
+    @Autowired
+    private RoomDetailService roomDetailService;
 
     @GetMapping("/api/message")
     @ResponseBody
@@ -108,10 +109,19 @@ public class MessageApi {
     @GetMapping("/api/files")
     @ResponseBody
     public List<String> getFiles(
-            @RequestParam("room") String roomId,
-            @RequestParam("userInRoom") String userInRoom
+            @RequestParam("room") String roomId
             ){
         List<String> files = new ArrayList<>();
+        User user = (User) sessionUtil.getObject("USER");
+        RoomDetail roomDetail = roomDetailService.findRoomDetailByUserAndRoom(user.getId(), roomId);
+        if(roomDetail != null){
+            List<Attach> attaches = attachService.findByRoom(roomDetail.getRoom().getId());
+            if(attaches != null){
+                for(Attach attach : attaches){
+                    files.add(attach.getFilename());
+                }
+            }
+        }
         return files;
     }
 }
