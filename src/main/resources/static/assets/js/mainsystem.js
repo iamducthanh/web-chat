@@ -25,7 +25,7 @@ function online(event) {
         stompClientCall = Stomp.over(socketCall);
         stompClientCall.connect({}, onOnlined, onError3);
 
-        socketRoom = new SockJS('/chatroom/system');
+        socketRoom = new SockJS('/chatroom/wss');
         stompClientRoom = Stomp.over(socketRoom);
         stompClientRoom.connect({}, onOnlined, onError4);
     }
