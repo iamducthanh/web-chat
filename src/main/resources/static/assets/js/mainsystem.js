@@ -106,6 +106,10 @@ function onCall(payload){
 function onMessageRealtime(payload){
     let messageRealtime = JSON.parse(payload.body);
     let classname = 'messUser' + messageRealtime.reader + messageRealtime.sender;
+    let contentUserMessage = document.getElementById("contentUserMessage");
+    let userMessage = document.getElementById(classname);
+    contentUserMessage.removeChild(userMessage);
+    contentUserMessage.innerHTML = userMessage + contentUserMessage.innerHTML
     console.log("classname: ---------------- " + classname)
     let elms = document.getElementsByName(classname);
     console.log(elms)

@@ -76,7 +76,7 @@ public class Message {
     }
 
     public String getTimeChat(){
-        DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy hh:mm:ss");
+        DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
         String strDate = dateFormat.format(this.time);
         return strDate;
     }

@@ -1,5 +1,6 @@
 package com.webchat.webchat.controller.web;
 
+import com.webchat.webchat.entities.Message;
 import com.webchat.webchat.entities.Room;
 import com.webchat.webchat.entities.RoomDetail;
 import com.webchat.webchat.entities.User;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
@@ -24,6 +26,9 @@ public class MessageController {
 
     @Autowired
     private RoomService roomService;
+
+    @Autowired
+    private MessageService messageService;
 
     @Autowired
     private RoomDetailService roomDetailService;
@@ -58,6 +63,7 @@ public class MessageController {
 
     public String createRoomChat(String id, User user){
         UUID roomId = UUID.randomUUID();
+        UUID messageId = UUID.randomUUID();
         Room room = new Room(String.valueOf(roomId), 0, "",user.getUsername());
         roomService.saveRoom(room);
         User user2 = new User();
@@ -66,6 +72,15 @@ public class MessageController {
         roomDetails.add(new RoomDetail(user,room));
         roomDetails.add(new RoomDetail(user2,room));
         roomDetailService.saveRoomDetail(roomDetails);
+        Message message = new Message();
+        message.setRoom(room);
+        message.setType("CREATE");
+        message.setTime(new Date());
+        message.setContent("Bắt đầu trò chuyện");
+        message.setUser(user);
+        message.setId(String.valueOf(messageId));
+        message.setStatus("READ");
+        messageService.saveMessage(message);
         return "redirect:/message_direct?room=" + room.getId();
     }
 

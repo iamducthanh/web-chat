@@ -17,11 +17,12 @@ public class MessageUser {
     private String time;
     private String roomCode;
     private boolean active;
+    private Date timeDate;
 
     public MessageUser() {
     }
 
-    public MessageUser(RoomDetail roomDetail, String name, List<User> users, String messageLast, int countMess, int status, String time, String roomCode, boolean active) {
+    public MessageUser(RoomDetail roomDetail, String name, List<User> users, String messageLast, int countMess, int status, String time, String roomCode, boolean active,Date timeDate) {
         this.roomDetail = roomDetail;
         this.name = name;
         this.users = users;
@@ -31,6 +32,7 @@ public class MessageUser {
         this.time = time;
         this.roomCode = roomCode;
         this.active = active;
+        this.timeDate = timeDate;
     }
 
     public MessageUser(RoomDetail roomDetail, String name, List<User> users, String messageLast, int countMess, int status, String time, String roomCode) {
@@ -122,5 +124,13 @@ public class MessageUser {
 
     public void setActive(boolean active) {
         this.active = active;
+    }
+
+    public Date getTimeDate() {
+        return timeDate;
+    }
+
+    public void setTimeDate(Date timeDate) {
+        this.timeDate = timeDate;
     }
 }

@@ -31,27 +31,30 @@
                 <div class="card-list" id="contentUserMessage">
                     <!-- Card -->
                     <th:block th:each="messageUser: ${messageUsers}">
-                        <a th:if="${messageUser.active}" th:href="@{'/message_direct?room=' + ${messageUser.roomCode}}" class="card border-0 text-reset">
+                        <a th:if="${messageUser.active}"
+                           th:href="@{'/message_direct?room=' + ${messageUser.roomCode}}"
+                           class="card border-0 text-reset"
+                           th:id="'messUser' + ${userOnline + messageUser.users.get(0).username}">
                             <div class="card-body">
                                 <div class="row gx-5">
                                     <div class="col-auto">
-                                        <div th:class="${messageUser.isOnline() ? 'avatar avatar-online' : 'avatar avatar-offline'}" th:id="@{${messageUser.users.get(0).username}}">
+                                        <div th:class="${messageUser.isOnline() ? 'avatar avatar-online' : 'avatar avatar-offline'}" th:id="${messageUser.users.get(0).username}">
                                             <img th:src="@{${messageUser.users.get(0).image}}" alt="#" class="avatar-img">
                                         </div>
                                     </div>
 
                                     <div class="col">
                                         <div class="d-flex align-items-center mb-3">
-                                            <h5 th:class="@{'me-auto mb-0 ' + ${messageUser.status == 1 ? 'messageSend' : ''}}" th:name="@{'messUser' + ${userOnline + messageUser.users.get(0).username}}">[[${messageUser.name}]]</h5>
-                                            <span th:class="@{'text-muted extra-small ms-2 ' + ${messageUser.status == 1 ? 'messageSend' : ''}}" th:name="@{'messUser' + ${userOnline + messageUser.users.get(0).username}}">[[${messageUser.time}]]</span>
+                                            <h5 th:class="'me-auto mb-0 ' + ${messageUser.status == 1 ? 'messageSend' : ''}" th:name="'messUser' + ${userOnline + messageUser.users.get(0).username}">[[${messageUser.name}]]</h5>
+                                            <span th:class="'text-muted extra-small ms-2 ' + ${messageUser.status == 1 ? 'messageSend' : ''}" th:name="'messUser' + ${userOnline + messageUser.users.get(0).username}">[[${messageUser.time}]]</span>
                                         </div>
 
                                         <div class="d-flex align-items-center">
-                                            <div th:class="@{'line-clamp me-auto ' + ${messageUser.status == 1 ? 'messageSend' : ''}}" th:name="@{'messUser' + ${userOnline + messageUser.users.get(0).username}}">
+                                            <div th:class="'line-clamp me-auto ' + ${messageUser.status == 1 ? 'messageSend' : ''}" th:name="'messUser' + ${userOnline + messageUser.users.get(0).username}">
                                                 [[${messageUser.messageLast}]]
                                             </div>
                                             <div class="badge badge-circle bg-primary ms-5">
-                                                <span th:name="@{'messUser' + ${userOnline + messageUser.users.get(0).username}}">[[${messageUser.countMess}]]</span>
+                                                <span th:name="'messUser' + ${userOnline + messageUser.users.get(0).username}">[[${messageUser.countMess}]]</span>
                                             </div>
                                         </div>
                                     </div>

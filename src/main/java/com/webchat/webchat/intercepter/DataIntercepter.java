@@ -21,6 +21,7 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 @Component
@@ -89,7 +90,10 @@ public class DataIntercepter implements HandlerInterceptor {
                 if(usernameCheck.equals(user.getUsername()) || usernameCheck.equals("")){
                     active = true;
                 }
-                messageUsers.add(new MessageUser(roomDetail, name, userInRoom, messageLast.getContent(), countMess, status, time, roomDetail.getRoom().getId(), active));
+                messageUsers.add(new MessageUser(roomDetail, name, userInRoom, messageLast.getContent(), countMess, status, time, roomDetail.getRoom().getId(), active, messageLast.getTime()));
+                messageUsers.sort((o1,o2) -> {
+                    return o2.getTimeDate().compareTo(o1.getTimeDate());
+                });
             }
         }
         req.setAttribute("messageUsers", messageUsers);

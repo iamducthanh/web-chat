@@ -8,7 +8,7 @@ import org.springframework.data.jpa.repository.Query;
 import java.util.List;
 
 public interface MessageRepository extends JpaRepository<Message, String> {
-    @Query("select o from Message o where o.room.id = ?1 order by o.time desc")
+    @Query("select o from Message o where o.room.id = ?1 and o.type <> 'CREATE' order by o.time desc")
     List<Message> findByRoom(String id, Pageable pageable);
 
     @Query("select o from Message  o where o.room.id = ?1 and o.user.username = ?2 and o.status = ?3")

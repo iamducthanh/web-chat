@@ -7,6 +7,7 @@ import com.webchat.webchat.pojo.MailPojo;
 import com.webchat.webchat.pojo.UserRegisterPojo;
 import com.webchat.webchat.service.impl.UserService;
 import com.webchat.webchat.utils.MailerUtil;
+import com.webchat.webchat.utils.UploadUtil;
 import lombok.SneakyThrows;
 import org.aspectj.apache.bcel.classfile.Code;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +19,8 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.mail.MessagingException;
+import javax.servlet.http.Part;
+import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -31,8 +34,22 @@ public class SignUpController {
     @Autowired
     private MailerUtil mailerUtil;
 
+    @Autowired
+    private UploadUtil uploadUtil;
+
     @GetMapping("/signup")
     public String signupPage(){
+        return "views/acount/signup";
+    }
+
+    @GetMapping("/signup/11")
+    public String signupPage11(){
+        return "views/acount/upload";
+    }
+
+    @PostMapping("/signup11")
+    public String saveUp(@RequestPart("file")Part part) throws IOException {
+        uploadUtil.upload(part);
         return "views/acount/signup";
     }
 
