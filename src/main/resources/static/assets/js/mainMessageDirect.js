@@ -18,7 +18,6 @@ function connect() {
     }
 }
 
-
 function onConnected() {
     var names = 'messUser' + username + document.getElementById('userInRoomDirect').value;
     // clear thông báo tin nhắn
@@ -53,7 +52,6 @@ function onError() {
     connectingElement.textContent = 'Could not connect to WebSocket server. Please refresh this page to try again!';
     connectingElement.style.color = 'red';
 }
-
 
 async function sendMessage(event) {
     var messageContent = messageInput.value.trim();
@@ -159,7 +157,6 @@ async function sendMessage(event) {
     }
     event.preventDefault();
 }
-
 
 async function onMessageReceived(payload) {
     let message = JSON.parse(payload.body);
@@ -509,8 +506,11 @@ function callVideo(){
 function onLoadMedia(){
     let status = document.getElementById("statusMedia").value;
     if(status == 0){
-        status = 1;
+        console.log("onload media")
+        document.getElementById("statusMedia").value = 1;
         let room = document.getElementById("room").value;
         let userInRoom = document.getElementById("userInRoomDirect").value;
+        console.log(room)
+        console.log(userInRoom)
     }
 }
