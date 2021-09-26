@@ -9,26 +9,44 @@ let socketClient = null;
 let socketSystem = null;
 let socketCall = null;
 let socketRoom = null;
+userOnline = document.querySelector('#userOnline').value.trim();
 
 function online(event) {
     userOnline = document.querySelector('#userOnline').value.trim();
     if (userOnline) {
         socketClient = new SockJS('/chatroom/system');
         stompClientSystem = Stomp.over(socketClient);
-        stompClientSystem.connect({}, onOnlined, onError1);
+        stompClientSystem.connect({}, socketClientConected, onError1);
 
         socketSystem = new SockJS('/chatroom/system');
         stompClientMessageListen = Stomp.over(socketSystem);
-        stompClientMessageListen.connect({}, onOnlined, onError2);
+        stompClientMessageListen.connect({}, socketSystemConected, onError2);
 
         socketCall = new SockJS('/chatroom/system');
         stompClientCall = Stomp.over(socketCall);
-        stompClientCall.connect({}, onOnlined, onError3);
+        stompClientCall.connect({}, socketCallConected, onError3);
 
         socketRoom = new SockJS('/chatroom/wss');
         stompClientRoom = Stomp.over(socketRoom);
-        stompClientRoom.connect({}, onOnlined, onError4);
+        stompClientRoom.connect({}, socketRoomConected, onError4);
     }
+}
+
+function socketClientConected(){
+    stompClientSystem.subscribe('/topic/system.adduser', onMessageReceivedOnline);
+    stompClientSystem.send("/app/system.adduser",
+        {},
+        JSON.stringify({username: userOnline, type: 'ONLINE'})
+    );
+}
+function socketSystemConected(){
+    stompClientMessageListen.subscribe('/topic/system.onmessage/' + userOnline, onMessageRealtime);
+}
+function socketCallConected(){
+    stompClientCall.subscribe('/topic/call/' + userOnline, onCall);
+}
+function socketRoomConected(){
+    stompClientRoom.subscribe('/topic/system/' + userOnline, onAddRoom);
 }
 
 function onError1() {
@@ -48,20 +66,20 @@ function onError4() {
 }
 
 function onOnlined() {
-    userOnline = document.querySelector('#userOnline').value.trim();
-    console.log("User online login " + userOnline)
+    // console.log("User online login " + userOnline)
+    //
+    // stompClientSystem.subscribe('/topic/system.adduser', onMessageReceivedOnline);
+    //
+    // stompClientRoom.subscribe('/topic/system/' + userOnline, onAddRoom);
+    //
+    // stompClientCall.subscribe('/topic/call/' + userOnline, onCall);
+    //
+    // stompClientMessageListen.subscribe('/topic/system.onmessage/' + userOnline, onMessageRealtime);
 
-    stompClientSystem.subscribe('/topic/system.adduser', onMessageReceivedOnline);
-    stompClientSystem.send("/app/system.adduser",
-        {},
-        JSON.stringify({username: userOnline, type: 'ONLINE'})
-    );
-
-    stompClientRoom.subscribe('/topic/system/' + userOnline, onAddRoom);
-
-    stompClientCall.subscribe('/topic/call/' + userOnline, onCall);
-
-    stompClientMessageListen.subscribe('/topic/system.onmessage/' + userOnline, onMessageRealtime);
+    // stompClientSystem.send("/app/system.adduser",
+    //     {},
+    //     JSON.stringify({username: userOnline, type: 'ONLINE'})
+    // );
 }
 
 function onAddRoom(payload) {
@@ -163,7 +181,7 @@ function onMessageReceivedOnline(payload) {
     let userClassFriend = document.getElementById(user.username + 'Friend');
     let userStatus = document.getElementsByClassName(user.username)[0];
     let userStatusFriend = document.getElementsByClassName(user.username + 'Friend')[0];
-    console.log(userStatusFriend)
+    console.log("thông báo online từ " + user.username)
     if (userClass != null) {
         if (user.type == 'ONLINE') {
             userClass.className = 'avatar avatar-online';
